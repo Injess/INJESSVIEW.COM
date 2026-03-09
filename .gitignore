@@ -1,0 +1,17 @@
+# Database credentials - never commit
+php/connect.php
+
+# Backups
+backups/
+
+# Cache files
+*.cache
+ppda_tenders_cache.html
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp

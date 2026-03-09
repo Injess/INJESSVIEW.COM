@@ -1,0 +1,167 @@
+@font-face {
+    font-family: gothic-b;
+    src: url(../fonts/Gothic-B.ttf);
+}
+
+@font-face {
+    font-family: gothic;
+    src: url(../fonts/Gothic.ttf);
+}
+
+.section-title {
+    text-align: center;
+    background-color: rgba(164, 177, 182, 0.4);
+    padding: 5px;
+    color: #575555;
+    border-radius: 20px;
+    text-transform: uppercase;
+    margin: 3px auto 15px auto;
+    font-size: 14px;
+    font-family: gothic-b;
+    width: 98%;
+}
+
+* {
+    font-family: gothic, Arial, Helvetica, sans-serif;
+}
+
+/* Set logo size to fit the navbar on desktop */
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+/* Make the navbar padding responsive */
+.navbar-custom {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 767px) {
+    .logo {
+        height: 40px; /* A smaller height for the logo on mobile */
+    }
+
+    .navbar-custom {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+}
+
+.menu-btn {
+    font-size: 1.5rem;
+    padding: 1.5rem;
+}
+
+@media(max-width:400px){
+    .menu-btn {
+        font-size: 1.2rem;
+        padding: 1.3rem;
+    }
+}
+
+.container {
+    max-width: 900px;
+}
+
+/* Base styles for all background sections */
+.welcome-section,
+.vision-mission-section,
+.services-section,
+.invest-section {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 3rem 1rem;
+    color: #fff;
+    margin: 20px 0;
+}
+
+/* Add a semi-transparent overlay to each section for better text readability */
+.welcome-section::before,
+.vision-mission-section::before,
+.services-section::before,
+.invest-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+/* Specific background images for each section */
+.welcome-section {
+    background-image: url('../img/welcome-bg.jpg');
+}
+
+.vision-mission-section {
+    background-image: url('../img/vision-mission-bg.jpg');
+    text-align: center;
+}
+
+.services-section {
+    background-image: url('../img/services-bg.jpg');
+    text-align: center;
+}
+
+.invest-section {
+    background-image: url('../img/invest-bg.jpg');
+}
+
+/* Updated rule for a semi-transparent content container */
+.transparent-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+/* Ensure text elements have correct color */
+.welcome-section h1,
+.welcome-section p,
+.vision-mission-section h2,
+.vision-mission-section p,
+.services-section h2,
+.services-section p,
+.invest-section h2,
+.invest-section p,
+.invest-section strong {
+    color: #000 !important;
+}
+
+/* Make sure the titles in sections with white transparent container are not white */
+.vision-mission-section h2,
+.invest-section h2,
+.transparent-container h1,
+.transparent-container p {
+  color: #000 !important;
+}
+
+/* Remove original background and shadow from containers to avoid conflict with new backgrounds */
+.container > div.bg-white,
+.row.bg-white {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Existing CSS from your provided file snippet */
+.p-4 { padding: 1.5rem!important; }
+.my-5 { margin-top: 3rem!important; margin-bottom: 3rem!important; }
+.rounded { border-radius: .25rem!important; }
+.shadow-sm { box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important; }
+.text-center { text-align: center!important; }
+.p-4.bg-white.rounded.shadow-sm { background-color: white !important; }
+
+/* Existing CSS from your provided file snippet */
+button.btn-primary { width: 80%; }
+.center { text-align: center; background-color: #e5e8f1; }
+
+/* Failsafe to force the main content to be visible */
+#main-content {
+    display: block !important;
+}

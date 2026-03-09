@@ -1,0 +1,54 @@
+#make every page as https
+#RewriteEngine On 
+#RewriteCond %{HTTPS} off 
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+#turn Rewrite engine on
+RewriteEngine on
+
+#ErrorDocument 404 /404.php
+
+RewriteRule ^home$ index.php [NC,L]
+RewriteRule ^about$ about.php [NC,L]
+RewriteRule ^contact$ contact.php [NC,L]
+
+RewriteRule ^preview preview.php [NC,L]
+
+RewriteRule ^site-diary site-diary.php [NC,L]
+
+RewriteRule ^roads-authority-site-dairy roads-authority.php [NC,L]
+
+RewriteRule ^building-site-dairy building.php [NC,L]
+
+RewriteRule ^irrigation-site-dairy irrigation.php [NC,L]
+
+RewriteRule ^construction-works construction-works.php [NC,L]
+
+RewriteRule ^construction-jobs-and-tenders construction-works.php [NC,L]
+
+RewriteRule ^road-authority-preview roads-authority-preview.php [NC,L]
+RewriteRule ^building-preview building-preview.php [NC,L]
+RewriteRule ^irrigation-preview irrigation-preview.php [NC,L]
+
+# Admin Panel Routes
+RewriteRule ^admin$ admin-login.php [NC,L]
+RewriteRule ^admin-login$ admin-login.php [NC,L]
+RewriteRule ^dashboard$ admin-dashboard.php [NC,L]
+RewriteRule ^admin-dashboard$ admin-dashboard.php [NC,L]
+RewriteRule ^admin-pages$ admin-pages.php [NC,L]
+RewriteRule ^admin-media$ admin-media.php [NC,L]
+RewriteRule ^admin-settings$ admin-settings.php [NC,L]
+RewriteRule ^admin-users$ admin-users.php [NC,L]
+RewriteRule ^admin-analytics$ admin-analytics.php [NC,L]
+RewriteRule ^admin-backup$ admin-backup.php [NC,L]
+RewriteRule ^admin-deploy$ admin-deploy.php [NC,L]
+
+#NC makes the rule non case sensitive
+#L makes this the last rule that this specific condition will match
+
+AddType image/svg+xml svg svgz
+AddEncoding gzip svgz
