@@ -91,7 +91,7 @@ date_default_timezone_set('Africa/Blantyre');
                 <div class="col-12 section-title">Organization Branding</div>
                 <div class="col-sm-8">
                     <div class="form-floating mb-3">
-                        <input type="text" id="branding_org_name_roads" class="form-control" maxlength="120" placeholder="Organization / Firm Name">
+                        <input type="text" id="branding_org_name_roads" class="form-control" maxlength="120" placeholder="Organization / Firm Name (e.g., INVI)">
                         <label for="branding_org_name_roads">Organization / Firm Name</label>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ date_default_timezone_set('Africa/Blantyre');
                 <div class="col-sm-8">
                     <label for="branding_logo_file_roads" class="form-label fw-semibold">Company Logo</label>
                     <input type="file" id="branding_logo_file_roads" class="form-control mb-2" accept="image/png,image/jpeg,image/webp">
-                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved in this browser per organization name for future diary entries.</div>
+                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved only in this browser per organization name and not stored as server files.</div>
                 </div>
                 <div class="col-sm-4 mb-3">
                     <div class="border rounded p-2 bg-white text-center h-100 d-flex flex-column justify-content-center align-items-center">
@@ -111,8 +111,6 @@ date_default_timezone_set('Africa/Blantyre');
                         <small id="branding_logo_status_roads" class="text-muted mt-2">No logo selected</small>
                     </div>
                 </div>
-                <input type="hidden" name="branding_org_name" id="branding_org_hidden_roads">
-                <input type="hidden" name="branding_logo_data" id="branding_logo_hidden_roads">
 
                 <div class="col-sm-3">
                     <div class="form-floating mb-3">
@@ -595,9 +593,7 @@ date_default_timezone_set('Africa/Blantyre');
                     logoInputSelector: '#branding_logo_file_roads',
                     logoPreviewSelector: '#branding_logo_preview_roads',
                     logoStatusSelector: '#branding_logo_status_roads',
-                    clearButtonSelector: '#branding_clear_roads',
-                    hiddenOrgSelector: '#branding_org_hidden_roads',
-                    hiddenLogoSelector: '#branding_logo_hidden_roads'
+                    clearButtonSelector: '#branding_clear_roads'
                 });
             }
         });

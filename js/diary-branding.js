@@ -1,10 +1,10 @@
 (function (window) {
     'use strict';
 
-    var STORAGE_KEY = 'injessview.diary.branding.v2';
+    var STORAGE_KEY = 'public-service.diary.branding.v3';
     var LEGACY_STORAGE_KEY = 'injessview.diary.branding.v1';
-    var DEFAULT_ORG_NAME = 'INJESSVIEW';
-    var DEFAULT_ORG_KEY = 'injessview';
+    var LEGACY_STORAGE_KEY_V2 = 'injessview.diary.branding.v2';
+    var BLANK_PROFILE_KEY = 'default-profile';
     var MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
     var TARGET_MAX_BYTES = 380 * 1024;
     var MAX_WIDTH = 520;
@@ -26,13 +26,13 @@
     function normalizeOrgKey(value) {
         var orgName = sanitizeOrgName(value);
         if (!orgName) {
-            return DEFAULT_ORG_KEY;
+            return BLANK_PROFILE_KEY;
         }
-        return orgName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || DEFAULT_ORG_KEY;
+        return orgName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || BLANK_PROFILE_KEY;
     }
 
     function createProfile(orgName, logoData, logoName) {
-        var cleanOrgName = sanitizeOrgName(orgName) || DEFAULT_ORG_NAME;
+        var cleanOrgName = sanitizeOrgName(orgName);
         return {
             orgName: cleanOrgName,
             logoData: typeof logoData === 'string' ? logoData : '',
@@ -42,13 +42,10 @@
     }
 
     function createStore() {
-        var baseProfile = createProfile(DEFAULT_ORG_NAME, '', '');
-        var store = {
-            activeOrgKey: DEFAULT_ORG_KEY,
+        return {
+            activeOrgKey: '',
             profiles: {}
         };
-        store.profiles[DEFAULT_ORG_KEY] = baseProfile;
-        return store;
     }
 
     function ensureStoreShape(store) {
@@ -63,19 +60,16 @@
         Object.keys(store.profiles).forEach(function (key) {
             var profile = store.profiles[key] || {};
             store.profiles[key] = {
-                orgName: sanitizeOrgName(profile.orgName || '') || DEFAULT_ORG_NAME,
+                orgName: sanitizeOrgName(profile.orgName || ''),
                 logoData: typeof profile.logoData === 'string' ? profile.logoData : '',
                 logoName: typeof profile.logoName === 'string' ? profile.logoName : '',
                 updatedAt: profile.updatedAt || ''
             };
         });
 
-        if (!store.profiles[DEFAULT_ORG_KEY]) {
-            store.profiles[DEFAULT_ORG_KEY] = createProfile(DEFAULT_ORG_NAME, '', '');
-        }
-
         if (!store.activeOrgKey || !store.profiles[store.activeOrgKey]) {
-            store.activeOrgKey = DEFAULT_ORG_KEY;
+            var keys = Object.keys(store.profiles);
+            store.activeOrgKey = keys.length > 0 ? keys[0] : '';
         }
 
         return store;
@@ -91,10 +85,16 @@
             if (!parsed || typeof parsed !== 'object') {
                 return null;
             }
+            var cleanOrgName = sanitizeOrgName(parsed.orgName || '');
+            var logoData = typeof parsed.logoData === 'string' ? parsed.logoData : '';
+            var logoName = typeof parsed.logoName === 'string' ? parsed.logoName : '';
+            if (!cleanOrgName && !logoData) {
+                return null;
+            }
             return {
-                orgName: sanitizeOrgName(parsed.orgName || DEFAULT_ORG_NAME),
-                logoData: typeof parsed.logoData === 'string' ? parsed.logoData : '',
-                logoName: typeof parsed.logoName === 'string' ? parsed.logoName : ''
+                orgName: cleanOrgName,
+                logoData: logoData,
+                logoName: logoName
             };
         } catch (error) {
             return null;
@@ -103,6 +103,19 @@
 
     function migrateLegacyStoreIfNeeded() {
         var legacy = readLegacyProfile();
+        var rawV2 = null;
+
+        if (!legacy) {
+            try {
+                rawV2 = window.localStorage.getItem(LEGACY_STORAGE_KEY_V2);
+                if (rawV2) {
+                    return ensureStoreShape(JSON.parse(rawV2));
+                }
+            } catch (error) {
+                return createStore();
+            }
+        }
+
         if (!legacy) {
             return createStore();
         }
@@ -111,12 +124,10 @@
         var key = normalizeOrgKey(legacy.orgName);
         migrated.activeOrgKey = key;
         migrated.profiles[key] = createProfile(legacy.orgName, legacy.logoData, legacy.logoName);
-        if (!migrated.profiles[DEFAULT_ORG_KEY]) {
-            migrated.profiles[DEFAULT_ORG_KEY] = createProfile(DEFAULT_ORG_NAME, '', '');
-        }
 
         try {
             window.localStorage.removeItem(LEGACY_STORAGE_KEY);
+            window.localStorage.removeItem(LEGACY_STORAGE_KEY_V2);
         } catch (error) {
             return migrated;
         }
@@ -150,13 +161,14 @@
         try {
             window.localStorage.removeItem(STORAGE_KEY);
             window.localStorage.removeItem(LEGACY_STORAGE_KEY);
+            window.localStorage.removeItem(LEGACY_STORAGE_KEY_V2);
         } catch (error) {
             return;
         }
     }
 
     function getOrCreateProfileByName(store, orgName, persist) {
-        var cleanName = sanitizeOrgName(orgName) || DEFAULT_ORG_NAME;
+        var cleanName = sanitizeOrgName(orgName);
         var key = normalizeOrgKey(cleanName);
         var profile = store.profiles[key];
 
@@ -177,7 +189,9 @@
 
     function getActiveProfile(store) {
         store = ensureStoreShape(store || readStore());
-        var profile = store.profiles[store.activeOrgKey] || createProfile(DEFAULT_ORG_NAME, '', '');
+        var profile = store.activeOrgKey && store.profiles[store.activeOrgKey]
+            ? store.profiles[store.activeOrgKey]
+            : { orgName: '', logoData: '', logoName: '', updatedAt: '' };
         return {
             orgName: profile.orgName,
             logoData: profile.logoData,
@@ -279,39 +293,51 @@
         var logoInput = document.querySelector(opts.logoInputSelector);
         var logoPreview = document.querySelector(opts.logoPreviewSelector);
         var clearButton = document.querySelector(opts.clearButtonSelector);
-        var hiddenOrg = document.querySelector(opts.hiddenOrgSelector);
-        var hiddenLogo = document.querySelector(opts.hiddenLogoSelector);
+        var hiddenOrg = opts.hiddenOrgSelector ? document.querySelector(opts.hiddenOrgSelector) : null;
+        var hiddenLogo = opts.hiddenLogoSelector ? document.querySelector(opts.hiddenLogoSelector) : null;
         var logoStatus = document.querySelector(opts.logoStatusSelector);
 
-        if (!orgInput || !logoInput || !hiddenOrg || !hiddenLogo) {
+        if (!orgInput || !logoInput) {
             return;
         }
 
         var store = ensureStoreShape(readStore());
         var active = getActiveProfile(store);
-        var activeOrgName = active.orgName || DEFAULT_ORG_NAME;
+        var activeOrgName = active.orgName || '';
 
         function syncHiddenFields(profile) {
-            var currentOrg = sanitizeOrgName(orgInput.value) || DEFAULT_ORG_NAME;
-            hiddenOrg.value = currentOrg;
-            hiddenLogo.value = profile && profile.logoData ? profile.logoData : '';
+            if (!hiddenOrg && !hiddenLogo) return; // Hidden fields not present; skip sync
+            var currentOrg = sanitizeOrgName(orgInput.value);
+            if (hiddenOrg) hiddenOrg.value = currentOrg;
+            if (hiddenLogo) hiddenLogo.value = profile && profile.logoData ? profile.logoData : '';
         }
 
         function applyProfileByOrgName(orgName, shouldPersistIfMissing) {
-            var resolved = getOrCreateProfileByName(store, orgName, shouldPersistIfMissing);
+            var cleanOrgName = sanitizeOrgName(orgName);
+            var resolved = getOrCreateProfileByName(store, cleanOrgName, false);
             var profile = resolved.profile;
             var key = resolved.key;
+            var shouldPersistProfile = cleanOrgName !== '' || !!profile.logoData;
 
-            store.activeOrgKey = key;
-            activeOrgName = profile.orgName || DEFAULT_ORG_NAME;
+            store.activeOrgKey = shouldPersistProfile || store.profiles[key] ? key : '';
+            activeOrgName = profile.orgName || '';
             orgInput.value = activeOrgName;
 
             setLogoPreview(logoPreview, logoStatus, profile.logoData, profile.logoName);
             syncHiddenFields(profile);
 
             if (shouldPersistIfMissing) {
-                profile.updatedAt = new Date().toISOString();
-                store.profiles[key] = profile;
+                if (shouldPersistProfile) {
+                    profile.updatedAt = new Date().toISOString();
+                    store.profiles[key] = profile;
+                    store.activeOrgKey = key;
+                } else if (store.profiles[key]) {
+                    delete store.profiles[key];
+                    if (store.activeOrgKey === key) {
+                        store.activeOrgKey = '';
+                    }
+                }
+
                 saveStore(store);
             }
 
@@ -322,7 +348,7 @@
         syncHiddenFields(initialProfile);
 
         orgInput.addEventListener('input', function () {
-            var candidateName = sanitizeOrgName(orgInput.value) || DEFAULT_ORG_NAME;
+            var candidateName = sanitizeOrgName(orgInput.value);
             var key = normalizeOrgKey(candidateName);
             var existingProfile = store.profiles[key];
 
@@ -387,30 +413,28 @@
 
         if (clearButton) {
             clearButton.addEventListener('click', function () {
-                var orgName = sanitizeOrgName(orgInput.value) || DEFAULT_ORG_NAME;
+                var orgName = sanitizeOrgName(orgInput.value);
                 var key = normalizeOrgKey(orgName);
 
                 if (store.profiles[key]) {
                     delete store.profiles[key];
                 }
 
-                if (!store.profiles[DEFAULT_ORG_KEY]) {
-                    store.profiles[DEFAULT_ORG_KEY] = createProfile(DEFAULT_ORG_NAME, '', '');
+                if (store.activeOrgKey === key) {
+                    store.activeOrgKey = '';
                 }
 
-                store.activeOrgKey = DEFAULT_ORG_KEY;
                 saveStore(store);
-
-                if (orgName === DEFAULT_ORG_NAME) {
-                    applyProfileByOrgName(DEFAULT_ORG_NAME, true);
-                    notify('Branding Reset', 'Default branding has been reset for this browser.', 'success');
-                    return;
-                }
 
                 orgInput.value = orgName;
                 setLogoPreview(logoPreview, logoStatus, '', '');
                 syncHiddenFields({ logoData: '' });
-                notify('Branding Cleared', 'Saved branding for "' + orgName + '" has been removed.', 'success');
+                if (orgName) {
+                    notify('Branding Cleared', 'Saved branding for "' + orgName + '" has been removed.', 'success');
+                    return;
+                }
+
+                notify('Branding Cleared', 'Saved browser branding has been removed.', 'success');
             });
         }
 

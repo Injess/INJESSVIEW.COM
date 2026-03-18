@@ -26,28 +26,6 @@ function intField($key)
     return (int)($_POST[$key] ?? 0);
 }
 
-function sanitizeLogoData($data)
-{
-    if (!is_string($data) || $data === '') {
-        return '';
-    }
-
-    $trimmed = trim($data);
-    if (strlen($trimmed) > 850000) {
-        return '';
-    }
-
-    if (!preg_match('/^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+\/=\r\n]+$/', $trimmed)) {
-        return '';
-    }
-
-    return $trimmed;
-}
-
-$organizationName = field('branding_org_name') ?: 'INJESSVIEW';
-$brandingLogo = sanitizeLogoData($_POST['branding_logo_data'] ?? '');
-$logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
-
 $maintenanceRows = [
     ['no' => 1, 'boq' => field('boq_item_1'), 'description' => field('description_1'), 'location' => field('location_1')],
     ['no' => 2, 'boq' => field('boq_item_2'), 'description' => field('description_2'), 'location' => field('location_2')],
@@ -84,6 +62,7 @@ $vehicleTotal = intField('plant') + intField('hvy_veh') + intField('veh') + intF
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/html2pdf.min.js"></script>
     <script src="./js/all.min.js"></script>
+    <script src="./js/diary-branding.js"></script>
     <style>
         body {
             background: #f3f3f3;
@@ -272,15 +251,15 @@ $vehicleTotal = intField('plant') + intField('hvy_veh') + intField('veh') + intF
 
 <body>
 <div class="preview-toolbar">
-    <a href="roads-authority-site-diary" class="brand"><?= $organizationName ?></a>
+    <a href="roads-authority-site-diary" class="brand" id="preview-toolbar-brand-roads">Roads Authority Site Diary Preview</a>
     <a href="roads-authority-site-diary" class="btn-action">← Back to Form</a>
     <button id="btn-dl" class="btn-action" type="button"><i class="fas fa-download"></i> Download PDF</button>
 </div>
 
 <div id="content">
     <div class="branding-header">
-        <img src="<?= $logoSource ?>" alt="Organization Logo" class="branding-logo" onerror="this.style.display='none'">
-        <p class="branding-name"><?= $organizationName ?></p>
+        <img id="preview-branding-logo-roads" alt="Organization Logo" class="branding-logo" style="display:none;" onerror="this.style.display='none'">
+        <p id="preview-branding-name-roads" class="branding-name" style="display:none;"></p>
         <p class="branding-subtitle">Roads Authority Contract Site Diary</p>
     </div>
 
@@ -485,6 +464,31 @@ $vehicleTotal = intField('plant') + intField('hvy_veh') + intField('veh') + intF
 
 <script>
     (function () {
+        if (window.DiaryBranding && typeof window.DiaryBranding.readProfile === 'function') {
+            var profile = window.DiaryBranding.readProfile() || {};
+            var orgName = String(profile.orgName || '').trim();
+            var logoData = String(profile.logoData || '').trim();
+
+            var toolbarBrand = document.getElementById('preview-toolbar-brand-roads');
+            var logoElement = document.getElementById('preview-branding-logo-roads');
+            var nameElement = document.getElementById('preview-branding-name-roads');
+
+            if (orgName) {
+                if (toolbarBrand) {
+                    toolbarBrand.textContent = orgName;
+                }
+                if (nameElement) {
+                    nameElement.textContent = orgName;
+                    nameElement.style.display = 'block';
+                }
+            }
+
+            if (logoData && logoElement) {
+                logoElement.src = logoData;
+                logoElement.style.display = 'block';
+            }
+        }
+
         function formattedDateToken() {
             var currentDate = new Date();
             var day = String(currentDate.getDate()).padStart(2, '0');

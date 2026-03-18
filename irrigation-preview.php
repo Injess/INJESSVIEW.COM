@@ -21,28 +21,6 @@ function field($key)
     return sanitizeValue($_POST[$key] ?? '');
 }
 
-function sanitizeLogoData($data)
-{
-    if (!is_string($data) || $data === '') {
-        return '';
-    }
-
-    $trimmed = trim($data);
-    if (strlen($trimmed) > 850000) {
-        return '';
-    }
-
-    if (!preg_match('/^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+\/=\r\n]+$/', $trimmed)) {
-        return '';
-    }
-
-    return $trimmed;
-}
-
-$organizationName = field('branding_org_name') ?: 'INJESSVIEW';
-$brandingLogo = sanitizeLogoData($_POST['branding_logo_data'] ?? '');
-$logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
-
 $otherActivities = [
     ['no' => 1, 'category' => 'Survey', 'location' => field('survey_location'), 'purpose' => field('survey_purposes')],
     ['no' => 2, 'category' => 'Setting Out', 'location' => field('setting_out_location'), 'purpose' => field('setting_out_purposes')],
@@ -70,6 +48,7 @@ $otherActivities = [
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/html2pdf.min.js"></script>
     <script src="./js/all.min.js"></script>
+    <script src="./js/diary-branding.js"></script>
     <style>
         body {
             background: #f3f3f3;
@@ -258,15 +237,15 @@ $otherActivities = [
 
 <body>
 <div class="preview-toolbar">
-    <a href="irrigation-site-diary" class="brand"><?= $organizationName ?></a>
+    <a href="irrigation-site-diary" class="brand" id="preview-toolbar-brand-irrigation">Irrigation Site Diary Preview</a>
     <a href="irrigation-site-diary" class="btn-action">← Back to Form</a>
     <button id="btn-dl" class="btn-action" type="button"><i class="fas fa-download"></i> Download PDF</button>
 </div>
 
 <div id="content">
     <div class="branding-header">
-        <img src="<?= $logoSource ?>" alt="Organization Logo" class="branding-logo" onerror="this.style.display='none'">
-        <p class="branding-name"><?= $organizationName ?></p>
+        <img id="preview-branding-logo-irrigation" alt="Organization Logo" class="branding-logo" style="display:none;" onerror="this.style.display='none'">
+        <p id="preview-branding-name-irrigation" class="branding-name" style="display:none;"></p>
         <p class="branding-subtitle">Irrigation Contract Site Diary</p>
     </div>
 
@@ -449,6 +428,31 @@ $otherActivities = [
 
 <script>
     (function () {
+        if (window.DiaryBranding && typeof window.DiaryBranding.readProfile === 'function') {
+            var profile = window.DiaryBranding.readProfile() || {};
+            var orgName = String(profile.orgName || '').trim();
+            var logoData = String(profile.logoData || '').trim();
+
+            var toolbarBrand = document.getElementById('preview-toolbar-brand-irrigation');
+            var logoElement = document.getElementById('preview-branding-logo-irrigation');
+            var nameElement = document.getElementById('preview-branding-name-irrigation');
+
+            if (orgName) {
+                if (toolbarBrand) {
+                    toolbarBrand.textContent = orgName;
+                }
+                if (nameElement) {
+                    nameElement.textContent = orgName;
+                    nameElement.style.display = 'block';
+                }
+            }
+
+            if (logoData && logoElement) {
+                logoElement.src = logoData;
+                logoElement.style.display = 'block';
+            }
+        }
+
         function formattedDateToken() {
             var currentDate = new Date();
             var day = String(currentDate.getDate()).padStart(2, '0');

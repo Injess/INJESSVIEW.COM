@@ -21,24 +21,6 @@ function getArrayValue($data, $index)
     return isset($data[$index]) ? $data[$index] : '';
 }
 
-function sanitizeLogoData($data)
-{
-    if (!is_string($data) || $data === '') {
-        return '';
-    }
-
-    $trimmed = trim($data);
-    if (strlen($trimmed) > 850000) {
-        return '';
-    }
-
-    if (!preg_match('/^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+\/=\r\n]+$/', $trimmed)) {
-        return '';
-    }
-
-    return $trimmed;
-}
-
 $site = sanitizeValue($_POST['site'] ?? '');
 $sheet_no = sanitizeValue($_POST['sheet_no'] ?? '');
 $area = sanitizeValue($_POST['area'] ?? '');
@@ -94,9 +76,6 @@ $work_delayed = sanitizeValue($_POST['work_delayed'] ?? []);
 $work_stopped = sanitizeValue($_POST['work_stopped'] ?? []);
 $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
 
-$organizationName = sanitizeValue($_POST['branding_org_name'] ?? '') ?: 'INJESSVIEW';
-$brandingLogo = sanitizeLogoData($_POST['branding_logo_data'] ?? '');
-$logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
 ?>
 
 <!DOCTYPE html>
@@ -112,6 +91,7 @@ $logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/html2pdf.min.js"></script>
     <script src="./js/all.min.js"></script>
+    <script src="./js/diary-branding.js"></script>
     <style>
         body { background: #f3f3f3; color: #111; }
 
@@ -342,7 +322,7 @@ $logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
 
 <!-- Toolbar -->
 <div class="preview-toolbar">
-    <a href="building-site-diary" class="brand"><?= $organizationName ?></a>
+    <a href="building-site-diary" class="brand" id="preview-toolbar-brand-building">Building Site Diary Preview</a>
     <a href="building-site-diary" class="btn-back">← Back to Form</a>
     <button id="btn-dl" class="btn-dl"><i class="fas fa-download"></i> Download PDF</button>
 </div>
@@ -352,8 +332,8 @@ $logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
 
     <!-- Header -->
     <div class="doc-header">
-        <img src="<?= $logoSource ?>" alt="Organization Logo" class="brand-logo" onerror="this.style.display='none'">
-        <p class="firm-name"><?= $organizationName ?></p>
+        <img id="preview-branding-logo-building" alt="Organization Logo" class="brand-logo" style="display:none;" onerror="this.style.display='none'">
+        <p id="preview-branding-name-building" class="firm-name" style="display:none;"></p>
         <h1>CONTRACT SITE DIARY FORM</h1>
         <h2>Building Works — Daily Field Report</h2>
     </div>
@@ -609,6 +589,21 @@ $logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
 
 <script>
 $(document).ready(function() {
+    if (window.DiaryBranding && typeof window.DiaryBranding.readProfile === 'function') {
+        var profile = window.DiaryBranding.readProfile() || {};
+        var orgName = String(profile.orgName || '').trim();
+        var logoData = String(profile.logoData || '').trim();
+
+        if (orgName) {
+            $('#preview-toolbar-brand-building').text(orgName);
+            $('#preview-branding-name-building').text(orgName).css('display', 'block');
+        }
+
+        if (logoData) {
+            $('#preview-branding-logo-building').attr('src', logoData).css('display', 'block');
+        }
+    }
+
     $('#btn-dl').on('click', function() {
         var d = new Date();
         var pad = function(n){ return String(n).padStart(2,'0'); };

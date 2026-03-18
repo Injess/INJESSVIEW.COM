@@ -126,7 +126,7 @@ date_default_timezone_set('Africa/Blantyre');
                 <div class="col-12 section-title">ORGANIZATION BRANDING</div>
                 <div class="col-sm-8">
                     <div class="form-floating mb-3">
-                        <input type="text" id="branding_org_name_irrigation" class="form-control" maxlength="120" placeholder="Organization / Firm Name" />
+                        <input type="text" id="branding_org_name_irrigation" class="form-control" maxlength="120" placeholder="Organization / Firm Name (e.g., INVI)" />
                         <label for="branding_org_name_irrigation">Organization / Firm Name</label>
                     </div>
                 </div>
@@ -138,7 +138,7 @@ date_default_timezone_set('Africa/Blantyre');
                 <div class="col-sm-8">
                     <label for="branding_logo_file_irrigation" class="form-label fw-semibold">Company Logo</label>
                     <input type="file" id="branding_logo_file_irrigation" class="form-control mb-2" accept="image/png,image/jpeg,image/webp" />
-                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved in this browser per organization name for future diary entries.</div>
+                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved only in this browser per organization name and not stored as server files.</div>
                 </div>
                 <div class="col-sm-4 mb-3">
                     <div class="border rounded p-2 bg-white text-center h-100 d-flex flex-column justify-content-center align-items-center">
@@ -146,8 +146,6 @@ date_default_timezone_set('Africa/Blantyre');
                         <small id="branding_logo_status_irrigation" class="text-muted mt-2">No logo selected</small>
                     </div>
                 </div>
-                <input type="hidden" name="branding_org_name" id="branding_org_hidden_irrigation" />
-                <input type="hidden" name="branding_logo_data" id="branding_logo_hidden_irrigation" />
 
                 <!-- Daily Information -->
                 <div class="col-12 section-title">DAILY INFORMATION</div>
@@ -545,9 +543,7 @@ date_default_timezone_set('Africa/Blantyre');
                 logoInputSelector: '#branding_logo_file_irrigation',
                 logoPreviewSelector: '#branding_logo_preview_irrigation',
                 logoStatusSelector: '#branding_logo_status_irrigation',
-                clearButtonSelector: '#branding_clear_irrigation',
-                hiddenOrgSelector: '#branding_org_hidden_irrigation',
-                hiddenLogoSelector: '#branding_logo_hidden_irrigation'
+                clearButtonSelector: '#branding_clear_irrigation'
             });
         }
 
