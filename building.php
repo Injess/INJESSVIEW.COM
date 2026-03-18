@@ -61,7 +61,7 @@ date_default_timezone_set('Africa/Blantyre');
     </nav>
 
     <div class="container diary">
-        <form action="building-preview" method="POST">
+        <form id="building-diary-form" action="building-preview" method="POST">
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <!-- General Information -->
                 <div class="col-12 section-title">General Information</div>
@@ -108,6 +108,33 @@ date_default_timezone_set('Africa/Blantyre');
                         <label for="contractor">Contractor</label>
                     </div>
                 </div>
+
+                <div class="col-12 section-title">Organization Branding</div>
+                <div class="col-sm-8">
+                    <div class="form-floating mb-3">
+                        <input type="text" id="branding_org_name_building" class="form-control" maxlength="120" placeholder="Organization / Firm Name" />
+                        <label for="branding_org_name_building">Organization / Firm Name</label>
+                    </div>
+                </div>
+                <div class="col-sm-4 d-flex align-items-center mb-3">
+                    <button type="button" class="btn btn-outline-secondary w-100" id="branding_clear_building">
+                        <i class="fa fa-rotate-left"></i> Reset Branding
+                    </button>
+                </div>
+                <div class="col-sm-8">
+                    <label for="branding_logo_file_building" class="form-label fw-semibold">Company Logo</label>
+                    <input type="file" id="branding_logo_file_building" class="form-control mb-2" accept="image/png,image/jpeg,image/webp" />
+                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved in this browser for future diary entries.</div>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <div class="border rounded p-2 bg-white text-center h-100 d-flex flex-column justify-content-center align-items-center">
+                        <img id="branding_logo_preview_building" alt="Company Logo Preview" style="display:none; max-height:80px; max-width:100%; object-fit:contain;" />
+                        <small id="branding_logo_status_building" class="text-muted mt-2">No logo selected</small>
+                    </div>
+                </div>
+                <input type="hidden" name="branding_org_name" id="branding_org_hidden_building" />
+                <input type="hidden" name="branding_logo_data" id="branding_logo_hidden_building" />
+
                 <div class="col-sm-12">
                     <div class="form-floating mb-3">
                         <select class="form-select" id="weather" name="weather">
@@ -707,6 +734,23 @@ date_default_timezone_set('Africa/Blantyre');
     <!-- Bootstrap Bundle with Popper -->
     <script src="./js/all.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/diary-branding.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.DiaryBranding && typeof window.DiaryBranding.initForm === 'function') {
+                window.DiaryBranding.initForm({
+                    formSelector: '#building-diary-form',
+                    orgInputSelector: '#branding_org_name_building',
+                    logoInputSelector: '#branding_logo_file_building',
+                    logoPreviewSelector: '#branding_logo_preview_building',
+                    logoStatusSelector: '#branding_logo_status_building',
+                    clearButtonSelector: '#branding_clear_building',
+                    hiddenOrgSelector: '#branding_org_hidden_building',
+                    hiddenLogoSelector: '#branding_logo_hidden_building'
+                });
+            }
+        });
+    </script>
     <?php
     include './scripts.php';
     ?>

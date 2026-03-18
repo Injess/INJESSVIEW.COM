@@ -7,71 +7,55 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['submit'])) {
     exit;
 }
 
-if (isset($_POST['submit'])) {
-    // Retrieve form data
-    $date = htmlentities($_POST['date']);
-    $sheet_no = htmlentities($_POST['sheet_no']);
-    $dept = htmlentities($_POST['dept']);
-    $region = htmlentities($_POST['region']);
-    $district = htmlentities($_POST['district']);
-    $contract_no = htmlentities($_POST['contract_no']);
-    $contract_title = htmlentities($_POST['contract_title']);
-    $contractor_name = htmlentities($_POST['contractor_name']);
-    $consultant_name = htmlentities($_POST['consultant_name']);
-    $date_daily = htmlentities($_POST['date_daily']); //
-    $day = htmlentities($_POST['day']); //
-    $from = htmlentities($_POST['working_time_from']);
-    $to = htmlentities($_POST['working_time_to']);
-    $rain = htmlentities($_POST['rain']);
-    $working_condition = htmlentities($_POST['working_condition']);
-    $construction_activities = htmlentities($_POST['construction_activities']);
-    $site_agent = htmlentities($_POST['site_agent']);
-    $site_eng = htmlentities($_POST['site_eng']);
-    $foreman = htmlentities($_POST['foreman']);
-    $driver = htmlentities($_POST['driver']);
-    $operator = htmlentities($_POST['operator']);
-    $craftsman = htmlentities($_POST['craftsman']);
-    $unskilled = htmlentities($_POST['unskilled']);
-    $total_personnel = htmlentities($_POST['total_personnel']);
-    $hvy_plant = htmlentities($_POST['hvy_plant']);
-    $light_plant = htmlentities($_POST['light_plant']);
-    $hvy_vehicle = htmlentities($_POST['hvy_vehicle']);
-    $light_vehicle = htmlentities($_POST['light_vehicle']);
-    $motorbike = htmlentities($_POST['motorbike']);
-    $bicycle = htmlentities($_POST['bicycle']);
-    $others_vehicle = htmlentities($_POST['others_vehicle']);
-    $total_vehicle = htmlentities($_POST['total_vehicle']);
-    $gravel = htmlentities($_POST['gravel']);
-    $crushed_stone = htmlentities($_POST['crushed_stone']);
-    $aggregate = htmlentities($_POST['aggregate']);
-    $cement = htmlentities($_POST['cement']);
-    $premix = htmlentities($_POST['premix']);
-    $timber = htmlentities($_POST['timber']);
-    $diesel = htmlentities($_POST['diesel']);
-    $petrol = htmlentities($_POST['petrol']);
-    $survey_location = htmlentities($_POST['survey_location']);
-    $survey_purposes = htmlentities($_POST['survey_purposes']);
-    $setting_out_location = htmlentities($_POST['setting_out_location']);
-    $setting_out_purposes = htmlentities($_POST['setting_out_purposes']);
-    $sampling_location = htmlentities($_POST['sampling_location']);
-    $sampling_purposes = htmlentities($_POST['sampling_purposes']);
-    $testing_location = htmlentities($_POST['testing_location']);
-    $testing_purposes = htmlentities($_POST['testing_purposes']);
-    $measurement_location = htmlentities($_POST['measurement_location']);
-    $measurement_purposes = htmlentities($_POST['measurement_purposes']);
-    $review_program_location = htmlentities($_POST['review_program_location']);
-    $review_program_purposes = htmlentities($_POST['review_program_purposes']);
-    $review_cost_location = htmlentities($_POST['review_cost_location']);
-    $review_cost_purposes = htmlentities($_POST['review_cost_purposes']);
-    $inspection_location = htmlentities($_POST['inspection_location']);
-    $inspection_purposes = htmlentities($_POST['inspection_purposes']);
-    $meeting_location = htmlentities($_POST['meeting_location']);
-    $meeting_purposes = htmlentities($_POST['meeting_purposes']);
-    $visitors_location = htmlentities($_POST['visitors_location']);
-    $visitors_purposes = htmlentities($_POST['visitors_purposes']);
-    $others_location = htmlentities($_POST['others_location']);
-    $others_purposes = htmlentities($_POST['others_purposes']);
-    $remarks = htmlentities($_POST['remarks']);
+function sanitizeValue($data)
+{
+    if (is_array($data)) {
+        return array_map('sanitizeValue', $data);
+    }
+
+    return is_string($data) ? htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8') : '';
+}
+
+function field($key)
+{
+    return sanitizeValue($_POST[$key] ?? '');
+}
+
+function sanitizeLogoData($data)
+{
+    if (!is_string($data) || $data === '') {
+        return '';
+    }
+
+    $trimmed = trim($data);
+    if (strlen($trimmed) > 850000) {
+        return '';
+    }
+
+    if (!preg_match('/^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+\/=\r\n]+$/', $trimmed)) {
+        return '';
+    }
+
+    return $trimmed;
+}
+
+$organizationName = field('branding_org_name') ?: 'INJESSVIEW';
+$brandingLogo = sanitizeLogoData($_POST['branding_logo_data'] ?? '');
+$logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
+
+$otherActivities = [
+    ['no' => 1, 'category' => 'Survey', 'location' => field('survey_location'), 'purpose' => field('survey_purposes')],
+    ['no' => 2, 'category' => 'Setting Out', 'location' => field('setting_out_location'), 'purpose' => field('setting_out_purposes')],
+    ['no' => 3, 'category' => 'Sampling', 'location' => field('sampling_location'), 'purpose' => field('sampling_purposes')],
+    ['no' => 4, 'category' => 'Testing', 'location' => field('testing_location'), 'purpose' => field('testing_purposes')],
+    ['no' => 5, 'category' => 'Measurement', 'location' => field('measurement_location'), 'purpose' => field('measurement_purposes')],
+    ['no' => 6, 'category' => 'Review Programme', 'location' => field('review_program_location'), 'purpose' => field('review_program_purposes')],
+    ['no' => 7, 'category' => 'Review Cost', 'location' => field('review_cost_location'), 'purpose' => field('review_cost_purposes')],
+    ['no' => 8, 'category' => 'Inspection', 'location' => field('inspection_location'), 'purpose' => field('inspection_purposes')],
+    ['no' => 9, 'category' => 'Meeting', 'location' => field('meeting_location'), 'purpose' => field('meeting_purposes')],
+    ['no' => 10, 'category' => 'Visitors', 'location' => field('visitors_location'), 'purpose' => field('visitors_purposes')],
+    ['no' => 11, 'category' => 'Other', 'location' => field('others_location'), 'purpose' => field('others_purposes')]
+];
 ?>
 
 <!DOCTYPE html>
@@ -79,317 +63,417 @@ if (isset($_POST['submit'])) {
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="css/main.css">
+    <title>Irrigation Site Diary Preview - Injessview</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/html2pdf.min.js"></script>
     <script src="./js/all.min.js"></script>
-    <title>Irrigation Site Diary Preview - Injessview</title>
+    <style>
+        body {
+            background: #f3f3f3;
+            color: #111;
+        }
 
-    <script type="text/javascript">
-    function getFormattedDate() {
-        const currentDate = new Date();
+        .preview-toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 300;
+            background: #fff;
+            border-bottom: 1px solid #d8d8d8;
+            padding: 0.7rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
 
-        const day = String(currentDate.getDate()).padStart(2, '0');
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-        const year = String(currentDate.getFullYear());
+        .preview-toolbar .brand {
+            color: #111;
+            font-weight: 800;
+            text-decoration: none;
+            margin-right: auto;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
 
-        const hours = String(currentDate.getHours()).padStart(2, '0');
-        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        .preview-toolbar .btn-action {
+            border: 1px solid #111;
+            color: #111;
+            background: #fff;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            padding: 0.33rem 0.85rem;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-        const formattedDate = `${day}${month}${year}${hours}${minutes}${seconds}`;
+        .preview-toolbar .btn-action:hover {
+            background: #111;
+            color: #fff;
+        }
 
-        return formattedDate;
-    }
+        #content {
+            max-width: 980px;
+            margin: 1.2rem auto 2.2rem;
+            background: #fff;
+            border: 1px solid #d7d7d7;
+            border-radius: 14px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
 
-    $(document).ready(function($) {
+        .branding-header {
+            padding: 1.2rem 1.6rem;
+            border-bottom: 2px solid #111;
+            text-align: center;
+        }
 
-        $(document).on('click', '.btn_download', function(event) {
-            event.preventDefault();
+        .branding-logo {
+            max-height: 78px;
+            max-width: 180px;
+            object-fit: contain;
+            margin: 0 auto 0.55rem;
+            display: block;
+        }
 
-            const formattedDate = getFormattedDate();
+        .branding-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            margin: 0;
+        }
 
-            //credit : https://ekoopmans.github.io/html2pdf.js
+        .branding-subtitle {
+            margin: 0.2rem 0 0;
+            color: #4b4b4b;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
 
-            var element = document.getElementById('content');
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.6rem;
+            padding: 1rem 1.4rem;
+            border-bottom: 1px solid #dedede;
+            background: #fafafa;
+        }
 
-            //easy
-            // html2pdf().from(element).save();
+        .meta-item {
+            border: 1px solid #d9d9d9;
+            border-radius: 9px;
+            padding: 0.5rem 0.7rem;
+            background: #fff;
+        }
 
-            //custom file name
-            //html2pdf().set({filename: 'code_with_mark_'+js.AutoCode()+'.pdf'}).from(element).save();
+        .meta-item .label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            color: #5a5a5a;
+            letter-spacing: 0.7px;
+            font-weight: 700;
+        }
 
+        .meta-item .value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #111;
+            margin-top: 0.1rem;
+        }
 
-            //more custom settings
-            var opt = {
-                margin: 0.4,
-                filename: 'site-diary-' + formattedDate + '.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                html2canvas: {
-                    scale: 2
-                },
-                jsPDF: {
-                    unit: 'in',
-                    format: 'letter',
-                    orientation: 'portrait'
-                }
-            };
+        .doc-section {
+            padding: 1rem 1.4rem;
+            border-bottom: 1px solid #ececec;
+        }
 
-            // New Promise-based usage:
-            html2pdf().set(opt).from(element).save();
-        });
+        .doc-section:last-child {
+            border-bottom: none;
+        }
 
-    });
-    </script>
+        .section-title {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #222;
+            font-weight: 800;
+            border-bottom: 1px solid #d8d8d8;
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.7rem;
+        }
 
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.84rem;
+        }
+
+        .report-table th,
+        .report-table td {
+            border: 1px solid #cfcfcf;
+            padding: 0.45rem 0.5rem;
+            vertical-align: top;
+            color: #111;
+        }
+
+        .report-table thead th,
+        .report-table .row-head {
+            background: #f1f1f1;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+        }
+
+        .remarks-box {
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            padding: 0.7rem;
+            min-height: 72px;
+            white-space: pre-wrap;
+            background: #fff;
+            font-size: 0.87rem;
+        }
+
+        @media print {
+            .preview-toolbar {
+                display: none !important;
+            }
+
+            body {
+                background: #fff;
+            }
+
+            #content {
+                margin: 0;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                max-width: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
+<div class="preview-toolbar">
+    <a href="irrigation-site-diary" class="brand"><?= $organizationName ?></a>
+    <a href="irrigation-site-diary" class="btn-action">← Back to Form</a>
+    <button id="btn-dl" class="btn-action" type="button"><i class="fas fa-download"></i> Download PDF</button>
+</div>
 
-    <button id="rep" class="btn_download" title="Download PDF"><i class="fas fa-download"></i></button>
-    <div id="content">
-        <table>
+<div id="content">
+    <div class="branding-header">
+        <img src="<?= $logoSource ?>" alt="Organization Logo" class="branding-logo" onerror="this.style.display='none'">
+        <p class="branding-name"><?= $organizationName ?></p>
+        <p class="branding-subtitle">Irrigation Contract Site Diary</p>
+    </div>
 
-            <tr>
-                <td colspan="10" class="center"><b>CONTRACT SITE DIARY FORM</b></td>
-            </tr>
+    <div class="meta-grid">
+        <div class="meta-item">
+            <div class="label">Date</div>
+            <div class="value"><?= field('date') ?: '—' ?></div>
+        </div>
+        <div class="meta-item">
+            <div class="label">Sheet No.</div>
+            <div class="value"><?= field('sheet_no') ?: '—' ?></div>
+        </div>
+    </div>
 
-            <thead style="line-height: 30px; font-size:16px;">
-                <caption>
-                    MINISTRY OF FINANCE ECONOMIC PLANNING AND DEVELOPMENT<br>
-                </caption>
-
-                <td colspan="5"><b>DATE:</b> <?php echo $date; ?></td>
-                <td colspan="5"><b>SHEET NO.:</b> <?php echo $sheet_no; ?></td>
-            </thead>
-
-            <!-- Site Data -->
-            <tr>
-                <td colspan="10" class="center">SITE DATA</b></td>
-            </tr>
-            <tr>
-                <td colspan="3"><b>DEPARTMENT:</b> <?php echo $dept; ?></td>
-                <td colspan="3"><b>REGION:</b> <?php echo $region; ?></td>
-                <td colspan="4"><b>DISTRICT:</b> <?php echo $district; ?></td>
-            </tr>
-            <tr>
-                <td colspan="10" style="height: 14px;"></td>
-            </tr>
-            <tr>
-                <td colspan=" 5"><b>CONTRACT NO:</b> <?php echo $contract_no; ?></td>
-                <td colspan="5"><b>CONTRACT TITLE:</b> <?php echo $contract_title; ?></td>
-            </tr>
-            <tr>
-                <td colspan="5"><b>CONTRACTOR NAME:</b> <?php echo $contractor_name; ?></td>
-                <td colspan="5"><b>CONSULTANT NAME:</b> <?php echo $consultant_name; ?></td>
-            </tr>
-            <tr>
-                <td colspan="10" style="height: 14px;"></td>
-            </tr>
-
-            <!-- Daily Information -->
-            <tr>
-                <td colspan="10" class="center">DAILY INFORMATION</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>DATE:</b> <?php echo $date_daily; ?></td>
-                <td colspan="2"><b>DAY:</b> <?php echo $day; ?></td>
-                <td colspan="2"><b>WORKING TIME</b></td>
-                <td colspan="2"><b>FROM:</b> <?php echo $from; ?></td>
-                <td colspan="2"><b>TO:</b> <?php echo $to; ?></td>
-            </tr>
-            <tr>
-                <td colspan="4">WEATHER CONDITION</td>
-                <td colspan="3"><b>RAIN:</b> <?php echo $rain; ?></td>
-                <td colspan="3"><b>WORKING CONDITION:</b> <?php echo $working_condition; ?></td>
-            </tr>
-
-            <!-- Construction Activities -->
-            <tr>
-                <td colspan="10" class="center">CONSTRUCTION ACTIVITIES CONDUCTED</td>
-            </tr>
-            <tr>
-                <td colspan="10" style="height:14px;"><?php echo $construction_activities; ?></td>
-            </tr>
-
-            <!-- Resources on Site -->
-            <tr>
-                <td colspan="10" class="center">RESOURCES ON SITE</td>
-            </tr>
-
-            <!-- Personnel -->
-            <tr>
-                <th>1</th>
-                <th>PERSONNEL</th>
-                <th>SITE AGENT</th>
-                <th>SITE ENG</th>
-                <th>FOREMAN</th>
-                <th>DRIVER</th>
-                <th>OPERATOR</th>
-                <th>CRAFTSMAN</th>
-                <th>UNSKILLED</th>
-                <th>TOTAL</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td>NUMBER</td>
-                <td><?php echo $site_agent; ?></td>
-                <td><?php echo $site_eng; ?></td>
-                <td><?php echo $foreman; ?></td>
-                <td><?php echo $driver; ?></td>
-                <td><?php echo $operator; ?></td>
-                <td><?php echo $craftsman; ?></td>
-                <td><?php echo $unskilled; ?></td>
-                <td><?php echo $total_personnel; ?></td>
-            </tr>
-
-            <!-- Plant & Vehicle -->
-            <tr>
-                <th colspan="1">2</th>
-                <th colspan="1">PLANT & VEHICLE</th>
-                <th colspan="1">HEAVY PLANT</th>
-                <th colspan="1">LIGHT PLANT</th>
-                <th colspan="1">HEAVY VEHICLE</th>
-                <th colspan="1">LIGHT VEHICLE</th>
-                <th colspan="1">MOTORBIKE</th>
-                <th colspan="1">BICYCLE</th>
-                <th colspan="1">OTHERS</th>
-                <th colspan="1">TOTAL</th>
-            </tr>
-            <tr>
-                <td colspan="1"></td>
-                <td colspan="1">NUMBER</td>
-                <td colspan="1"><?php echo $hvy_plant; ?></td>
-                <td colspan="1"><?php echo $light_plant; ?></td>
-                <td colspan="1"><?php echo $hvy_vehicle; ?></td>
-                <td colspan="1"><?php echo $light_vehicle; ?></td>
-                <td colspan="1"><?php echo $motorbike; ?></td>
-                <td colspan="1"><?php echo $bicycle; ?></td>
-                <td colspan="1"><?php echo $others_vehicle; ?></td>
-                <td colspan="1"><?php echo $total_vehicle; ?></td>
-            </tr>
-
-            <!-- Materials -->
-            <tr>
-                <th colspan="1">3</th>
-                <th colspan="1">MATERIALS</th>
-                <th colspan="1">GRAVEL</th>
-                <th colspan="1">CRUSHED STONE</th>
-                <th colspan="1">AGGREGATE</th>
-                <th colspan="1">CEMENT</th>
-                <th colspan="1">PREMIX</th>
-                <th colspan="1">TIMBER</th>
-                <th colspan="1">DIESEL</th>
-                <th colspan="1">PETROL</th>
-            </tr>
-            <tr>
-                <td colspan="1"></td>
-                <td colspan="1">QUANTITY</td>
-                <td colspan="1"><?php echo $gravel; ?> cu.m</td>
-                <td colspan="1"><?php echo $crushed_stone; ?> cu.m</td>
-                <td colspan="1"><?php echo $aggregate; ?> cu.m</td>
-                <td colspan="1"><?php echo $cement; ?> kg</td>
-                <td colspan="1"><?php echo $premix; ?> kg</td>
-                <td colspan="1"><?php echo $timber; ?> cu.m</td>
-                <td colspan="1"><?php echo $diesel; ?> litres</td>
-                <td colspan="1"><?php echo $petrol; ?> litres</td>
-            </tr>
-
-            <!-- Other Activities -->
-            <tr>
-                <td colspan="10" class="center">OTHER ACTIVITIES</td>
-            </tr>
-            <tr>
-                <td colspan="1"></td>
-                <td colspan="3"><b>CATEGORY</b></td>
-                <td colspan="3"><b>LOCATION</b></td>
-                <td colspan="3"><b>PURPOSES</b></td>
-            </tr>
-            <tr>
-                <td colspan="1">1</td>
-                <td colspan="3">SURVEY</td>
-                <td colspan="3"><?php echo $survey_location; ?></td>
-                <td colspan="3"><?php echo $survey_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">2</td>
-                <td colspan="3">SETTING OUT</td>
-                <td colspan="3"><?php echo $setting_out_location; ?></td>
-                <td colspan="3"><?php echo $setting_out_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">3</td>
-                <td colspan="3">SAMPLING</td>
-                <td colspan="3"><?php echo $sampling_location; ?></td>
-                <td colspan="3"><?php echo $sampling_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">4</td>
-                <td colspan="3">TESTING</td>
-                <td colspan="3"><?php echo $testing_location; ?></td>
-                <td colspan="3"><?php echo $testing_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">5</td>
-                <td colspan="3">MEASUREMENT</td>
-                <td colspan="3"><?php echo $measurement_location; ?></td>
-                <td colspan="3"><?php echo $measurement_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">6</td>
-                <td colspan="3">REVIEW PROGRAMME</td>
-                <td colspan="3"><?php echo $review_program_location; ?></td>
-                <td colspan="3"><?php echo $review_program_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">7</td>
-                <td colspan="3">REVIEW COST</td>
-                <td colspan="3"><?php echo $review_cost_location; ?></td>
-                <td colspan="3"><?php echo $review_cost_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">8</td>
-                <td colspan="3">INSPECTION</td>
-                <td colspan="3"><?php echo $inspection_location; ?></td>
-                <td colspan="3"><?php echo $inspection_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">9</td>
-                <td colspan="3">MEETING</td>
-                <td colspan="3"><?php echo $meeting_location; ?></td>
-                <td colspan="3"><?php echo $meeting_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">10</td>
-                <td colspan="3">VISITORS</td>
-                <td colspan="3"><?php echo $visitors_location; ?></td>
-                <td colspan="3"><?php echo $visitors_purposes; ?></td>
-            </tr>
-            <tr>
-                <td colspan="1">11</td>
-                <td colspan="3">OTHER</td>
-                <td colspan="3"><?php echo $others_location; ?></td>
-                <td colspan="3"><?php echo $others_purposes; ?></td>
-            </tr>
-            <!-- Remarks -->
-            <tr>
-                <td colspan="10" class="center" style="height: 14px;">REMARKS</td>
-            </tr>
-            <tr>
-                <td colspan="10" style="height:14px;"><?php echo $remarks; ?></td>
-            </tr>
+    <div class="doc-section">
+        <div class="section-title">Site Data</div>
+        <table class="report-table">
+            <tbody>
+                <tr>
+                    <td><strong>Department:</strong> <?= field('dept') ?></td>
+                    <td><strong>Region:</strong> <?= field('region') ?></td>
+                    <td><strong>District:</strong> <?= field('district') ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Contract No:</strong> <?= field('contract_no') ?></td>
+                    <td colspan="2"><strong>Contract Title:</strong> <?= field('contract_title') ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Contractor Name:</strong> <?= field('contractor_name') ?></td>
+                    <td colspan="2"><strong>Consultant Name:</strong> <?= field('consultant_name') ?></td>
+                </tr>
+            </tbody>
         </table>
     </div>
+
+    <div class="doc-section">
+        <div class="section-title">Daily Information</div>
+        <table class="report-table">
+            <tbody>
+                <tr>
+                    <td><strong>Date:</strong> <?= field('date_daily') ?></td>
+                    <td><strong>Day:</strong> <?= field('day') ?></td>
+                    <td><strong>Working Time:</strong> <?= field('working_time_from') ?> to <?= field('working_time_to') ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Weather Condition:</strong> Rain <?= field('rain') ?></td>
+                    <td colspan="2"><strong>Working Condition:</strong> <?= field('working_condition') ?></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="doc-section">
+        <div class="section-title">Construction Activities Conducted</div>
+        <div class="remarks-box"><?= field('construction_activities') ?: 'No activities submitted.' ?></div>
+    </div>
+
+    <div class="doc-section">
+        <div class="section-title">Resources on Site</div>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th class="row-head" colspan="10">Personnel</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Site Agent</th>
+                    <th>Site Eng</th>
+                    <th>Foreman</th>
+                    <th>Driver</th>
+                    <th>Operator</th>
+                    <th>Craftsman</th>
+                    <th>Unskilled</th>
+                    <th colspan="2">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><?= field('site_agent') ?></td>
+                    <td><?= field('site_eng') ?></td>
+                    <td><?= field('foreman') ?></td>
+                    <td><?= field('driver') ?></td>
+                    <td><?= field('operator') ?></td>
+                    <td><?= field('craftsman') ?></td>
+                    <td><?= field('unskilled') ?></td>
+                    <td colspan="2"><?= field('total_personnel') ?></td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th class="row-head" colspan="10">Plant & Vehicle</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Heavy Plant</th>
+                    <th>Light Plant</th>
+                    <th>Heavy Vehicle</th>
+                    <th>Light Vehicle</th>
+                    <th>Motorbike</th>
+                    <th>Bicycle</th>
+                    <th>Others</th>
+                    <th colspan="2">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2</td>
+                    <td><?= field('hvy_plant') ?></td>
+                    <td><?= field('light_plant') ?></td>
+                    <td><?= field('hvy_vehicle') ?></td>
+                    <td><?= field('light_vehicle') ?></td>
+                    <td><?= field('motorbike') ?></td>
+                    <td><?= field('bicycle') ?></td>
+                    <td><?= field('others_vehicle') ?></td>
+                    <td colspan="2"><?= field('total_vehicle') ?></td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th class="row-head" colspan="10">Materials</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Gravel</th>
+                    <th>Crushed Stone</th>
+                    <th>Aggregate</th>
+                    <th>Cement</th>
+                    <th>Premix</th>
+                    <th>Timber</th>
+                    <th>Diesel</th>
+                    <th colspan="2">Petrol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3</td>
+                    <td><?= field('gravel') ?> cu.m</td>
+                    <td><?= field('crushed_stone') ?> cu.m</td>
+                    <td><?= field('aggregate') ?> cu.m</td>
+                    <td><?= field('cement') ?> kg</td>
+                    <td><?= field('premix') ?> kg</td>
+                    <td><?= field('timber') ?> cu.m</td>
+                    <td><?= field('diesel') ?> litres</td>
+                    <td colspan="2"><?= field('petrol') ?> litres</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="doc-section">
+        <div class="section-title">Other Activities</div>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th style="width:6%">#</th>
+                    <th style="width:22%">Category</th>
+                    <th>Location</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($otherActivities as $activity): ?>
+                    <tr>
+                        <td><?= $activity['no'] ?></td>
+                        <td><?= $activity['category'] ?></td>
+                        <td><?= $activity['location'] ?></td>
+                        <td><?= $activity['purpose'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="doc-section">
+        <div class="section-title">Remarks</div>
+        <div class="remarks-box"><?= field('remarks') ?: 'No remarks submitted.' ?></div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        function formattedDateToken() {
+            var currentDate = new Date();
+            var day = String(currentDate.getDate()).padStart(2, '0');
+            var month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            var year = String(currentDate.getFullYear());
+            var hours = String(currentDate.getHours()).padStart(2, '0');
+            var minutes = String(currentDate.getMinutes()).padStart(2, '0');
+            var seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+            return day + month + year + hours + minutes + seconds;
+        }
+
+        document.getElementById('btn-dl').addEventListener('click', function () {
+            var filename = 'irrigation-site-diary-' + formattedDateToken() + '.pdf';
+            html2pdf().set({
+                margin: 0.4,
+                filename: filename,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            }).from(document.getElementById('content')).save();
+        });
+    })();
+</script>
+<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
-
-<?php
-}
-?>

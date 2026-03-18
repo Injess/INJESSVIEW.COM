@@ -28,7 +28,7 @@ date_default_timezone_set('Africa/Blantyre');
 <body class="d-flex flex-column min-vh-100 bg-light">
     <?php include './nav.php'; ?>
     <div class="container diary">
-        <form action="road-authority-preview" method="POST">
+        <form id="roads-diary-form" action="road-authority-preview" method="POST">
             <div class="row mt-3 d-flex justify-content-center">
                 <div class="col-sm-6">
                     <div class="form-floating mb-3">
@@ -87,6 +87,32 @@ date_default_timezone_set('Africa/Blantyre');
                         <label for="consultant_name">Consultant Name</label>
                     </div>
                 </div>
+
+                <div class="col-12 section-title">Organization Branding</div>
+                <div class="col-sm-8">
+                    <div class="form-floating mb-3">
+                        <input type="text" id="branding_org_name_roads" class="form-control" maxlength="120" placeholder="Organization / Firm Name">
+                        <label for="branding_org_name_roads">Organization / Firm Name</label>
+                    </div>
+                </div>
+                <div class="col-sm-4 d-flex align-items-center mb-3">
+                    <button type="button" class="btn btn-outline-secondary w-100" id="branding_clear_roads">
+                        <i class="fa fa-rotate-left"></i> Reset Branding
+                    </button>
+                </div>
+                <div class="col-sm-8">
+                    <label for="branding_logo_file_roads" class="form-label fw-semibold">Company Logo</label>
+                    <input type="file" id="branding_logo_file_roads" class="form-control mb-2" accept="image/png,image/jpeg,image/webp">
+                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved in this browser for future diary entries.</div>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <div class="border rounded p-2 bg-white text-center h-100 d-flex flex-column justify-content-center align-items-center">
+                        <img id="branding_logo_preview_roads" alt="Company Logo Preview" style="display:none; max-height:80px; max-width:100%; object-fit:contain;">
+                        <small id="branding_logo_status_roads" class="text-muted mt-2">No logo selected</small>
+                    </div>
+                </div>
+                <input type="hidden" name="branding_org_name" id="branding_org_hidden_roads">
+                <input type="hidden" name="branding_logo_data" id="branding_logo_hidden_roads">
 
                 <div class="col-sm-3">
                     <div class="form-floating mb-3">
@@ -559,4 +585,21 @@ date_default_timezone_set('Africa/Blantyre');
 
         </form>
     </div>
+    <script src="./js/diary-branding.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.DiaryBranding && typeof window.DiaryBranding.initForm === 'function') {
+                window.DiaryBranding.initForm({
+                    formSelector: '#roads-diary-form',
+                    orgInputSelector: '#branding_org_name_roads',
+                    logoInputSelector: '#branding_logo_file_roads',
+                    logoPreviewSelector: '#branding_logo_preview_roads',
+                    logoStatusSelector: '#branding_logo_status_roads',
+                    clearButtonSelector: '#branding_clear_roads',
+                    hiddenOrgSelector: '#branding_org_hidden_roads',
+                    hiddenLogoSelector: '#branding_logo_hidden_roads'
+                });
+            }
+        });
+    </script>
     <?php include './footer.php'; ?>

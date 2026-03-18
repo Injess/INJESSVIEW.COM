@@ -60,7 +60,7 @@ date_default_timezone_set('Africa/Blantyre');
     </nav>
 
     <div class="container diary">
-        <form action="irrigation-preview" method="POST">
+        <form id="irrigation-diary-form" action="irrigation-preview" method="POST">
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col-sm-6">
                     <div class="form-floating mb-3">
@@ -122,6 +122,32 @@ date_default_timezone_set('Africa/Blantyre');
                         <label for="consultant_name">Consultant Name</label>
                     </div>
                 </div>
+
+                <div class="col-12 section-title">ORGANIZATION BRANDING</div>
+                <div class="col-sm-8">
+                    <div class="form-floating mb-3">
+                        <input type="text" id="branding_org_name_irrigation" class="form-control" maxlength="120" placeholder="Organization / Firm Name" />
+                        <label for="branding_org_name_irrigation">Organization / Firm Name</label>
+                    </div>
+                </div>
+                <div class="col-sm-4 d-flex align-items-center mb-3">
+                    <button type="button" class="btn btn-outline-secondary w-100" id="branding_clear_irrigation">
+                        <i class="fa fa-rotate-left"></i> Reset Branding
+                    </button>
+                </div>
+                <div class="col-sm-8">
+                    <label for="branding_logo_file_irrigation" class="form-label fw-semibold">Company Logo</label>
+                    <input type="file" id="branding_logo_file_irrigation" class="form-control mb-2" accept="image/png,image/jpeg,image/webp" />
+                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved in this browser for future diary entries.</div>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <div class="border rounded p-2 bg-white text-center h-100 d-flex flex-column justify-content-center align-items-center">
+                        <img id="branding_logo_preview_irrigation" alt="Company Logo Preview" style="display:none; max-height:80px; max-width:100%; object-fit:contain;" />
+                        <small id="branding_logo_status_irrigation" class="text-muted mt-2">No logo selected</small>
+                    </div>
+                </div>
+                <input type="hidden" name="branding_org_name" id="branding_org_hidden_irrigation" />
+                <input type="hidden" name="branding_logo_data" id="branding_logo_hidden_irrigation" />
 
                 <!-- Daily Information -->
                 <div class="col-12 section-title">DAILY INFORMATION</div>
@@ -510,7 +536,21 @@ date_default_timezone_set('Africa/Blantyre');
     <!-- Bootstrap Bundle with Popper -->
     <script src="js/all.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/diary-branding.js"></script>
     <script>
+        if (window.DiaryBranding && typeof window.DiaryBranding.initForm === 'function') {
+            window.DiaryBranding.initForm({
+                formSelector: '#irrigation-diary-form',
+                orgInputSelector: '#branding_org_name_irrigation',
+                logoInputSelector: '#branding_logo_file_irrigation',
+                logoPreviewSelector: '#branding_logo_preview_irrigation',
+                logoStatusSelector: '#branding_logo_status_irrigation',
+                clearButtonSelector: '#branding_clear_irrigation',
+                hiddenOrgSelector: '#branding_org_hidden_irrigation',
+                hiddenLogoSelector: '#branding_logo_hidden_irrigation'
+            });
+        }
+
         function calculateTotal() {
             const siteAgent =
                 parseInt(document.getElementById("site_agent").value) || 0;

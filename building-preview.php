@@ -21,6 +21,24 @@ function getArrayValue($data, $index)
     return isset($data[$index]) ? $data[$index] : '';
 }
 
+function sanitizeLogoData($data)
+{
+    if (!is_string($data) || $data === '') {
+        return '';
+    }
+
+    $trimmed = trim($data);
+    if (strlen($trimmed) > 850000) {
+        return '';
+    }
+
+    if (!preg_match('/^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+\/=\r\n]+$/', $trimmed)) {
+        return '';
+    }
+
+    return $trimmed;
+}
+
 $site = sanitizeValue($_POST['site'] ?? '');
 $sheet_no = sanitizeValue($_POST['sheet_no'] ?? '');
 $area = sanitizeValue($_POST['area'] ?? '');
@@ -75,6 +93,10 @@ $work_suspended = sanitizeValue($_POST['work_suspended'] ?? []);
 $work_delayed = sanitizeValue($_POST['work_delayed'] ?? []);
 $work_stopped = sanitizeValue($_POST['work_stopped'] ?? []);
 $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
+
+$organizationName = sanitizeValue($_POST['branding_org_name'] ?? '') ?: 'INJESSVIEW';
+$brandingLogo = sanitizeLogoData($_POST['branding_logo_data'] ?? '');
+$logoSource = $brandingLogo !== '' ? $brandingLogo : 'img/INVI_LOGO.png';
 ?>
 
 <!DOCTYPE html>
@@ -91,22 +113,23 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
     <script src="./js/html2pdf.min.js"></script>
     <script src="./js/all.min.js"></script>
     <style>
-        body { background: #f0f2fa; }
+        body { background: #f3f3f3; color: #111; }
 
         /* ── Toolbar (hidden in PDF) ───────────────────────── */
         .preview-toolbar {
             position: sticky;
             top: 0;
             z-index: 200;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: #fff;
+            border-bottom: 1px solid #d8d8d8;
             padding: 0.7rem 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.65rem;
-            box-shadow: 0 2px 14px rgba(102, 126, 234, .35);
+            box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
         }
         .preview-toolbar .brand {
-            color: #fff;
+            color: #111;
             font-weight: 800;
             font-size: 1.05rem;
             text-decoration: none;
@@ -114,20 +137,20 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
             letter-spacing: .5px;
         }
         .preview-toolbar .btn-back {
-            background: rgba(255,255,255,.18);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,.3);
+            background: #fff;
+            color: #111;
+            border: 1px solid #111;
             font-size: .85rem;
             border-radius: 50px;
             padding: .35rem .9rem;
             text-decoration: none;
             transition: background .2s;
         }
-        .preview-toolbar .btn-back:hover { background: rgba(255,255,255,.3); }
+        .preview-toolbar .btn-back:hover { background: #111; color: #fff; }
         .preview-toolbar .btn-dl {
             background: #fff;
-            color: #667eea;
-            border: none;
+            color: #111;
+            border: 1px solid #111;
             font-weight: 700;
             font-size: .85rem;
             border-radius: 50px;
@@ -135,7 +158,7 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
             cursor: pointer;
             transition: box-shadow .2s;
         }
-        .preview-toolbar .btn-dl:hover { box-shadow: 0 4px 14px rgba(102,126,234,.4); }
+        .preview-toolbar .btn-dl:hover { background: #111; color: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.15); }
 
         /* ── Document card ─────────────────────────────────── */
         #content {
@@ -143,18 +166,35 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
             margin: 2rem auto 3rem;
             background: #fff;
             border-radius: 1rem;
-            box-shadow: 0 6px 36px rgba(102, 126, 234, .14);
+            border: 1px solid #d7d7d7;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .07);
             overflow: hidden;
         }
 
         /* ── Document header ───────────────────────────────── */
         .doc-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
+            background: #fff;
+            color: #111;
+            border-bottom: 2px solid #111;
             padding: 2rem 2.5rem 1.6rem;
+            text-align: center;
         }
-        .doc-header h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: .5px; margin: 0 0 .2rem; }
-        .doc-header h2 { font-size: .95rem; font-weight: 400; opacity: .82; margin: 0; }
+        .doc-header h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: .5px; margin: .35rem 0 .2rem; }
+        .doc-header h2 { font-size: .95rem; font-weight: 500; color: #4b4b4b; margin: 0; }
+        .brand-logo {
+            max-height: 78px;
+            max-width: 180px;
+            object-fit: contain;
+            margin: 0 auto;
+            display: block;
+        }
+        .firm-name {
+            margin: .55rem 0 0;
+            text-transform: uppercase;
+            font-size: 1.22rem;
+            font-weight: 800;
+            letter-spacing: .4px;
+        }
 
         /* ── Meta strip ────────────────────────────────────── */
         .doc-meta {
@@ -162,38 +202,38 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
             flex-wrap: wrap;
             gap: .65rem 2rem;
             padding: 1.1rem 2.5rem;
-            background: #f7f8ff;
-            border-bottom: 1px solid #e5e9f8;
+            background: #fafafa;
+            border-bottom: 1px solid #dedede;
         }
         .doc-meta-item .lbl {
             font-size: .67rem;
             text-transform: uppercase;
             letter-spacing: .8px;
-            color: #8892b0;
+            color: #5a5a5a;
             font-weight: 700;
             display: block;
         }
         .doc-meta-item .val {
             font-size: .92rem;
             font-weight: 700;
-            color: #1a1e3c;
+            color: #111;
         }
 
         /* ── Sections ──────────────────────────────────────── */
         .doc-section {
             padding: 1.5rem 2.5rem;
-            border-bottom: 1px solid #edf0f9;
+            border-bottom: 1px solid #ececec;
         }
         .doc-section:last-child { border-bottom: none; }
         .s-heading {
             font-size: .68rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #667eea;
-            font-weight: 700;
+            color: #222;
+            font-weight: 800;
             margin-bottom: 1rem;
             padding-bottom: .4rem;
-            border-bottom: 2px solid #edf0f9;
+            border-bottom: 1px solid #d8d8d8;
         }
 
         /* ── Sub-category label ────────────────────────────── */
@@ -202,7 +242,7 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
             text-transform: uppercase;
             letter-spacing: .5px;
             font-weight: 700;
-            color: #2d3661;
+            color: #222;
             margin: 1rem 0 .5rem;
         }
         .sub-label:first-child { margin-top: 0; }
@@ -216,22 +256,22 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
         }
         .preview-table:last-child { margin-bottom: 0; }
         .preview-table thead th {
-            background: linear-gradient(135deg, rgba(102,126,234,.1), rgba(118,75,162,.1));
-            color: #1a1e3c;
-            font-weight: 700;
+            background: #f1f1f1;
+            color: #111;
+            font-weight: 800;
             padding: .55rem .85rem;
-            border: 1px solid #d8def5;
+            border: 1px solid #cfcfcf;
             text-transform: uppercase;
             font-size: .72rem;
             letter-spacing: .5px;
         }
         .preview-table tbody td {
             padding: .55rem .85rem;
-            border: 1px solid #e8ecf8;
+            border: 1px solid #cfcfcf;
             vertical-align: top;
-            color: #2d3661;
+            color: #111;
         }
-        .preview-table tbody tr:nth-child(even) td { background: #f7f8ff; }
+        .preview-table tbody tr:nth-child(even) td { background: #fafafa; }
 
         /* ── Info grid ─────────────────────────────────────── */
         .info-grid {
@@ -243,12 +283,12 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
             font-size: .67rem;
             text-transform: uppercase;
             letter-spacing: .8px;
-            color: #8892b0;
+            color: #5a5a5a;
             font-weight: 700;
             display: block;
             margin-bottom: .15rem;
         }
-        .info-pair .val { font-size: .95rem; font-weight: 600; color: #1a1e3c; }
+        .info-pair .val { font-size: .95rem; font-weight: 600; color: #111; }
 
         /* ── Status badges ─────────────────────────────────── */
         .sbadge {
@@ -260,32 +300,32 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
             text-transform: uppercase;
             letter-spacing: .4px;
         }
-        .sb-started   { background: #d1fae5; color: #065f46; }
-        .sb-restarted { background: #dbeafe; color: #1e40af; }
-        .sb-completed { background: #ede9fe; color: #5b21b6; }
-        .sb-suspended { background: #fee2e2; color: #991b1b; }
-        .sb-delayed   { background: #fef3c7; color: #92400e; }
-        .sb-stopped   { background: #fee2e2; color: #7f1d1d; }
-        .sb-claim     { background: #fce7f3; color: #9d174d; }
-        .sb-yes       { background: #d1fae5; color: #065f46; }
-        .sb-no        { background: #fee2e2; color: #991b1b; }
+        .sb-started,
+        .sb-restarted,
+        .sb-completed,
+        .sb-suspended,
+        .sb-delayed,
+        .sb-stopped,
+        .sb-claim,
+        .sb-yes,
+        .sb-no { background: #efefef; color: #111; border: 1px solid #cfcfcf; }
 
         /* ── Signature boxes ───────────────────────────────── */
         .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .sig-box {
-            border: 1px solid #dde3f8;
+            border: 1px solid #d4d4d4;
             border-radius: .75rem;
             padding: 1rem 1.25rem;
-            background: #f7f8ff;
+            background: #fff;
         }
-        .sig-box .sig-name { font-size: 1.05rem; font-weight: 700; color: #1a1e3c; margin-top: .2rem; }
-        .sig-box .sig-role { font-size: .85rem; color: #5a6283; margin-top: .1rem; }
+        .sig-box .sig-name { font-size: 1.05rem; font-weight: 700; color: #111; margin-top: .2rem; }
+        .sig-box .sig-role { font-size: .85rem; color: #4b4b4b; margin-top: .1rem; }
         .sig-box .sig-line {
-            border-top: 2px solid #667eea;
+            border-top: 2px solid #111;
             margin-top: .9rem;
             padding-top: .65rem;
             font-size: .85rem;
-            color: #2d3661;
+            color: #111;
         }
 
         /* ── Print optimisations ───────────────────────────── */
@@ -302,7 +342,7 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
 
 <!-- Toolbar -->
 <div class="preview-toolbar">
-    <a href="building-site-diary" class="brand">INJESSVIEW</a>
+    <a href="building-site-diary" class="brand"><?= $organizationName ?></a>
     <a href="building-site-diary" class="btn-back">← Back to Form</a>
     <button id="btn-dl" class="btn-dl"><i class="fas fa-download"></i> Download PDF</button>
 </div>
@@ -312,6 +352,8 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
 
     <!-- Header -->
     <div class="doc-header">
+        <img src="<?= $logoSource ?>" alt="Organization Logo" class="brand-logo" onerror="this.style.display='none'">
+        <p class="firm-name"><?= $organizationName ?></p>
         <h1>CONTRACT SITE DIARY FORM</h1>
         <h2>Building Works — Daily Field Report</h2>
     </div>
@@ -549,15 +591,15 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
         <div class="s-heading">Official Validation</div>
         <div class="sig-grid">
             <div class="sig-box">
-                <span class="lbl" style="font-size:.67rem;text-transform:uppercase;letter-spacing:.8px;color:#8892b0;font-weight:700;">Authorised By</span>
+                <span class="lbl" style="font-size:.67rem;text-transform:uppercase;letter-spacing:.8px;color:#5a5a5a;font-weight:700;">Authorised By</span>
                 <div class="sig-name"><?= $authorised ?: '—' ?></div>
                 <div class="sig-role"><?= $position ?: '' ?></div>
                 <div class="sig-line">
-                    <span style="color:#8892b0;font-size:.75rem;">Signature: </span><?= $signature ?: '' ?>
+                    <span style="color:#5a5a5a;font-size:.75rem;">Signature: </span><?= $signature ?: '' ?>
                 </div>
             </div>
             <div class="sig-box">
-                <span class="lbl" style="font-size:.67rem;text-transform:uppercase;letter-spacing:.8px;color:#8892b0;font-weight:700;">Date Signed</span>
+                <span class="lbl" style="font-size:.67rem;text-transform:uppercase;letter-spacing:.8px;color:#5a5a5a;font-weight:700;">Date Signed</span>
                 <div class="sig-name"><?= $signed_date ?: '—' ?></div>
             </div>
         </div>
