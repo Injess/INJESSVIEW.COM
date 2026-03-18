@@ -124,7 +124,7 @@ date_default_timezone_set('Africa/Blantyre');
                 <div class="col-sm-8">
                     <label for="branding_logo_file_building" class="form-label fw-semibold">Company Logo</label>
                     <input type="file" id="branding_logo_file_building" class="form-control mb-2" accept="image/png,image/jpeg,image/webp" />
-                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved in this browser for future diary entries.</div>
+                    <div class="form-text mb-3">PNG, JPG, or WEBP up to 2MB. Saved in this browser per organization name for future diary entries.</div>
                 </div>
                 <div class="col-sm-4 mb-3">
                     <div class="border rounded p-2 bg-white text-center h-100 d-flex flex-column justify-content-center align-items-center">

@@ -1,8 +1,10 @@
 (function (window) {
     'use strict';
 
-    var STORAGE_KEY = 'injessview.diary.branding.v1';
+    var STORAGE_KEY = 'injessview.diary.branding.v2';
+    var LEGACY_STORAGE_KEY = 'injessview.diary.branding.v1';
     var DEFAULT_ORG_NAME = 'INJESSVIEW';
+    var DEFAULT_ORG_KEY = 'injessview';
     var MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
     var TARGET_MAX_BYTES = 380 * 1024;
     var MAX_WIDTH = 520;
@@ -21,9 +23,67 @@
         return sanitized.slice(0, 120);
     }
 
-    function readProfile() {
+    function normalizeOrgKey(value) {
+        var orgName = sanitizeOrgName(value);
+        if (!orgName) {
+            return DEFAULT_ORG_KEY;
+        }
+        return orgName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || DEFAULT_ORG_KEY;
+    }
+
+    function createProfile(orgName, logoData, logoName) {
+        var cleanOrgName = sanitizeOrgName(orgName) || DEFAULT_ORG_NAME;
+        return {
+            orgName: cleanOrgName,
+            logoData: typeof logoData === 'string' ? logoData : '',
+            logoName: typeof logoName === 'string' ? logoName : '',
+            updatedAt: new Date().toISOString()
+        };
+    }
+
+    function createStore() {
+        var baseProfile = createProfile(DEFAULT_ORG_NAME, '', '');
+        var store = {
+            activeOrgKey: DEFAULT_ORG_KEY,
+            profiles: {}
+        };
+        store.profiles[DEFAULT_ORG_KEY] = baseProfile;
+        return store;
+    }
+
+    function ensureStoreShape(store) {
+        if (!store || typeof store !== 'object') {
+            return createStore();
+        }
+
+        if (!store.profiles || typeof store.profiles !== 'object') {
+            store.profiles = {};
+        }
+
+        Object.keys(store.profiles).forEach(function (key) {
+            var profile = store.profiles[key] || {};
+            store.profiles[key] = {
+                orgName: sanitizeOrgName(profile.orgName || '') || DEFAULT_ORG_NAME,
+                logoData: typeof profile.logoData === 'string' ? profile.logoData : '',
+                logoName: typeof profile.logoName === 'string' ? profile.logoName : '',
+                updatedAt: profile.updatedAt || ''
+            };
+        });
+
+        if (!store.profiles[DEFAULT_ORG_KEY]) {
+            store.profiles[DEFAULT_ORG_KEY] = createProfile(DEFAULT_ORG_NAME, '', '');
+        }
+
+        if (!store.activeOrgKey || !store.profiles[store.activeOrgKey]) {
+            store.activeOrgKey = DEFAULT_ORG_KEY;
+        }
+
+        return store;
+    }
+
+    function readLegacyProfile() {
         try {
-            var raw = window.localStorage.getItem(STORAGE_KEY);
+            var raw = window.localStorage.getItem(LEGACY_STORAGE_KEY);
             if (!raw) {
                 return null;
             }
@@ -32,19 +92,53 @@
                 return null;
             }
             return {
-                orgName: sanitizeOrgName(parsed.orgName || ''),
+                orgName: sanitizeOrgName(parsed.orgName || DEFAULT_ORG_NAME),
                 logoData: typeof parsed.logoData === 'string' ? parsed.logoData : '',
-                logoName: typeof parsed.logoName === 'string' ? parsed.logoName : '',
-                updatedAt: parsed.updatedAt || ''
+                logoName: typeof parsed.logoName === 'string' ? parsed.logoName : ''
             };
         } catch (error) {
             return null;
         }
     }
 
-    function saveProfile(profile) {
+    function migrateLegacyStoreIfNeeded() {
+        var legacy = readLegacyProfile();
+        if (!legacy) {
+            return createStore();
+        }
+
+        var migrated = createStore();
+        var key = normalizeOrgKey(legacy.orgName);
+        migrated.activeOrgKey = key;
+        migrated.profiles[key] = createProfile(legacy.orgName, legacy.logoData, legacy.logoName);
+        if (!migrated.profiles[DEFAULT_ORG_KEY]) {
+            migrated.profiles[DEFAULT_ORG_KEY] = createProfile(DEFAULT_ORG_NAME, '', '');
+        }
+
         try {
-            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+            window.localStorage.removeItem(LEGACY_STORAGE_KEY);
+        } catch (error) {
+            return migrated;
+        }
+
+        return migrated;
+    }
+
+    function readStore() {
+        try {
+            var raw = window.localStorage.getItem(STORAGE_KEY);
+            if (!raw) {
+                return migrateLegacyStoreIfNeeded();
+            }
+            return ensureStoreShape(JSON.parse(raw));
+        } catch (error) {
+            return createStore();
+        }
+    }
+
+    function saveStore(store) {
+        try {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
             return true;
         } catch (error) {
             notify('Storage Limit Reached', 'Could not save branding profile in this browser. Try a smaller logo.', 'warning');
@@ -52,12 +146,44 @@
         }
     }
 
-    function clearProfile() {
+    function clearAllProfiles() {
         try {
             window.localStorage.removeItem(STORAGE_KEY);
+            window.localStorage.removeItem(LEGACY_STORAGE_KEY);
         } catch (error) {
             return;
         }
+    }
+
+    function getOrCreateProfileByName(store, orgName, persist) {
+        var cleanName = sanitizeOrgName(orgName) || DEFAULT_ORG_NAME;
+        var key = normalizeOrgKey(cleanName);
+        var profile = store.profiles[key];
+
+        if (!profile) {
+            profile = createProfile(cleanName, '', '');
+            if (persist) {
+                store.profiles[key] = profile;
+            }
+        } else if (!profile.orgName || profile.orgName !== cleanName) {
+            profile.orgName = cleanName;
+        }
+
+        return {
+            key: key,
+            profile: profile
+        };
+    }
+
+    function getActiveProfile(store) {
+        store = ensureStoreShape(store || readStore());
+        var profile = store.profiles[store.activeOrgKey] || createProfile(DEFAULT_ORG_NAME, '', '');
+        return {
+            orgName: profile.orgName,
+            logoData: profile.logoData,
+            logoName: profile.logoName,
+            updatedAt: profile.updatedAt
+        };
     }
 
     function setLogoPreview(previewElement, statusElement, logoData, logoName) {
@@ -161,32 +287,58 @@
             return;
         }
 
-        var profile = readProfile() || {
-            orgName: DEFAULT_ORG_NAME,
-            logoData: '',
-            logoName: '',
-            updatedAt: ''
-        };
+        var store = ensureStoreShape(readStore());
+        var active = getActiveProfile(store);
+        var activeOrgName = active.orgName || DEFAULT_ORG_NAME;
 
-        function syncHiddenFields() {
+        function syncHiddenFields(profile) {
             var currentOrg = sanitizeOrgName(orgInput.value) || DEFAULT_ORG_NAME;
             hiddenOrg.value = currentOrg;
-            hiddenLogo.value = profile.logoData || '';
+            hiddenLogo.value = profile && profile.logoData ? profile.logoData : '';
         }
 
-        function persistOrganizationName() {
-            profile.orgName = sanitizeOrgName(orgInput.value) || DEFAULT_ORG_NAME;
-            profile.updatedAt = new Date().toISOString();
-            saveProfile(profile);
-            syncHiddenFields();
+        function applyProfileByOrgName(orgName, shouldPersistIfMissing) {
+            var resolved = getOrCreateProfileByName(store, orgName, shouldPersistIfMissing);
+            var profile = resolved.profile;
+            var key = resolved.key;
+
+            store.activeOrgKey = key;
+            activeOrgName = profile.orgName || DEFAULT_ORG_NAME;
+            orgInput.value = activeOrgName;
+
+            setLogoPreview(logoPreview, logoStatus, profile.logoData, profile.logoName);
+            syncHiddenFields(profile);
+
+            if (shouldPersistIfMissing) {
+                profile.updatedAt = new Date().toISOString();
+                store.profiles[key] = profile;
+                saveStore(store);
+            }
+
+            return profile;
         }
 
-        orgInput.value = profile.orgName || DEFAULT_ORG_NAME;
-        setLogoPreview(logoPreview, logoStatus, profile.logoData, profile.logoName);
-        syncHiddenFields();
+        var initialProfile = applyProfileByOrgName(activeOrgName, false);
+        syncHiddenFields(initialProfile);
 
-        orgInput.addEventListener('input', persistOrganizationName);
-        orgInput.addEventListener('blur', persistOrganizationName);
+        orgInput.addEventListener('input', function () {
+            var candidateName = sanitizeOrgName(orgInput.value) || DEFAULT_ORG_NAME;
+            var key = normalizeOrgKey(candidateName);
+            var existingProfile = store.profiles[key];
+
+            if (existingProfile) {
+                setLogoPreview(logoPreview, logoStatus, existingProfile.logoData, existingProfile.logoName);
+                syncHiddenFields(existingProfile);
+                return;
+            }
+
+            setLogoPreview(logoPreview, logoStatus, '', '');
+            syncHiddenFields({ logoData: '' });
+        });
+
+        orgInput.addEventListener('blur', function () {
+            applyProfileByOrgName(orgInput.value, true);
+        });
 
         logoInput.addEventListener('change', function () {
             var file = logoInput.files && logoInput.files[0];
@@ -209,17 +361,22 @@
 
             resizeAndEncode(file)
                 .then(function (encodedLogo) {
-                    profile.orgName = sanitizeOrgName(orgInput.value) || DEFAULT_ORG_NAME;
+                    var resolved = getOrCreateProfileByName(store, orgInput.value, true);
+                    var key = resolved.key;
+                    var profile = resolved.profile;
+
                     profile.logoData = encodedLogo;
                     profile.logoName = file.name;
                     profile.updatedAt = new Date().toISOString();
 
-                    if (!saveProfile(profile)) {
+                    store.activeOrgKey = key;
+                    store.profiles[key] = profile;
+
+                    if (!saveStore(store)) {
                         return;
                     }
 
-                    setLogoPreview(logoPreview, logoStatus, profile.logoData, profile.logoName);
-                    syncHiddenFields();
+                    applyProfileByOrgName(profile.orgName, false);
                     logoInput.value = '';
                 })
                 .catch(function (error) {
@@ -230,30 +387,44 @@
 
         if (clearButton) {
             clearButton.addEventListener('click', function () {
-                clearProfile();
-                profile = {
-                    orgName: DEFAULT_ORG_NAME,
-                    logoData: '',
-                    logoName: '',
-                    updatedAt: ''
-                };
-                orgInput.value = DEFAULT_ORG_NAME;
-                logoInput.value = '';
+                var orgName = sanitizeOrgName(orgInput.value) || DEFAULT_ORG_NAME;
+                var key = normalizeOrgKey(orgName);
+
+                if (store.profiles[key]) {
+                    delete store.profiles[key];
+                }
+
+                if (!store.profiles[DEFAULT_ORG_KEY]) {
+                    store.profiles[DEFAULT_ORG_KEY] = createProfile(DEFAULT_ORG_NAME, '', '');
+                }
+
+                store.activeOrgKey = DEFAULT_ORG_KEY;
+                saveStore(store);
+
+                if (orgName === DEFAULT_ORG_NAME) {
+                    applyProfileByOrgName(DEFAULT_ORG_NAME, true);
+                    notify('Branding Reset', 'Default branding has been reset for this browser.', 'success');
+                    return;
+                }
+
+                orgInput.value = orgName;
                 setLogoPreview(logoPreview, logoStatus, '', '');
-                syncHiddenFields();
-                notify('Branding Reset', 'Organization branding has been reset for this browser.', 'success');
+                syncHiddenFields({ logoData: '' });
+                notify('Branding Cleared', 'Saved branding for "' + orgName + '" has been removed.', 'success');
             });
         }
 
         form.addEventListener('submit', function () {
-            persistOrganizationName();
-            syncHiddenFields();
+            var activeProfile = applyProfileByOrgName(orgInput.value, true);
+            syncHiddenFields(activeProfile);
         });
     }
 
     window.DiaryBranding = {
         initForm: initForm,
-        readProfile: readProfile,
-        clearProfile: clearProfile
+        readProfile: function () {
+            return getActiveProfile(readStore());
+        },
+        clearProfile: clearAllProfiles
     };
 })(window);
