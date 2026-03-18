@@ -23,37 +23,6 @@ date_default_timezone_set('Africa/Blantyre');
     <meta property="og:image" content="https://injessview.com/img/online-survey.png" />
     <meta property="og:title" content="Irrigation Site Diary Form - Injessview" />
     <meta property="og:description" content="Irrigation site diary for structured daily reporting, project tracking, and official field documentation." />
-    <style>
-        .diary-nav-menu {
-            min-width: 240px;
-            margin-top: 0.65rem;
-            padding: 0.45rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            background: rgba(20, 25, 42, 0.96);
-            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
-        }
-
-        .diary-nav-menu .dropdown-item {
-            color: #eef2ff;
-            font-weight: 600;
-            border-radius: 0.8rem;
-            padding: 0.7rem 0.9rem;
-        }
-
-        .diary-nav-menu .dropdown-item:hover,
-        .diary-nav-menu .dropdown-item:focus,
-        .diary-nav-menu .dropdown-item.active {
-            color: #fff;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.92), rgba(118, 75, 162, 0.92));
-        }
-
-        .diary-nav-toggle.show,
-        .diary-nav-toggle.active {
-            color: #fff;
-        }
-    </style>
-
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -561,6 +530,7 @@ date_default_timezone_set('Africa/Blantyre');
         const currentPath = (window.location.pathname.replace(/\/+$/, "").split("/").pop() || "home").toLowerCase();
         const routeAliases = {
             home: ["", "home", "index.php"],
+            about: ["about", "about.php"],
             "construction-works": ["construction-works", "construction-works.php", "construction-jobs-and-tenders"],
             "site-sync": ["site-sync", "site-sync.php"],
             "site-diary": [
@@ -576,13 +546,10 @@ date_default_timezone_set('Africa/Blantyre');
                 "roads-authority-site-dairy",
                 "roads-authority.php"
             ],
+            contact: ["contact", "contact.php"],
             "it-solutions": ["it-solutions", "it-solutions.php"],
             "invi-rides": ["invi-rides", "invi-rides.php"],
             "carbon-abatement": ["carbon-abatement", "carbon-abatement.php"]
-        };
-
-        const routeGroups = {
-            ecosystem: ["construction-works", "site-sync", "site-diary", "it-solutions", "invi-rides", "carbon-abatement"]
         };
 
         document.querySelectorAll("ul.navbar-nav [data-route]").forEach(function(link) {
@@ -592,20 +559,6 @@ date_default_timezone_set('Africa/Blantyre');
             const aliases = routeAliases[route] || [route];
 
             if (aliases.includes(currentPath)) {
-                link.classList.add("active");
-            }
-        });
-
-        document.querySelectorAll("ul.navbar-nav [data-route-group]").forEach(function(link) {
-            link.classList.remove("active");
-
-            const group = link.getAttribute("data-route-group");
-            const isActive = (routeGroups[group] || []).some(function(route) {
-                const aliases = routeAliases[route] || [route];
-                return aliases.includes(currentPath);
-            });
-
-            if (isActive) {
                 link.classList.add("active");
             }
         });

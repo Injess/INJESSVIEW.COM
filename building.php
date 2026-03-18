@@ -24,36 +24,6 @@ date_default_timezone_set('Africa/Blantyre');
     <meta property="og:image" content="https://injessview.com/img/online-survey.png" />
     <meta property="og:title" content="Building Site Diary Form - Injessview" />
     <meta property="og:description" content="Lilongwe Water and Sanitation Project building site diary for daily field reporting and project documentation." />
-    <style>
-        .diary-nav-menu {
-            min-width: 240px;
-            margin-top: 0.65rem;
-            padding: 0.45rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            background: rgba(20, 25, 42, 0.96);
-            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
-        }
-
-        .diary-nav-menu .dropdown-item {
-            color: #eef2ff;
-            font-weight: 600;
-            border-radius: 0.8rem;
-            padding: 0.7rem 0.9rem;
-        }
-
-        .diary-nav-menu .dropdown-item:hover,
-        .diary-nav-menu .dropdown-item:focus,
-        .diary-nav-menu .dropdown-item.active {
-            color: #fff;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.92), rgba(118, 75, 162, 0.92));
-        }
-
-        .diary-nav-toggle.show,
-        .diary-nav-toggle.active {
-            color: #fff;
-        }
-    </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">

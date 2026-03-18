@@ -132,6 +132,7 @@
     const currentPath = (window.location.pathname.replace(/\/+$/, "").split("/").pop() || "home").toLowerCase();
     const routeAliases = {
         home: ["", "home", "index.php"],
+        about: ["about", "about.php"],
         "construction-works": ["construction-works", "construction-works.php", "construction-jobs-and-tenders"],
         "site-sync": ["site-sync", "site-sync.php"],
         "site-diary": [
@@ -147,13 +148,10 @@
             "roads-authority-site-dairy",
             "roads-authority.php"
         ],
+        contact: ["contact", "contact.php"],
         "it-solutions": ["it-solutions", "it-solutions.php"],
         "invi-rides": ["invi-rides", "invi-rides.php"],
         "carbon-abatement": ["carbon-abatement", "carbon-abatement.php"]
-    };
-
-    const routeGroups = {
-        ecosystem: ["construction-works", "site-sync", "site-diary", "it-solutions", "invi-rides", "carbon-abatement"]
     };
 
     document.querySelectorAll("ul.navbar-nav [data-route]").forEach(function(link) {
@@ -163,20 +161,6 @@
         const aliases = routeAliases[route] || [route];
 
         if (aliases.includes(currentPath)) {
-            link.classList.add("active");
-        }
-    });
-
-    document.querySelectorAll("ul.navbar-nav [data-route-group]").forEach(function(link) {
-        link.classList.remove("active");
-
-        const group = link.getAttribute("data-route-group");
-        const isActive = (routeGroups[group] || []).some(function(route) {
-            const aliases = routeAliases[route] || [route];
-            return aliases.includes(currentPath);
-        });
-
-        if (isActive) {
             link.classList.add("active");
         }
     });
