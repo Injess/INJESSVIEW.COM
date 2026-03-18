@@ -70,18 +70,20 @@ date_default_timezone_set('Africa/Blantyre');
                     <li class="nav-item">
                         <a class="nav-link" href="home" data-route="home">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle diary-nav-toggle" href="#" id="diaryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-route-group="ecosystem">
-                            Ecosystem
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end diary-nav-menu" aria-labelledby="diaryDropdown">
-                            <li><a class="dropdown-item" href="construction-works" data-route="construction-works">Construction Works</a></li>
-                            <li><a class="dropdown-item" href="site-sync" data-route="site-sync">SiteSync</a></li>
-                            <li><a class="dropdown-item" href="site-diary" data-route="site-diary">Site Diary</a></li>
-                            <li><a class="dropdown-item" href="it-solutions" data-route="it-solutions">IT Solutions</a></li>
-                            <li><a class="dropdown-item" href="invi-rides" data-route="invi-rides">Invi Rides</a></li>
-                            <li><a class="dropdown-item" href="carbon-abatement" data-route="carbon-abatement">Carbon Abatement</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about" data-route="about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="site-sync" data-route="site-sync">SiteSync</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="invi-rides" data-route="invi-rides">Invi Rides</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="carbon-abatement" data-route="carbon-abatement">Carbon Abatement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact" data-route="contact">Contact Us</a>
                     </li>
                 </ul>
             </div>
