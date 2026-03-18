@@ -84,352 +84,504 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
+    <title>Building Site Diary Preview – Injessview</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/html2pdf.min.js"></script>
     <script src="./js/all.min.js"></script>
-    <title>Building Site Diary Preview - Injessview</title>
+    <style>
+        body { background: #f0f2fa; }
 
-    <script type="text/javascript">
-    function getFormattedDate() {
-        const currentDate = new Date();
+        /* ── Toolbar (hidden in PDF) ───────────────────────── */
+        .preview-toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            box-shadow: 0 2px 14px rgba(102, 126, 234, .35);
+        }
+        .preview-toolbar .brand {
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.05rem;
+            text-decoration: none;
+            margin-right: auto;
+            letter-spacing: .5px;
+        }
+        .preview-toolbar .btn-back {
+            background: rgba(255,255,255,.18);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.3);
+            font-size: .85rem;
+            border-radius: 50px;
+            padding: .35rem .9rem;
+            text-decoration: none;
+            transition: background .2s;
+        }
+        .preview-toolbar .btn-back:hover { background: rgba(255,255,255,.3); }
+        .preview-toolbar .btn-dl {
+            background: #fff;
+            color: #667eea;
+            border: none;
+            font-weight: 700;
+            font-size: .85rem;
+            border-radius: 50px;
+            padding: .35rem .9rem;
+            cursor: pointer;
+            transition: box-shadow .2s;
+        }
+        .preview-toolbar .btn-dl:hover { box-shadow: 0 4px 14px rgba(102,126,234,.4); }
 
-        const day = String(currentDate.getDate()).padStart(2, '0');
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-        const year = String(currentDate.getFullYear());
+        /* ── Document card ─────────────────────────────────── */
+        #content {
+            max-width: 960px;
+            margin: 2rem auto 3rem;
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 6px 36px rgba(102, 126, 234, .14);
+            overflow: hidden;
+        }
 
-        const hours = String(currentDate.getHours()).padStart(2, '0');
-        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        /* ── Document header ───────────────────────────────── */
+        .doc-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 2rem 2.5rem 1.6rem;
+        }
+        .doc-header h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: .5px; margin: 0 0 .2rem; }
+        .doc-header h2 { font-size: .95rem; font-weight: 400; opacity: .82; margin: 0; }
 
-        const formattedDate = `${day}${month}${year}${hours}${minutes}${seconds}`;
+        /* ── Meta strip ────────────────────────────────────── */
+        .doc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .65rem 2rem;
+            padding: 1.1rem 2.5rem;
+            background: #f7f8ff;
+            border-bottom: 1px solid #e5e9f8;
+        }
+        .doc-meta-item .lbl {
+            font-size: .67rem;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: #8892b0;
+            font-weight: 700;
+            display: block;
+        }
+        .doc-meta-item .val {
+            font-size: .92rem;
+            font-weight: 700;
+            color: #1a1e3c;
+        }
 
-        return formattedDate;
-    }
+        /* ── Sections ──────────────────────────────────────── */
+        .doc-section {
+            padding: 1.5rem 2.5rem;
+            border-bottom: 1px solid #edf0f9;
+        }
+        .doc-section:last-child { border-bottom: none; }
+        .s-heading {
+            font-size: .68rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: .4rem;
+            border-bottom: 2px solid #edf0f9;
+        }
 
-    $(document).ready(function($) {
-        $(document).on('click', '.btn_download', function(event) {
-            event.preventDefault();
+        /* ── Sub-category label ────────────────────────────── */
+        .sub-label {
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-weight: 700;
+            color: #2d3661;
+            margin: 1rem 0 .5rem;
+        }
+        .sub-label:first-child { margin-top: 0; }
 
-            const formattedDate = getFormattedDate();
+        /* ── Tables ────────────────────────────────────────── */
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .86rem;
+            margin-bottom: 1.25rem;
+        }
+        .preview-table:last-child { margin-bottom: 0; }
+        .preview-table thead th {
+            background: linear-gradient(135deg, rgba(102,126,234,.1), rgba(118,75,162,.1));
+            color: #1a1e3c;
+            font-weight: 700;
+            padding: .55rem .85rem;
+            border: 1px solid #d8def5;
+            text-transform: uppercase;
+            font-size: .72rem;
+            letter-spacing: .5px;
+        }
+        .preview-table tbody td {
+            padding: .55rem .85rem;
+            border: 1px solid #e8ecf8;
+            vertical-align: top;
+            color: #2d3661;
+        }
+        .preview-table tbody tr:nth-child(even) td { background: #f7f8ff; }
 
-            var element = document.getElementById('content');
+        /* ── Info grid ─────────────────────────────────────── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .75rem 2.5rem;
+        }
+        .info-pair .lbl {
+            font-size: .67rem;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: #8892b0;
+            font-weight: 700;
+            display: block;
+            margin-bottom: .15rem;
+        }
+        .info-pair .val { font-size: .95rem; font-weight: 600; color: #1a1e3c; }
 
-            var opt = {
-                margin: 0.4,
-                filename: 'site-diary-' + formattedDate + '.pdf',
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                html2canvas: {
-                    scale: 2
-                },
-                jsPDF: {
-                    unit: 'in',
-                    format: 'letter',
-                    orientation: 'portrait'
-                }
-            };
+        /* ── Status badges ─────────────────────────────────── */
+        .sbadge {
+            display: inline-block;
+            font-size: .7rem;
+            font-weight: 700;
+            padding: .18rem .55rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+        .sb-started   { background: #d1fae5; color: #065f46; }
+        .sb-restarted { background: #dbeafe; color: #1e40af; }
+        .sb-completed { background: #ede9fe; color: #5b21b6; }
+        .sb-suspended { background: #fee2e2; color: #991b1b; }
+        .sb-delayed   { background: #fef3c7; color: #92400e; }
+        .sb-stopped   { background: #fee2e2; color: #7f1d1d; }
+        .sb-claim     { background: #fce7f3; color: #9d174d; }
+        .sb-yes       { background: #d1fae5; color: #065f46; }
+        .sb-no        { background: #fee2e2; color: #991b1b; }
 
-            html2pdf().set(opt).from(element).save();
-        });
-    });
-    </script>
+        /* ── Signature boxes ───────────────────────────────── */
+        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .sig-box {
+            border: 1px solid #dde3f8;
+            border-radius: .75rem;
+            padding: 1rem 1.25rem;
+            background: #f7f8ff;
+        }
+        .sig-box .sig-name { font-size: 1.05rem; font-weight: 700; color: #1a1e3c; margin-top: .2rem; }
+        .sig-box .sig-role { font-size: .85rem; color: #5a6283; margin-top: .1rem; }
+        .sig-box .sig-line {
+            border-top: 2px solid #667eea;
+            margin-top: .9rem;
+            padding-top: .65rem;
+            font-size: .85rem;
+            color: #2d3661;
+        }
+
+        /* ── Print optimisations ───────────────────────────── */
+        @media print {
+            .preview-toolbar { display: none !important; }
+            body { background: #fff; }
+            #content { box-shadow: none; margin: 0; border-radius: 0; }
+            .doc-section { padding: 1rem 1.5rem; }
+        }
+    </style>
 </head>
 
 <body>
 
+<!-- Toolbar -->
+<div class="preview-toolbar">
+    <a href="building-site-diary" class="brand">INJESSVIEW</a>
+    <a href="building-site-diary" class="btn-back">← Back to Form</a>
+    <button id="btn-dl" class="btn-dl"><i class="fas fa-download"></i> Download PDF</button>
+</div>
 
-    <button id="rep" class="btn_download" title="Download PDF"><i class="fas fa-download"></i></button>
+<!-- Document -->
+<div id="content">
 
+    <!-- Header -->
+    <div class="doc-header">
+        <h1>CONTRACT SITE DIARY FORM</h1>
+        <h2>Building Works — Daily Field Report</h2>
+    </div>
 
-    <div id="content">
+    <!-- Meta strip -->
+    <div class="doc-meta">
+        <div class="doc-meta-item">
+            <span class="lbl">Sheet No.</span>
+            <span class="val"><?= $sheet_no ?: '—' ?></span>
+        </div>
+        <div class="doc-meta-item">
+            <span class="lbl">Site</span>
+            <span class="val"><?= $site ?: '—' ?></span>
+        </div>
+        <div class="doc-meta-item">
+            <span class="lbl">Area</span>
+            <span class="val"><?= $area ?: '—' ?></span>
+        </div>
+        <div class="doc-meta-item">
+            <span class="lbl">Daily Weather</span>
+            <span class="val"><?= $weather ? ucfirst($weather) : '—' ?></span>
+        </div>
+    </div>
 
+    <!-- Contract Information -->
+    <div class="doc-section">
+        <div class="s-heading">Contract Information</div>
+        <div class="info-grid">
+            <div class="info-pair" style="grid-column: 1 / -1;">
+                <span class="lbl">Contract Name</span>
+                <span class="val"><?= $contract_name ?: '—' ?></span>
+            </div>
+            <div class="info-pair">
+                <span class="lbl">Contract No.</span>
+                <span class="val"><?= $contract_no ?: '—' ?></span>
+            </div>
+            <div class="info-pair">
+                <span class="lbl">Contractor</span>
+                <span class="val"><?= $contractor ?: '—' ?></span>
+            </div>
+        </div>
+    </div>
 
-        <table style="table-layout:fixed; width:100%;">
-
-
-            <thead style="line-height: 30px; font-size:16px;">
-                <caption>LILONGWE WATER AND SANITATION PROJECT</caption>
-
+    <!-- Visitors -->
+    <div class="doc-section">
+        <div class="s-heading">Visitors</div>
+        <?php
+        $hasVisitors = !empty($visitor_name) && !(count($visitor_name) === 1 && $visitor_name[0] === '');
+        if (!$hasVisitors):
+        ?>
+            <p class="text-muted mb-0" style="font-size:.875rem;">No visitors recorded.</p>
+        <?php else: ?>
+        <table class="preview-table">
+            <thead>
                 <tr>
-                    <td colspan="10" class="center" rol="5"><b>CONTRACT SITE DIARY FORM</b></td>
+                    <th style="width:3%">#</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Organisation</th>
                 </tr>
             </thead>
-
-            <tr>
-                <td colspan="5"><b>Sheet No:</b>
-                    <?php echo $sheet_no; ?>
-                </td>
-                <td colspan="5"><b>SITE:</b>
-                    <?php echo $site; ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="10"><b>AREA:</b>
-                    <?php echo $area; ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="10"><b>CONTRACT NAME:</b>
-                    <?php echo $contract_name; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="10"><b>CONTRACT No.:</b>
-                    <?php echo $contract_no; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="10"><b>CONTRACTOR:</b>
-                    <?php echo $contractor; ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="10"><b>DAILY WEATHER:</b>
-                    <?php echo $weather; ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="10" class="center"><b>VISITORS</b></td>
-            </tr>
-            <tr>
-                <td colspan="3"><b>NAME</b></td>
-                <td colspan="3"><b>POSITION</b></td>
-                <td colspan="4"><b>ORGANISATION</b></td>
-            </tr>
-            <?php foreach ($visitor_name as $index => $name): ?>
-            <tr>
-                <td colspan="3" style="height:14px;">
-                    <?php echo $name; ?>
-                </td>
-                <td colspan="3" style="height:14px;">
-                    <?php echo getArrayValue($visitor_position, $index); ?>
-                </td>
-                <td colspan="4" style="height:14px;">
-                    <?php echo getArrayValue($visitor_organization, $index); ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-            <tr>
-                <td colspan="10" class="center"><b>CHANGES ON SITE TO:</b></td>
-            </tr>
-            <tr>
-                <td colspan="1"><b>PLANT</b></td>
-                <td colspan="2"><b>ITEM</b></td>
-                <td colspan="1"><b>ADDED</b></td>
-                <td colspan="1"><b>REMOVED</b></td>
-                <td colspan="2"><b>TOTAL</b></td>
-                <td colspan="3"><b>REMARK</b></td>
-            </tr>
-            <?php foreach ($plant_item as $index => $item): ?>
-            <tr>
-                <td colspan="1">
-                    <?php echo $index + 1 ?>
-                </td>
-                <td colspan="2">
-                    <?php echo $item; ?>
-                </td>
-                <td colspan="1">
-                    <?php echo getArrayValue($plant_added, $index); ?>
-                </td>
-                <td colspan="1">
-                    <?php echo getArrayValue($plant_removed, $index); ?>
-                </td>
-                <td colspan="2">
-                    <?php echo getArrayValue($plant_total, $index); ?>
-                </td>
-                <td colspan="3">
-                    <?php echo getArrayValue($plant_remarks, $index); ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-            <tr>
-                <td colspan="1"><b>PERSONNEL</b></td>
-                <td colspan="2"><b>ITEM</b></td>
-                <td colspan="1"><b>ADDED</b></td>
-                <td colspan="1"><b>REMOVED</b></td>
-                <td colspan="2"><b>TOTAL</b></td>
-                <td colspan="3"><b>REMARK</b></td>
-            </tr>
-            <?php foreach ($personnel_item as $index => $item): ?>
-            <tr>
-                <td colspan="1">
-                    <?php echo $index + 1 ?>
-                </td>
-                <td colspan="2">
-                    <?php echo $item; ?>
-                </td>
-                <td colspan="1">
-                    <?php echo getArrayValue($personnel_added, $index); ?>
-                </td>
-                <td colspan="1">
-                    <?php echo getArrayValue($personnel_removed, $index); ?>
-                </td>
-                <td colspan="2">
-                    <?php echo getArrayValue($personnel_total, $index); ?>
-                </td>
-                <td colspan="3">
-                    <?php echo getArrayValue($personnel_remarks, $index); ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-            <tr>
-                <td colspan="1"><b>MATERIALS</b></td>
-                <td colspan="2"><b>ITEM</b></td>
-                <td colspan="1"><b>ADDED</b></td>
-                <td colspan="1"><b>REMOVED</b></td>
-                <td colspan="2"><b>TOTAL</b></td>
-                <td colspan="3"><b>REMARK</b></td>
-            </tr>
-            <?php foreach ($materials_item as $index => $item): ?>
-            <tr>
-                <td colspan="1">
-                    <?php echo $index + 1 ?>
-                </td>
-                <td colspan="2">
-                    <?php echo $item; ?>
-                </td>
-                <td colspan="1">
-                    <?php echo getArrayValue($materials_added, $index); ?>
-                </td>
-                <td colspan="1">
-                    <?php echo getArrayValue($materials_removed, $index); ?>
-                </td>
-                <td colspan="2">
-                    <?php echo getArrayValue($materials_total, $index); ?>
-                </td>
-                <td colspan="3">
-                    <?php echo getArrayValue($materials_remarks, $index); ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-            <tr>
-                <td colspan="1"><b>OTHER (SPECIFY)</b></td>
-                <td colspan="2"><b>ITEM</b></td>
-                <td colspan="1"><b>ADDED</b></td>
-                <td colspan="1"><b>REMOVED</b></td>
-                <td colspan="2"><b>TOTAL</b></td>
-                <td colspan="3"><b>REMARK</b></td>
-            </tr>
-            <?php foreach ($other_item as $index => $item): ?>
-            <tr>
-                <td colspan="1">
-                    <?php echo $index + 1 ?>
-                </td>
-                <td colspan="2">
-                    <?php echo $item; ?>
-                </td>
-                <td colspan="1">
-                    <?php echo getArrayValue($other_added, $index); ?>
-                </td>
-                <td colspan="1">
-                    <?php echo getArrayValue($other_removed, $index); ?>
-                </td>
-                <td colspan="2">
-                    <?php echo getArrayValue($other_total, $index); ?>
-                </td>
-                <td colspan="3">
-                    <?php echo getArrayValue($other_remarks, $index); ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-            <tr>
-                <td colspan="10" class="center"><b>INCIDENTS / SAFETY</b></td>
-            </tr>
-            <tr>
-                <td colspan="10" style='height: 14px;'>
-                    <?php echo $incidents; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="10" class="center"><b>WORKING CONDITION AND SAFETY</b></td>
-            </tr>
-            <tr>
-                <td colspan="10" style='height: 14px;'>
-                    <?php echo $working_conditions; ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="10" class="center"><b>DETAILS OF WORKS STARTED / RESTARTED / COMPLETED</b></td>
-            </tr>
-            <tr>
-                <td colspan="4"><b>DETAIL</b></td>
-                <td colspan="6"><b>CATEGORY</b></td>
-            </tr>
-            <?php
-            foreach ($work_details as $index => $detail) {
-                echo "<tr>";
-                echo "<td colspan='4' style='height: 14px;'>{$detail}</td>";
-                echo "<td colspan='2'>" . (!empty($work_started[$index]) ? 'STARTED' : '') . "</td>";
-                echo "<td colspan='2'>" . (!empty($work_restarted[$index]) ? 'RESTARTED' : '') . "</td>";
-                echo "<td colspan='2'>" . (!empty($work_completed[$index]) ? 'COMPLETED' : '') . "</td>";
-                echo "</tr>";
-            }
-            ?>
-            <tr>
-                <td colspan="10" class="center"><b>WORK TEMPORARILY SUSPENDED / DELAYED /
-                        STOPPED /
-                        POTENTIAL CLAIMS</b>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>WORK ISSUE</b></td>
-                <td colspan="8"><b>CATEGORY</b></td>
-            </tr>
-            <?php
-            foreach ($work_issues_details as $index => $detail) {
-                echo "<tr>";
-                echo "<td colspan='2' style='height: 14px;'>{$detail}</td>";
-                echo "<td colspan='2'>" . (!empty($work_suspended[$index]) ? 'SUSPENDED' : '') . "</td>";
-                echo "<td colspan='2'>" . (!empty($work_delayed[$index]) ? 'DELAYED' : '') . "</td>";
-                echo "<td colspan='2'>" . (!empty($work_stopped[$index]) ? 'STOPPED' : '') . "</td>";
-                echo "<td colspan='2'>" . (!empty($potential_claims[$index]) ? 'POTENTIAL CLAIM' : '') . "</td>";
-                echo "</tr>";
-            }
-            ?>
-
-            <tr>
-                <td colspan="10" class="center"><b>SATISFACTION TO THE WORKS CARRIED OUT:</b></td>
-            </tr>
-            <tr>
-                <td colspan="10" style='height: 14px;'>SATISFIED:
-                    <?php echo htmlentities($satisfaction); ?>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="10"><b>IF NO (Give reasons)</b></td>
-            </tr>
-            <tr>
-                <td colspan="10" style='height: 14px;'>
-                    <?php echo $remarks; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5"><b>NAME:</b>
-                    <?php echo $authorised; ?>
-                </td>
-                <td colspan="5"><b>POSITION:</b>
-                    <?php echo $position; ?>
-                </td>
-            </tr>
-            <tr></tr>
-            <td colspan="5"><b>SIGNATURE:</b>
-                <?php echo $signature; ?>
-            </td>
-            <td colspan="5"><b>DATE:</b>
-                <?php echo $signed_date; ?>
-            </td>
-            </tr>
+            <tbody>
+                <?php foreach ($visitor_name as $i => $name):
+                    if ($name === '' && getArrayValue($visitor_position,$i) === '' && getArrayValue($visitor_organization,$i) === '') continue;
+                ?>
+                <tr>
+                    <td><?= $i + 1 ?></td>
+                    <td><?= $name ?></td>
+                    <td><?= getArrayValue($visitor_position, $i) ?></td>
+                    <td><?= getArrayValue($visitor_organization, $i) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
         </table>
+        <?php endif; ?>
     </div>
+
+    <!-- Changes on Site -->
+    <div class="doc-section">
+        <div class="s-heading">Changes on Site</div>
+
+        <?php
+        $changeSections = [
+            'Plant'           => ['item' => $plant_item,     'added' => $plant_added,     'removed' => $plant_removed,     'total' => $plant_total,     'remarks' => $plant_remarks],
+            'Personnel'       => ['item' => $personnel_item, 'added' => $personnel_added, 'removed' => $personnel_removed, 'total' => $personnel_total, 'remarks' => $personnel_remarks],
+            'Materials'       => ['item' => $materials_item, 'added' => $materials_added, 'removed' => $materials_removed, 'total' => $materials_total, 'remarks' => $materials_remarks],
+            'Other (Specify)' => ['item' => $other_item,     'added' => $other_added,     'removed' => $other_removed,     'total' => $other_total,     'remarks' => $other_remarks],
+        ];
+        foreach ($changeSections as $label => $data):
+            $hasRows = !empty($data['item']) && !(count($data['item']) === 1 && $data['item'][0] === '');
+        ?>
+        <p class="sub-label"><?= $label ?></p>
+        <?php if (!$hasRows): ?>
+            <p class="text-muted mb-3" style="font-size:.875rem;">No <?= strtolower($label) ?> changes recorded.</p>
+        <?php else: ?>
+        <table class="preview-table">
+            <thead>
+                <tr>
+                    <th style="width:3%">#</th>
+                    <th>Item</th>
+                    <th>Added</th>
+                    <th>Removed</th>
+                    <th>Total</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($data['item'] as $i => $item):
+                    if ($item === '') continue;
+                ?>
+                <tr>
+                    <td><?= $i + 1 ?></td>
+                    <td><?= $item ?></td>
+                    <td><?= getArrayValue($data['added'],   $i) ?></td>
+                    <td><?= getArrayValue($data['removed'], $i) ?></td>
+                    <td><?= getArrayValue($data['total'],   $i) ?></td>
+                    <td><?= getArrayValue($data['remarks'], $i) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php endif;
+        endforeach; ?>
+    </div>
+
+    <!-- Incidents & Safety -->
+    <div class="doc-section">
+        <div class="s-heading">Incidents / Safety</div>
+        <div class="info-grid">
+            <div class="info-pair">
+                <span class="lbl">Incidents</span>
+                <span class="val"><?= $incidents ?: 'None reported' ?></span>
+            </div>
+            <div class="info-pair">
+                <span class="lbl">Working Conditions</span>
+                <span class="val"><?= $working_conditions ? ucfirst($working_conditions) : '—' ?></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Works Started / Restarted / Completed -->
+    <div class="doc-section">
+        <div class="s-heading">Details of Works Started / Restarted / Completed</div>
+        <?php $hasWorkDetails = !empty($work_details) && !(count($work_details) === 1 && $work_details[0] === ''); ?>
+        <?php if (!$hasWorkDetails): ?>
+            <p class="text-muted mb-0" style="font-size:.875rem;">No work details recorded.</p>
+        <?php else: ?>
+        <table class="preview-table">
+            <thead>
+                <tr>
+                    <th style="width:3%">#</th>
+                    <th>Detail</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($work_details as $i => $detail):
+                    if ($detail === '') continue;
+                    $cats = [];
+                    if (!empty($work_started[$i]))   $cats[] = '<span class="sbadge sb-started">Started</span>';
+                    if (!empty($work_restarted[$i])) $cats[] = '<span class="sbadge sb-restarted">Restarted</span>';
+                    if (!empty($work_completed[$i])) $cats[] = '<span class="sbadge sb-completed">Completed</span>';
+                ?>
+                <tr>
+                    <td><?= $i + 1 ?></td>
+                    <td><?= $detail ?></td>
+                    <td><?= $cats ? implode(' ', $cats) : '<span class="text-muted">—</span>' ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php endif; ?>
+    </div>
+
+    <!-- Work Issues -->
+    <div class="doc-section">
+        <div class="s-heading">Work Temporarily Suspended / Delayed / Stopped / Potential Claims</div>
+        <?php $hasIssues = !empty($work_issues_details) && !(count($work_issues_details) === 1 && $work_issues_details[0] === ''); ?>
+        <?php if (!$hasIssues): ?>
+            <p class="text-muted mb-0" style="font-size:.875rem;">No work issues recorded.</p>
+        <?php else: ?>
+        <table class="preview-table">
+            <thead>
+                <tr>
+                    <th style="width:3%">#</th>
+                    <th>Issue Detail</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($work_issues_details as $i => $detail):
+                    if ($detail === '') continue;
+                    $statuses = [];
+                    if (!empty($work_suspended[$i]))   $statuses[] = '<span class="sbadge sb-suspended">Suspended</span>';
+                    if (!empty($work_delayed[$i]))     $statuses[] = '<span class="sbadge sb-delayed">Delayed</span>';
+                    if (!empty($work_stopped[$i]))     $statuses[] = '<span class="sbadge sb-stopped">Stopped</span>';
+                    if (!empty($potential_claims[$i])) $statuses[] = '<span class="sbadge sb-claim">Potential Claim</span>';
+                ?>
+                <tr>
+                    <td><?= $i + 1 ?></td>
+                    <td><?= $detail ?></td>
+                    <td><?= $statuses ? implode(' ', $statuses) : '<span class="text-muted">—</span>' ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php endif; ?>
+    </div>
+
+    <!-- Satisfaction -->
+    <div class="doc-section">
+        <div class="s-heading">Satisfaction to Works Carried Out</div>
+        <div class="info-grid">
+            <div class="info-pair">
+                <span class="lbl">Satisfied</span>
+                <span class="val">
+                    <?php if ($satisfaction === 'Yes'): ?>
+                        <span class="sbadge sb-yes">Yes</span>
+                    <?php elseif ($satisfaction === 'No'): ?>
+                        <span class="sbadge sb-no">No</span>
+                    <?php else: ?>—<?php endif; ?>
+                </span>
+            </div>
+            <?php if ($satisfaction === 'No' && $remarks): ?>
+            <div class="info-pair">
+                <span class="lbl">Reason</span>
+                <span class="val"><?= $remarks ?></span>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- Official Validation -->
+    <div class="doc-section">
+        <div class="s-heading">Official Validation</div>
+        <div class="sig-grid">
+            <div class="sig-box">
+                <span class="lbl" style="font-size:.67rem;text-transform:uppercase;letter-spacing:.8px;color:#8892b0;font-weight:700;">Authorised By</span>
+                <div class="sig-name"><?= $authorised ?: '—' ?></div>
+                <div class="sig-role"><?= $position ?: '' ?></div>
+                <div class="sig-line">
+                    <span style="color:#8892b0;font-size:.75rem;">Signature: </span><?= $signature ?: '' ?>
+                </div>
+            </div>
+            <div class="sig-box">
+                <span class="lbl" style="font-size:.67rem;text-transform:uppercase;letter-spacing:.8px;color:#8892b0;font-weight:700;">Date Signed</span>
+                <div class="sig-name"><?= $signed_date ?: '—' ?></div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /#content -->
+
+<script>
+$(document).ready(function() {
+    $('#btn-dl').on('click', function() {
+        var d = new Date();
+        var pad = function(n){ return String(n).padStart(2,'0'); };
+        var ts = pad(d.getDate()) + pad(d.getMonth()+1) + d.getFullYear() + pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds());
+        html2pdf().set({
+            margin:       0.4,
+            filename:     'building-site-diary-' + ts + '.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        }).from(document.getElementById('content')).save();
+    });
+});
+</script>
+<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -120,19 +120,19 @@ date_default_timezone_set('Africa/Blantyre');
 
                 <div class="col-sm-12">
                     <div class="form-floating mb-3">
-                        <input type="text" name="contract_name" class="form-control" id="contract_name" value="Construction of Improved Emptiable On-Site Sanitation (OSS) Facilities in Lilongwe City - Phase II - Lot 3" />
+                        <input type="text" name="contract_name" class="form-control" id="contract_name" placeholder="Contract Name" />
                         <label for="contract_name">Contract Name</label>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="form-floating mb-3">
-                        <input type="text" name="contract_no" class="form-control" id="contract_no" value="MW-LWSP-342403-CW-RFB" />
+                        <input type="text" name="contract_no" class="form-control" id="contract_no" placeholder="Contract No." />
                         <label for="contract_no">Contract No.</label>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="form-floating mb-3">
-                        <input type="text" name="contractor" class="form-control" id="contractor" value="SAWA-EMMAC JOINT VENTURE" />
+                        <input type="text" name="contractor" class="form-control" id="contractor" placeholder="Contractor Name" />
                         <label for="contractor">Contractor</label>
                     </div>
                 </div>
