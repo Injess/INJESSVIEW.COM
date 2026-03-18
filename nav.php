@@ -55,24 +55,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="about" data-route="about">ℹ️ About</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-ecosystem-toggle" href="#" id="ecosystemDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-route-group="ecosystem">
-                        🧭 Ecosystem
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end nav-ecosystem-menu" aria-labelledby="ecosystemDropdown">
-                        <li><a class="dropdown-item" href="construction-works" data-route="construction-works">🏗️ Construction Works</a></li>
-                        <li><a class="dropdown-item" href="site-sync" data-route="site-sync">🚀 SiteSync</a></li>
-                        <li><a class="dropdown-item" href="site-diary" data-route="site-diary">📔 Site Diary</a></li>
-                        <li><a class="dropdown-item" href="it-solutions" data-route="it-solutions">💻 IT Solutions</a></li>
-                        <li><a class="dropdown-item" href="invi-rides" data-route="invi-rides">🚗 Invi Rides</a></li>
-                        <li><a class="dropdown-item" href="carbon-abatement" data-route="carbon-abatement">🌱 Carbon Abatement</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="site-sync" data-route="site-sync">🚀 SiteSync</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact" data-route="contact">📧 Contact</a>
+                    <a class="nav-link" href="invi-rides" data-route="invi-rides">🚗 Invi Rides</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 8px 15px;">🌟 Ziwilatu Project</a>
+                    <a class="nav-link" href="carbon-abatement" data-route="carbon-abatement">🌱 Carbon Abatement</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact" data-route="contact">📧 Contact Us</a>
                 </li>
             </ul>
         </div>
