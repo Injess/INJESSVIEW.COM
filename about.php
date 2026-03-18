@@ -8,6 +8,12 @@ date_default_timezone_set('Africa/Blantyre');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Injessview</title>
+    <link rel="canonical" href="https://injessview.com/about">
+    <meta property="og:url" content="https://injessview.com/about" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://injessview.com/img/engineer.png" />
+    <meta property="og:title" content="About Us - Injessview" />
+    <meta property="og:description" content="Learn how INVI connects construction, SiteSync technology, and sustainable mobility into one ecosystem." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
@@ -15,7 +21,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="icon" type="image/png" href="./img/engineer.png" />
     <script src="./js/sweetalert.min.js"></script>
     
-    <meta name="description" content="Learn about INVI (Injessview) - Your partner in construction, technology, and media solutions.">
+    <meta name="description" content="Learn about INVI (Injessview) and how our construction, SiteSync, and sustainability platforms work together.">
 </head>
 
 <body class="bg-light">

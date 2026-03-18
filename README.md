@@ -63,8 +63,33 @@ http://localhost:8000/admin-login
 - `/contact` - Contact page
 - `/construction-works` - Tenders
 - `/site-diary` - Site diary
+- `/site-sync` - SiteSync platform story page
+- `/it-solutions` - Product ecosystem page
+- `/invi-rides` - Sustainable mobility page
+- `/carbon-abatement` - Carbon & sustainability page
+- `/building-site-diary` - Building diary form
+- `/irrigation-site-diary` - Irrigation diary form
+- `/roads-authority-site-diary` - Roads authority diary form
 - `/admin` - Admin login
 - `/dashboard` - Admin dashboard
+
+---
+
+## 🧭 Narrative & Page Connectivity
+
+This section documents how core public PHP pages connect and why.
+
+- `construction-works.php` → Opportunity and operations feed. This is where the SiteSync story started from active construction workflows and tender activity.
+- `site-sync.php` → Productization layer. Converts construction workflow + Ziwilatu network patterns into a unified project management system.
+- `site-diary.php` + diary forms (`building.php`, `irrigation.php`, `roads-authority.php`) → Field intelligence layer. Daily entries become structured project data and PDF evidence that support SiteSync reporting quality.
+- `it-solutions.php` → Ecosystem map page. Explains how SiteSync, Invi Rides, and Ziwilatu work together.
+- `carbon-abatement.php` + `invi-rides.php` → Sustainability engine. Mobility data and operational data power measurable carbon-abatement outcomes.
+- `about.php` + `contact.php` → Trust and conversion pages that route visitors into the same operational ecosystem.
+
+Public linking principle used in this codebase:
+- Use clean route slugs (`/site-sync`) for internal public navigation.
+- Keep preview/admin flows non-indexed and operationally isolated.
+- Keep narrative continuity by linking construction context, site diaries, SiteSync, and sustainability pages.
 
 ---
 

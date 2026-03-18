@@ -1,3 +1,41 @@
+<style>
+    .nav-ecosystem-toggle {
+        transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-ecosystem-toggle.show,
+    .nav-ecosystem-toggle.active {
+        color: #ffffff;
+    }
+
+    .nav-ecosystem-menu {
+        min-width: 260px;
+        margin-top: 0.75rem;
+        padding: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 1rem;
+        background: rgba(18, 24, 48, 0.96);
+        box-shadow: 0 18px 38px rgba(13, 18, 38, 0.28);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+
+    .nav-ecosystem-menu .dropdown-item {
+        border-radius: 0.85rem;
+        padding: 0.75rem 0.95rem;
+        color: #eef2ff;
+        font-weight: 600;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-ecosystem-menu .dropdown-item:hover,
+    .nav-ecosystem-menu .dropdown-item:focus,
+    .nav-ecosystem-menu .dropdown-item.active {
+        color: #ffffff;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+        transform: translateX(2px);
+    }
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="home">
@@ -12,28 +50,29 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="home">🏠 Home</a>
+                    <a class="nav-link" href="home" data-route="home">🏠 Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about">ℹ️ About</a>
+                    <a class="nav-link" href="about" data-route="about">ℹ️ About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle nav-ecosystem-toggle" href="#" id="ecosystemDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-route-group="ecosystem">
+                        🧭 Ecosystem
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end nav-ecosystem-menu" aria-labelledby="ecosystemDropdown">
+                        <li><a class="dropdown-item" href="construction-works" data-route="construction-works">🏗️ Construction Works</a></li>
+                        <li><a class="dropdown-item" href="site-sync" data-route="site-sync">🚀 SiteSync</a></li>
+                        <li><a class="dropdown-item" href="site-diary" data-route="site-diary">📔 Site Diary</a></li>
+                        <li><a class="dropdown-item" href="it-solutions" data-route="it-solutions">💻 IT Solutions</a></li>
+                        <li><a class="dropdown-item" href="invi-rides" data-route="invi-rides">🚗 Invi Rides</a></li>
+                        <li><a class="dropdown-item" href="carbon-abatement" data-route="carbon-abatement">🌱 Carbon Abatement</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="construction-works">🏗️ Construction</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="site-diary">📔 Site Diary</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact">📧 Contact</a>
+                    <a class="nav-link" href="contact" data-route="contact">📧 Contact</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 8px 15px;">🌟 Ziwilatu Project</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="invi-rides.php">🚗 Invi Rides</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="carbon-abatement.php">🌱 Carbon Abatement</a>
                 </li>
             </ul>
         </div>
@@ -41,3 +80,68 @@
 </nav>
 <!-- Spacer for fixed navbar -->
 <div style="height: 70px;"></div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const currentPath = (window.location.pathname.replace(/\/+$/, "").split("/").pop() || "home").toLowerCase();
+        const routeAliases = {
+            home: ["", "home", "index.php"],
+            about: ["about", "about.php"],
+            "construction-works": ["construction-works", "construction-works.php", "construction-jobs-and-tenders"],
+            "site-sync": ["site-sync", "site-sync.php"],
+            "site-diary": [
+                "site-diary",
+                "site-diary.php",
+                "building-site-diary",
+                "building-site-dairy",
+                "building.php",
+                "irrigation-site-diary",
+                "irrigation-site-dairy",
+                "irrigation.php",
+                "roads-authority-site-diary",
+                "roads-authority-site-dairy",
+                "roads-authority.php"
+            ],
+            contact: ["contact", "contact.php"],
+            "it-solutions": ["it-solutions", "it-solutions.php"],
+            "invi-rides": ["invi-rides", "invi-rides.php"],
+            "carbon-abatement": ["carbon-abatement", "carbon-abatement.php"]
+        };
+
+        const routeGroups = {
+            ecosystem: [
+                "construction-works",
+                "site-sync",
+                "site-diary",
+                "it-solutions",
+                "invi-rides",
+                "carbon-abatement"
+            ]
+        };
+
+        document.querySelectorAll("ul.navbar-nav [data-route]").forEach(function(link) {
+            link.classList.remove("active");
+
+            const route = link.getAttribute("data-route");
+            const aliases = routeAliases[route] || [route];
+
+            if (aliases.includes(currentPath)) {
+                link.classList.add("active");
+            }
+        });
+
+        document.querySelectorAll("ul.navbar-nav [data-route-group]").forEach(function(link) {
+            link.classList.remove("active");
+
+            const group = link.getAttribute("data-route-group");
+            const groupRoutes = routeGroups[group] || [];
+            const isActive = groupRoutes.some(function(route) {
+                const aliases = routeAliases[route] || [route];
+                return aliases.includes(currentPath);
+            });
+
+            if (isActive) {
+                link.classList.add("active");
+            }
+        });
+    });
+</script>

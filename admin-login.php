@@ -2,7 +2,7 @@
 session_start();
 // Redirect if already logged in
 if(isset($_SESSION['uid'])) {
-    header('Location: admin-dashboard.php');
+    header('Location: admin-dashboard');
     exit;
 }
 ?>
@@ -11,6 +11,7 @@ if(isset($_SESSION['uid'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Admin Login - Injessview</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
@@ -93,7 +94,7 @@ if(isset($_SESSION['uid'])) {
         </form>
         
         <div class="text-center mt-3">
-            <a href="index.php" class="text-muted text-decoration-none">← Back to Website</a>
+            <a href="home" class="text-muted text-decoration-none">← Back to Website</a>
         </div>
     </div>
 

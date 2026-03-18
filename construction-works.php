@@ -52,6 +52,12 @@ $rows = $xpath->query('//table[@id="tenderstable"]/tbody/tr');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Construction Works & Tenders - Injessview</title>
+    <link rel="canonical" href="https://injessview.com/construction-works">
+    <meta property="og:url" content="https://injessview.com/construction-works" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://injessview.com/img/engineer.png" />
+    <meta property="og:title" content="Construction Works & Tenders - Injessview" />
+    <meta property="og:description" content="Track current Malawi construction opportunities and follow how they connect to SiteSync, Ziwilatu, and digital site diaries." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
@@ -79,6 +85,12 @@ $rows = $xpath->query('//table[@id="tenderstable"]/tbody/tr');
         <div class="alert alert-info text-center shadow-custom" data-aos="fade-up">
             <strong>📅 Last Updated:</strong> <?php echo date('F j, Y, g:i a', file_exists($cache_file) ? filemtime($cache_file) : time()); ?>
             <br><small class="mt-2 d-block">Data sourced from PPDA Official Tenders</small>
+        </div>
+
+        <div class="alert alert-light shadow-custom" data-aos="fade-up">
+            <strong>🧭 Narrative Link:</strong> This construction pipeline is the operational origin of
+            <a href="site-sync" class="alert-link">SiteSync</a>. Ziwilatu network activity helps identify opportunity signals,
+            while our <a href="site-diary" class="alert-link">Site Diary</a> forms capture field execution data that strengthens reporting quality.
         </div>
 
         <div class="table-responsive">
@@ -141,7 +153,6 @@ $rows = $xpath->query('//table[@id="tenderstable"]/tbody/tr');
 
     <?php include './footer.php'; ?>
     <script>
-        document.querySelectorAll("ul.navbar-nav .nav-link")[1].classList.add("active")
     </script>
 </body>
 </html>

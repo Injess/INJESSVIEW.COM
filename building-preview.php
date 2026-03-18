@@ -2,78 +2,79 @@
 // Set time zone
 date_default_timezone_set('Africa/Blantyre');
 
-if (isset($_POST['submit'])) {
-    // Function to sanitize strings safely
-    function sanitizeString($data)
-    {
-        return is_string($data) ? htmlspecialchars($data, ENT_QUOTES, 'UTF-8') : '';
-    }
-
-    // Function to sanitize arrays safely
-    function sanitizeArray($data)
-    {
-        return is_array($data) ? array_map('sanitizeString', $data) : [];
-    }
-
-    // Sanitize string inputs
-    $site = sanitizeString($_POST['site'] ?? '');
-    $sheet_no = sanitizeString($_POST['sheet_no'] ?? '');
-    $area = sanitizeString($_POST['area'] ?? '');
-    $contract_name = sanitizeString($_POST['contract_name'] ?? '');
-    $contract_no = sanitizeString($_POST['contract_no'] ?? '');
-    $contractor = sanitizeString($_POST['contractor'] ?? '');
-    $weather = sanitizeString($_POST['weather'] ?? '');
-    $incidents = sanitizeString($_POST['incidents'] ?? '');
-    $working_conditions = sanitizeString($_POST['working_conditions'] ?? '');
-    $works_suspended = sanitizeString($_POST['works_suspended'] ?? '');
-    $satisfaction = sanitizeString($_POST['satisfaction'] ?? '');
-    $remarks = sanitizeString($_POST['remarks'] ?? '');
-    $authorised = sanitizeString($_POST['authorised'] ?? '');
-    $position = sanitizeString($_POST['position'] ?? '');
-    $signature = sanitizeString($_POST['signature'] ?? '');
-    $signed_date = sanitizeString($_POST['signed_date'] ?? '');
-
-    // Sanitize array inputs
-    $visitor_name = sanitizeArray($_POST['visitor_name'] ?? []);
-    $visitor_position = sanitizeArray($_POST['visitor_position'] ?? []);
-    $visitor_organization = sanitizeArray($_POST['visitor_organization'] ?? []);
-
-    $plant_item = sanitizeArray($_POST['plant_item'] ?? []);
-    $plant_added = sanitizeArray($_POST['plant_added'] ?? []);
-    $plant_removed = sanitizeArray($_POST['plant_removed'] ?? []);
-    $plant_total = sanitizeArray($_POST['plant_total'] ?? []);
-    $plant_remarks = sanitizeArray($_POST['plant_remarks'] ?? []);
-
-    $personnel_item = sanitizeArray($_POST['personnel_item'] ?? []);
-    $personnel_added = sanitizeArray($_POST['personnel_added'] ?? []);
-    $personnel_removed = sanitizeArray($_POST['personnel_removed'] ?? []);
-    $personnel_total = sanitizeArray($_POST['personnel_total'] ?? []);
-    $personnel_remarks = sanitizeArray($_POST['personnel_remarks'] ?? []);
-
-    $materials_item = sanitizeArray($_POST['materials_item'] ?? []);
-    $materials_added = sanitizeArray($_POST['materials_added'] ?? []);
-    $materials_removed = sanitizeArray($_POST['materials_removed'] ?? []);
-    $materials_total = sanitizeArray($_POST['materials_total'] ?? []);
-    $materials_remarks = sanitizeArray($_POST['materials_remarks'] ?? []);
-
-    $other_item = sanitizeArray($_POST['other_item'] ?? []);
-    $other_added = sanitizeArray($_POST['other_added'] ?? []);
-    $other_removed = sanitizeArray($_POST['other_removed'] ?? []);
-    $other_total = sanitizeArray($_POST['other_total'] ?? []);
-    $other_remarks = sanitizeArray($_POST['other_remarks'] ?? []);
-
-    // Work Details and Work Issues
-    $work_details = sanitizeArray($_POST['work_details'] ?? []);
-    $work_started = sanitizeArray($_POST['work_started'] ?? []);
-    $work_restarted = sanitizeArray($_POST['work_restarted'] ?? []);
-    $work_completed = sanitizeArray($_POST['work_completed'] ?? []);
-
-    $work_issues_details = sanitizeArray($_POST['work_issues_details'] ?? []);
-    $work_suspended = sanitizeArray($_POST['work_suspended'] ?? []);
-    $work_delayed = sanitizeArray($_POST['work_delayed'] ?? []);
-    $work_stopped = sanitizeArray($_POST['work_stopped'] ?? []);
-    $potential_claims = sanitizeArray($_POST['potential_claims'] ?? []);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['submit'])) {
+    header('Location: building-site-diary');
+    exit;
 }
+
+function sanitizeValue($data)
+{
+    if (is_array($data)) {
+        return array_map('sanitizeValue', $data);
+    }
+
+    return is_string($data) ? htmlspecialchars($data, ENT_QUOTES, 'UTF-8') : '';
+}
+
+function getArrayValue($data, $index)
+{
+    return isset($data[$index]) ? $data[$index] : '';
+}
+
+$site = sanitizeValue($_POST['site'] ?? '');
+$sheet_no = sanitizeValue($_POST['sheet_no'] ?? '');
+$area = sanitizeValue($_POST['area'] ?? '');
+$contract_name = sanitizeValue($_POST['contract_name'] ?? '');
+$contract_no = sanitizeValue($_POST['contract_no'] ?? '');
+$contractor = sanitizeValue($_POST['contractor'] ?? '');
+$weather = sanitizeValue($_POST['weather'] ?? '');
+$incidents = sanitizeValue($_POST['incidents'] ?? '');
+$working_conditions = sanitizeValue($_POST['working_conditions'] ?? '');
+$satisfaction = sanitizeValue($_POST['satisfaction'] ?? '');
+$remarks = sanitizeValue($_POST['remarks'] ?? '');
+$authorised = sanitizeValue($_POST['authorised'] ?? '');
+$position = sanitizeValue($_POST['position'] ?? '');
+$signature = sanitizeValue($_POST['signature'] ?? '');
+$signed_date = sanitizeValue($_POST['signed_date'] ?? '');
+
+$visitor_name = sanitizeValue($_POST['visitor_name'] ?? []);
+$visitor_position = sanitizeValue($_POST['visitor_position'] ?? []);
+$visitor_organization = sanitizeValue($_POST['visitor_organization'] ?? []);
+
+$plant_item = sanitizeValue($_POST['plant_item'] ?? []);
+$plant_added = sanitizeValue($_POST['plant_added'] ?? []);
+$plant_removed = sanitizeValue($_POST['plant_removed'] ?? []);
+$plant_total = sanitizeValue($_POST['plant_total'] ?? []);
+$plant_remarks = sanitizeValue($_POST['plant_remarks'] ?? []);
+
+$personnel_item = sanitizeValue($_POST['personnel_item'] ?? []);
+$personnel_added = sanitizeValue($_POST['personnel_added'] ?? []);
+$personnel_removed = sanitizeValue($_POST['personnel_removed'] ?? []);
+$personnel_total = sanitizeValue($_POST['personnel_total'] ?? []);
+$personnel_remarks = sanitizeValue($_POST['personnel_remarks'] ?? []);
+
+$materials_item = sanitizeValue($_POST['materials_item'] ?? []);
+$materials_added = sanitizeValue($_POST['materials_added'] ?? []);
+$materials_removed = sanitizeValue($_POST['materials_removed'] ?? []);
+$materials_total = sanitizeValue($_POST['materials_total'] ?? []);
+$materials_remarks = sanitizeValue($_POST['materials_remarks'] ?? []);
+
+$other_item = sanitizeValue($_POST['other_item'] ?? []);
+$other_added = sanitizeValue($_POST['other_added'] ?? []);
+$other_removed = sanitizeValue($_POST['other_removed'] ?? []);
+$other_total = sanitizeValue($_POST['other_total'] ?? []);
+$other_remarks = sanitizeValue($_POST['other_remarks'] ?? []);
+
+$work_details = sanitizeValue($_POST['work_details'] ?? []);
+$work_started = sanitizeValue($_POST['work_started'] ?? []);
+$work_restarted = sanitizeValue($_POST['work_restarted'] ?? []);
+$work_completed = sanitizeValue($_POST['work_completed'] ?? []);
+
+$work_issues_details = sanitizeValue($_POST['work_issues_details'] ?? []);
+$work_suspended = sanitizeValue($_POST['work_suspended'] ?? []);
+$work_delayed = sanitizeValue($_POST['work_delayed'] ?? []);
+$work_stopped = sanitizeValue($_POST['work_stopped'] ?? []);
+$potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
 ?>
 
 <!DOCTYPE html>
@@ -82,11 +83,12 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="css/main.css">
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/html2pdf.min.js"></script>
     <script src="./js/all.min.js"></script>
-    <title>Site Diary Preview</title>
+    <title>Building Site Diary Preview - Injessview</title>
 
     <script type="text/javascript">
     function getFormattedDate() {
@@ -207,10 +209,10 @@ if (isset($_POST['submit'])) {
                     <?php echo $name; ?>
                 </td>
                 <td colspan="3" style="height:14px;">
-                    <?php echo $visitor_position[$index]; ?>
+                    <?php echo getArrayValue($visitor_position, $index); ?>
                 </td>
                 <td colspan="4" style="height:14px;">
-                    <?php echo $visitor_organization[$index]; ?>
+                    <?php echo getArrayValue($visitor_organization, $index); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -234,16 +236,16 @@ if (isset($_POST['submit'])) {
                     <?php echo $item; ?>
                 </td>
                 <td colspan="1">
-                    <?php echo $plant_added[$index]; ?>
+                    <?php echo getArrayValue($plant_added, $index); ?>
                 </td>
                 <td colspan="1">
-                    <?php echo $plant_removed[$index]; ?>
+                    <?php echo getArrayValue($plant_removed, $index); ?>
                 </td>
                 <td colspan="2">
-                    <?php echo $plant_total[$index]; ?>
+                    <?php echo getArrayValue($plant_total, $index); ?>
                 </td>
                 <td colspan="3">
-                    <?php echo $plant_remarks[$index]; ?>
+                    <?php echo getArrayValue($plant_remarks, $index); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -264,16 +266,16 @@ if (isset($_POST['submit'])) {
                     <?php echo $item; ?>
                 </td>
                 <td colspan="1">
-                    <?php echo $personnel_added[$index]; ?>
+                    <?php echo getArrayValue($personnel_added, $index); ?>
                 </td>
                 <td colspan="1">
-                    <?php echo $personnel_removed[$index]; ?>
+                    <?php echo getArrayValue($personnel_removed, $index); ?>
                 </td>
                 <td colspan="2">
-                    <?php echo $personnel_total[$index]; ?>
+                    <?php echo getArrayValue($personnel_total, $index); ?>
                 </td>
                 <td colspan="3">
-                    <?php echo $personnel_remarks[$index]; ?>
+                    <?php echo getArrayValue($personnel_remarks, $index); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -294,16 +296,16 @@ if (isset($_POST['submit'])) {
                     <?php echo $item; ?>
                 </td>
                 <td colspan="1">
-                    <?php echo $materials_added[$index]; ?>
+                    <?php echo getArrayValue($materials_added, $index); ?>
                 </td>
                 <td colspan="1">
-                    <?php echo $materials_removed[$index]; ?>
+                    <?php echo getArrayValue($materials_removed, $index); ?>
                 </td>
                 <td colspan="2">
-                    <?php echo $materials_total[$index]; ?>
+                    <?php echo getArrayValue($materials_total, $index); ?>
                 </td>
                 <td colspan="3">
-                    <?php echo $materials_remarks[$index]; ?>
+                    <?php echo getArrayValue($materials_remarks, $index); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -324,16 +326,16 @@ if (isset($_POST['submit'])) {
                     <?php echo $item; ?>
                 </td>
                 <td colspan="1">
-                    <?php echo $other_added[$index]; ?>
+                    <?php echo getArrayValue($other_added, $index); ?>
                 </td>
                 <td colspan="1">
-                    <?php echo $other_removed[$index]; ?>
+                    <?php echo getArrayValue($other_removed, $index); ?>
                 </td>
                 <td colspan="2">
-                    <?php echo $other_total[$index]; ?>
+                    <?php echo getArrayValue($other_total, $index); ?>
                 </td>
                 <td colspan="3">
-                    <?php echo $other_remarks[$index]; ?>
+                    <?php echo getArrayValue($other_remarks, $index); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -365,9 +367,9 @@ if (isset($_POST['submit'])) {
             foreach ($work_details as $index => $detail) {
                 echo "<tr>";
                 echo "<td colspan='4' style='height: 14px;'>{$detail}</td>";
-                echo "<td colspan='2'>" . (isset($work_started[$index]) ? 'STARTED' : '') . "</td>";
-                echo "<td colspan='2'>" . (isset($work_restarted[$index]) ? 'RESTARTED' : '') . "</td>";
-                echo "<td colspan='2'>" . (isset($work_completed[$index])  ? 'COMPLETED' : '') . "</td>";
+                echo "<td colspan='2'>" . (!empty($work_started[$index]) ? 'STARTED' : '') . "</td>";
+                echo "<td colspan='2'>" . (!empty($work_restarted[$index]) ? 'RESTARTED' : '') . "</td>";
+                echo "<td colspan='2'>" . (!empty($work_completed[$index]) ? 'COMPLETED' : '') . "</td>";
                 echo "</tr>";
             }
             ?>
@@ -385,10 +387,10 @@ if (isset($_POST['submit'])) {
             foreach ($work_issues_details as $index => $detail) {
                 echo "<tr>";
                 echo "<td colspan='2' style='height: 14px;'>{$detail}</td>";
-                echo "<td colspan='2'>" . (isset($work_suspended[$index]) ? 'SUSPENDED' : '') . "</td>";
-                echo "<td colspan='2'>" . (isset($work_delayed[$index]) ? 'DELAYED' : '') . "</td>";
-                echo "<td colspan='2'>" . (isset($work_stopped[$index]) ? 'STOPPED' : '') . "</td>";
-                echo "<td colspan='2'>" . (isset($potential_claims[$index]) ? 'POTENTIAL CLAIM' : '') . "</td>";
+                echo "<td colspan='2'>" . (!empty($work_suspended[$index]) ? 'SUSPENDED' : '') . "</td>";
+                echo "<td colspan='2'>" . (!empty($work_delayed[$index]) ? 'DELAYED' : '') . "</td>";
+                echo "<td colspan='2'>" . (!empty($work_stopped[$index]) ? 'STOPPED' : '') . "</td>";
+                echo "<td colspan='2'>" . (!empty($potential_claims[$index]) ? 'POTENTIAL CLAIM' : '') . "</td>";
                 echo "</tr>";
             }
             ?>

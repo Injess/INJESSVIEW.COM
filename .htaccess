@@ -20,6 +20,10 @@ RewriteRule ^preview preview.php [NC,L]
 
 RewriteRule ^site-diary site-diary.php [NC,L]
 
+RewriteRule ^roads-authority-site-diary$ roads-authority.php [NC,L]
+RewriteRule ^building-site-diary$ building.php [NC,L]
+RewriteRule ^irrigation-site-diary$ irrigation.php [NC,L]
+
 RewriteRule ^roads-authority-site-dairy roads-authority.php [NC,L]
 
 RewriteRule ^building-site-dairy building.php [NC,L]
@@ -27,6 +31,11 @@ RewriteRule ^building-site-dairy building.php [NC,L]
 RewriteRule ^irrigation-site-dairy irrigation.php [NC,L]
 
 RewriteRule ^construction-works construction-works.php [NC,L]
+
+RewriteRule ^site-sync$ site-sync.php [NC,L]
+RewriteRule ^it-solutions$ it-solutions.php [NC,L]
+RewriteRule ^invi-rides$ invi-rides.php [NC,L]
+RewriteRule ^carbon-abatement$ carbon-abatement.php [NC,L]
 
 RewriteRule ^construction-jobs-and-tenders construction-works.php [NC,L]
 

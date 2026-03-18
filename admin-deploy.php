@@ -3,7 +3,7 @@ session_start();
 include './php/core.php';
 
 if(!loggedin()) {
-    header('Location: admin-login.php');
+    header('Location: admin-login');
     exit;
 }
 ?>
@@ -12,6 +12,7 @@ if(!loggedin()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Deployment - Injessview Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
@@ -123,13 +124,13 @@ if(!loggedin()) {
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard.php">📊 Dashboard</a></li>
-            <li><a href="admin-pages.php">📄 Manage Pages</a></li>
-            <li><a href="admin-media.php">🖼️ Media Library</a></li>
-            <li><a href="admin-settings.php">⚙️ Settings</a></li>
-            <li><a href="admin-users.php">👥 Users</a></li>
-            <li><a href="admin-analytics.php">📈 Analytics</a></li>
-            <li><a href="index.php" target="_blank">🌐 View Website</a></li>
+            <li><a href="admin-dashboard">📊 Dashboard</a></li>
+            <li><a href="admin-pages">📄 Manage Pages</a></li>
+            <li><a href="admin-media">🖼️ Media Library</a></li>
+            <li><a href="admin-settings">⚙️ Settings</a></li>
+            <li><a href="admin-users">👥 Users</a></li>
+            <li><a href="admin-analytics">📈 Analytics</a></li>
+            <li><a href="home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -137,7 +138,7 @@ if(!loggedin()) {
     <div class="main-content">
         <div class="top-bar">
             <h1>🚀 Deploy Changes</h1>
-            <a href="admin-dashboard.php" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
 
         <div class="deploy-box">
@@ -184,8 +185,8 @@ if(!loggedin()) {
             <div class="deploy-step">
                 <h5>4. 🛠️ Quick Actions</h5>
                 <div class="mt-3">
-                    <a href="admin-backup.php" class="btn btn-primary me-2">💾 Create Backup First</a>
-                    <a href="index.php" target="_blank" class="btn btn-outline-primary">👁️ Preview Site</a>
+                    <a href="admin-backup" class="btn btn-primary me-2">💾 Create Backup First</a>
+                    <a href="home" target="_blank" class="btn btn-outline-primary">👁️ Preview Site</a>
                 </div>
             </div>
         </div>

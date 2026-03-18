@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /admin
+Disallow: /admin-
+Disallow: /dashboard
+Disallow: /building-preview
+Disallow: /road-authority-preview
+Disallow: /irrigation-preview
+Disallow: /php/
+Disallow: /backups/
+Disallow: /compress-image.php
+
+Sitemap: https://injessview.com/sitemap.xml

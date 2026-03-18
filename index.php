@@ -21,12 +21,13 @@ date_default_timezone_set('Africa/Blantyre');
     <meta name="keywords" content="construction management, IT solutions, media services, Malawi, INVI, site diary, tenders">
     <meta name="author" content="Injessview">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://injessview.com/home">
 
-    <meta property="og:url" content="https://injessview.com/index.php" />
+    <meta property="og:url" content="https://injessview.com/home" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/online-survey.png" />
-    <meta property="og:title" content="INJESS VIEW" />
-    <meta property="og:description" content="Construction works, Site Diary" />
+    <meta property="og:title" content="Injessview - Construction, Technology & Media Solutions" />
+    <meta property="og:description" content="INVI delivers construction intelligence, SiteSync technology, and sustainable mobility solutions across Malawi." />
     
     <style>
         /* Styles for elegant high contrast and sophisticated look for INVI */
@@ -125,16 +126,16 @@ date_default_timezone_set('Africa/Blantyre');
                     </div>
                     
                     <div class="mb-3">
-                        <a href="site-sync.php" class="btn btn-primary btn-lg menu-btn w-100 py-3">Construction & Project Management</a>
+                        <a href="site-sync" class="btn btn-primary btn-lg menu-btn w-100 py-3">Construction & Project Management</a>
                     </div>
                     <div class="mb-3">
-                        <a href="it-solutions.php" class="btn btn-info btn-lg menu-btn w-100 py-3">IT & Computer Systems</a>
+                        <a href="it-solutions" class="btn btn-info btn-lg menu-btn w-100 py-3">IT & Computer Systems</a>
                     </div>
                     <div class="mb-3">
-                        <a href="media.php" class="btn btn-secondary btn-lg menu-btn w-100 py-3">Media & Digital Solutions</a>
+                        <a href="contact" class="btn btn-secondary btn-lg menu-btn w-100 py-3">Media & Digital Solutions</a>
                     </div>
                     <div class="mb-3">
-                        <a href="carbon-abatement.php" class="btn btn-outline-success btn-lg menu-btn w-100 py-3">🌱 Carbon Abatement & Sustainability</a>
+                        <a href="carbon-abatement" class="btn btn-outline-success btn-lg menu-btn w-100 py-3">🌱 Carbon Abatement & Sustainability</a>
                     </div>
                 </div>
             </div>
@@ -152,7 +153,7 @@ date_default_timezone_set('Africa/Blantyre');
                         </div>
                         
                         <div class="col-12 col-md-8 col-lg-6 mb-3">
-                            <a href="/site-diary.php" class="btn btn-info btn-lg menu-btn w-100 py-3 rounded-pill">📔 Online Site Diary</a>
+                            <a href="site-diary" class="btn btn-info btn-lg menu-btn w-100 py-3 rounded-pill">📔 Online Site Diary</a>
                         </div>
                         
                         <div class="col-12 col-md-8 col-lg-6 mb-3">

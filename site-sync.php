@@ -7,13 +7,19 @@ date_default_timezone_set('Africa/Blantyre');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Construction & Project Management - Injessview</title>
+    <link rel="canonical" href="https://injessview.com/site-sync">
+    <meta property="og:url" content="https://injessview.com/site-sync" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://injessview.com/img/engineer.png" />
+    <meta property="og:title" content="SiteSync - Construction & Project Management" />
+    <meta property="og:description" content="SiteSync grew from INVI's construction and Ziwilatu workflows, with site diaries now powering project intelligence." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
     <script src="./js/sweetalert.min.js"></script>
-    <meta name="description" content="INVI SiteSync — AI-powered construction and project management platform built for Malawi.">
+    <meta name="description" content="INVI SiteSync — AI-powered construction and project management platform built from real construction works and Ziwilatu operations in Malawi.">
 </head>
 
 <body class="bg-light">
@@ -40,6 +46,23 @@ date_default_timezone_set('Africa/Blantyre');
                         that brings your entire project lifecycle into one intelligent dashboard.
                         From resource tracking and progress reporting to team coordination and document management,
                         SiteSync eliminates the chaos of managing construction sites manually.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5" data-aos="fade-up">
+            <div class="col-md-12">
+                <div class="alert alert-info shadow-custom">
+                    <h4 class="mb-2">How SiteSync Was Formed</h4>
+                    <p class="mb-2">
+                        SiteSync started from our construction operations on
+                        <a href="construction-works" class="alert-link">Construction Works</a>
+                        and the professional network dynamics from
+                        <a href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" class="alert-link">Ziwilatu</a>.
+                        Today, the
+                        <a href="site-diary" class="alert-link">Site Diary</a>
+                        flow contributes day-to-day field intelligence that feeds directly into SiteSync reporting.
                     </p>
                 </div>
             </div>

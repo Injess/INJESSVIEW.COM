@@ -1,21 +1,29 @@
 <?php
 session_start();
 include './php/core.php';
-include './php/connect.php';
 
 if(!loggedin()) {
-    header('Location: admin-login.php');
+    header('Location: admin-login');
     exit;
 }
 
+include './php/connect.php';
+
 $uid = $_SESSION['uid'];
-$query = "SELECT username FROM users WHERE uid='$uid'";
-$result = mysqli_query($conn, $query);
-$user = mysqli_fetch_assoc($result);
-$username = $user['username'] ?? 'Admin';
+$username = 'Admin';
+$db_error_message = '';
+$users_result = false;
+if($conn) {
+    $query = "SELECT username FROM users WHERE uid='$uid'";
+    $result = mysqli_query($conn, $query);
+    $user = $result ? mysqli_fetch_assoc($result) : null;
+    $username = $user['username'] ?? 'Admin';
+} elseif (!empty($db_connection_error)) {
+    $db_error_message = 'Database connection unavailable. User management is temporarily disabled.';
+}
 
 // Handle user creation
-if(isset($_POST['create_user'])) {
+if($conn && isset($_POST['create_user'])) {
     $new_username = mysqli_real_escape_string($conn, htmlentities($_POST['new_username']));
     $new_password = mysqli_real_escape_string($conn, htmlentities($_POST['new_password']));
     $pword_hash = md5($new_password);
@@ -34,7 +42,7 @@ if(isset($_POST['create_user'])) {
 }
 
 // Handle user deletion
-if(isset($_GET['delete_user'])) {
+if($conn && isset($_GET['delete_user'])) {
     $delete_id = intval($_GET['delete_user']);
     if($delete_id != $uid) { // Prevent deleting self
         $delete_query = "DELETE FROM users WHERE uid='$delete_id'";
@@ -49,14 +57,17 @@ if(isset($_GET['delete_user'])) {
 }
 
 // Get all users
-$users_query = "SELECT uid, username FROM users ORDER BY uid DESC";
-$users_result = mysqli_query($conn, $users_query);
+if($conn) {
+    $users_query = "SELECT uid, username FROM users ORDER BY uid DESC";
+    $users_result = mysqli_query($conn, $users_query);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>User Management - Injessview Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
@@ -187,13 +198,13 @@ $users_result = mysqli_query($conn, $users_query);
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard.php">📊 Dashboard</a></li>
-            <li><a href="admin-pages.php">📄 Manage Pages</a></li>
-            <li><a href="admin-media.php">🖼️ Media Library</a></li>
-            <li><a href="admin-settings.php">⚙️ Settings</a></li>
-            <li><a href="admin-users.php" class="active">👥 Users</a></li>
-            <li><a href="admin-analytics.php">📈 Analytics</a></li>
-            <li><a href="index.php" target="_blank">🌐 View Website</a></li>
+            <li><a href="admin-dashboard">📊 Dashboard</a></li>
+            <li><a href="admin-pages">📄 Manage Pages</a></li>
+            <li><a href="admin-media">🖼️ Media Library</a></li>
+            <li><a href="admin-settings">⚙️ Settings</a></li>
+            <li><a href="admin-users" class="active">👥 Users</a></li>
+            <li><a href="admin-analytics">📈 Analytics</a></li>
+            <li><a href="home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -201,14 +212,18 @@ $users_result = mysqli_query($conn, $users_query);
     <div class="main-content">
         <div class="top-bar">
             <h1>User Management</h1>
-            <a href="admin-dashboard.php" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
+
+        <?php if($db_error_message): ?>
+            <div class="alert alert-warning" role="alert"><?= htmlspecialchars($db_error_message) ?></div>
+        <?php endif; ?>
 
         <?php if(isset($success_message)): ?>
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
                     swal("Success!", "<?= $success_message ?>", "success").then(() => {
-                        window.location.href = "admin-users.php";
+                        window.location.href = "admin-users";
                     });
                 });
             </script>
@@ -227,13 +242,13 @@ $users_result = mysqli_query($conn, $users_query);
             <h3 class="mb-3">Create New User</h3>
             <form method="POST" action="" class="row g-3">
                 <div class="col-md-5">
-                    <input type="text" class="form-control" name="new_username" placeholder="Username" required>
+                    <input type="text" class="form-control" name="new_username" placeholder="Username" <?= !$conn ? 'disabled' : '' ?> required>
                 </div>
                 <div class="col-md-5">
-                    <input type="password" class="form-control" name="new_password" placeholder="Password" required>
+                    <input type="password" class="form-control" name="new_password" placeholder="Password" <?= !$conn ? 'disabled' : '' ?> required>
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" name="create_user" class="btn btn-primary w-100">➕ Create</button>
+                    <button type="submit" name="create_user" class="btn btn-primary w-100" <?= !$conn ? 'disabled' : '' ?>>➕ Create</button>
                 </div>
             </form>
         </div>
@@ -241,23 +256,27 @@ $users_result = mysqli_query($conn, $users_query);
         <!-- Users List -->
         <div class="content-box">
             <h3 class="mb-3">All Users</h3>
-            <?php while($u = mysqli_fetch_assoc($users_result)): ?>
-                <div class="user-card">
-                    <div class="user-info">
-                        <div class="user-avatar"><?= strtoupper(substr($u['username'], 0, 1)) ?></div>
-                        <div>
-                            <h5 class="mb-0"><?= htmlspecialchars($u['username']) ?></h5>
-                            <small class="text-muted">User ID: <?= $u['uid'] ?></small>
-                            <?php if($u['uid'] == $uid): ?>
-                                <span class="badge bg-success ms-2">You</span>
-                            <?php endif; ?>
+            <?php if($users_result): ?>
+                <?php while($u = mysqli_fetch_assoc($users_result)): ?>
+                    <div class="user-card">
+                        <div class="user-info">
+                            <div class="user-avatar"><?= strtoupper(substr($u['username'], 0, 1)) ?></div>
+                            <div>
+                                <h5 class="mb-0"><?= htmlspecialchars($u['username']) ?></h5>
+                                <small class="text-muted">User ID: <?= $u['uid'] ?></small>
+                                <?php if($u['uid'] == $uid): ?>
+                                    <span class="badge bg-success ms-2">You</span>
+                                <?php endif; ?>
+                            </div>
                         </div>
+                        <?php if($u['uid'] != $uid): ?>
+                            <a href="?delete_user=<?= $u['uid'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this user?')">🗑️ Delete</a>
+                        <?php endif; ?>
                     </div>
-                    <?php if($u['uid'] != $uid): ?>
-                        <a href="?delete_user=<?= $u['uid'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this user?')">🗑️ Delete</a>
-                    <?php endif; ?>
-                </div>
-            <?php endwhile; ?>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-muted mb-0">User records are unavailable until the database connection is restored.</p>
+            <?php endif; ?>
         </div>
     </div>
 

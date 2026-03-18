@@ -1,26 +1,34 @@
 <?php
 session_start();
 include './php/core.php';
-include './php/connect.php';
 
 // Check if user is logged in
 if(!loggedin()) {
-    header('Location: admin-login.php');
+    header('Location: admin-login');
     exit;
 }
 
+include './php/connect.php';
+
 // Get user info
 $uid = $_SESSION['uid'];
-$query = "SELECT username FROM users WHERE uid='$uid'";
-$result = mysqli_query($conn, $query);
-$user = mysqli_fetch_assoc($result);
-$username = $user['username'] ?? 'Admin';
+$username = 'Admin';
+$db_error_message = '';
+if($conn) {
+    $query = "SELECT username FROM users WHERE uid='$uid'";
+    $result = mysqli_query($conn, $query);
+    $user = $result ? mysqli_fetch_assoc($result) : null;
+    $username = $user['username'] ?? 'Admin';
+} elseif (!empty($db_connection_error)) {
+    $db_error_message = 'Database connection unavailable. Dashboard data is running in limited mode.';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Admin Dashboard - Injessview</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
@@ -233,13 +241,13 @@ $username = $user['username'] ?? 'Admin';
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard.php" class="active">📊 Dashboard</a></li>
-            <li><a href="admin-pages.php">📄 Manage Pages</a></li>
-            <li><a href="admin-media.php">🖼️ Media Library</a></li>
-            <li><a href="admin-settings.php">⚙️ Settings</a></li>
-            <li><a href="admin-users.php">👥 Users</a></li>
-            <li><a href="admin-analytics.php">📈 Analytics</a></li>
-            <li><a href="index.php" target="_blank">🌐 View Website</a></li>
+            <li><a href="admin-dashboard" class="active">📊 Dashboard</a></li>
+            <li><a href="admin-pages">📄 Manage Pages</a></li>
+            <li><a href="admin-media">🖼️ Media Library</a></li>
+            <li><a href="admin-settings">⚙️ Settings</a></li>
+            <li><a href="admin-users">👥 Users</a></li>
+            <li><a href="admin-analytics">📈 Analytics</a></li>
+            <li><a href="home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -253,9 +261,13 @@ $username = $user['username'] ?? 'Admin';
                     <div style="font-weight: 600;"><?= htmlspecialchars($username) ?></div>
                     <small style="color: #666;">Administrator</small>
                 </div>
-                <a href="php/logout.php" class="btn btn-logout">Logout</a>
+                <a href="/php/logout.php" class="btn btn-logout">Logout</a>
             </div>
         </div>
+
+        <?php if($db_error_message): ?>
+            <div class="alert alert-warning" role="alert"><?= htmlspecialchars($db_error_message) ?></div>
+        <?php endif; ?>
 
         <!-- Stats Grid -->
         <div class="stats-grid">
@@ -285,15 +297,15 @@ $username = $user['username'] ?? 'Admin';
         <div class="quick-actions">
             <h2>Quick Actions</h2>
             <div class="action-grid">
-                <a href="admin-pages.php?action=new" class="action-btn">
+                <a href="admin-pages?action=new" class="action-btn">
                     <div class="icon">➕</div>
                     <span>New Page</span>
                 </a>
-                <a href="admin-media.php?action=upload" class="action-btn">
+                <a href="admin-media?action=upload" class="action-btn">
                     <div class="icon">📤</div>
                     <span>Upload Media</span>
                 </a>
-                <a href="admin-settings.php" class="action-btn">
+                <a href="admin-settings" class="action-btn">
                     <div class="icon">⚙️</div>
                     <span>Site Settings</span>
                 </a>
@@ -301,11 +313,11 @@ $username = $user['username'] ?? 'Admin';
                     <div class="icon">🌟</div>
                     <span>Ziwilatu Project</span>
                 </a>
-                <a href="admin-backup.php" class="action-btn">
+                <a href="admin-backup" class="action-btn">
                     <div class="icon">💾</div>
                     <span>Backup Site</span>
                 </a>
-                <a href="admin-deploy.php" class="action-btn">
+                <a href="admin-deploy" class="action-btn">
                     <div class="icon">🚀</div>
                     <span>Deploy Changes</span>
                 </a>

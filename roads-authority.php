@@ -8,7 +8,9 @@ date_default_timezone_set('Africa/Blantyre');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roads Authority Site Diary Form</title>
+    <title>Roads Authority Site Diary Form - Injessview</title>
+    <meta name="description" content="Track roads authority field activity with a daily site diary for maintenance works, materials, incidents, visitors, and site remarks.">
+    <link rel="canonical" href="https://injessview.com/roads-authority-site-diary">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="icon" type="image/png" href="./img/online-survey.png" />
@@ -16,11 +18,11 @@ date_default_timezone_set('Africa/Blantyre');
     <script src="./js/sweetalert.min.js"></script>
 
     <!--og codes-->
-    <meta property="og:url" content="https://injessview.com/roads-authority.php" />
+    <meta property="og:url" content="https://injessview.com/roads-authority-site-diary" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/online-survey.png" />
-    <meta property="og:title" content="<?php echo "SITE DIARY"; ?>" />
-    <meta property="og:description" content="Roads Authority Maintenance Department Contractor's Site Diary Form" />
+    <meta property="og:title" content="Roads Authority Site Diary Form - Injessview" />
+    <meta property="og:description" content="Roads Authority maintenance site diary for daily operational reporting, project oversight, and contractor documentation." />
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -558,6 +560,3 @@ date_default_timezone_set('Africa/Blantyre');
         </form>
     </div>
     <?php include './footer.php'; ?>
-    <script>
-        document.querySelectorAll("ul.navbar-nav .nav-link")[2].classList.add("active")
-    </script>

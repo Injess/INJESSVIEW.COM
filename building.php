@@ -9,27 +9,58 @@ date_default_timezone_set('Africa/Blantyre');
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Building Site Diary Form</title>
+    <title>Building Site Diary Form - Injessview</title>
+    <meta name="description" content="Create and preview a building site diary for daily works, visitors, plant, personnel, materials, incidents, and official site validation.">
+    <link rel="canonical" href="https://injessview.com/building-site-diary">
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/aos.css" />
     <link rel="icon" type="image/png" href="./img/online-survey.png" />
     <link rel="stylesheet" href="./css/main.css" />
-    <link rel="stylesheet" href="./css/custom-building.css" />
     <script src="./js/sweetalert.min.js" defer></script>
 
     <!--og codes-->
-    <meta property="og:url" content="https://injessview.com/building.php" />
+    <meta property="og:url" content="https://injessview.com/building-site-diary" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/online-survey.png" />
-    <meta property="og:title" content="SITE DIARY" />
-    <meta property="og:description" content="Lilongwe Water Sanitation Project Contractor's Site Diary Form" />
+    <meta property="og:title" content="Building Site Diary Form - Injessview" />
+    <meta property="og:description" content="Lilongwe Water and Sanitation Project building site diary for daily field reporting and project documentation." />
+    <style>
+        .diary-nav-menu {
+            min-width: 240px;
+            margin-top: 0.65rem;
+            padding: 0.45rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            background: rgba(20, 25, 42, 0.96);
+            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+        }
+
+        .diary-nav-menu .dropdown-item {
+            color: #eef2ff;
+            font-weight: 600;
+            border-radius: 0.8rem;
+            padding: 0.7rem 0.9rem;
+        }
+
+        .diary-nav-menu .dropdown-item:hover,
+        .diary-nav-menu .dropdown-item:focus,
+        .diary-nav-menu .dropdown-item.active {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.92), rgba(118, 75, 162, 0.92));
+        }
+
+        .diary-nav-toggle.show,
+        .diary-nav-toggle.active {
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
     <!-- Navbar with Skewed Background Links and Navbar-Brand -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">INJESSVIEW</a>
+            <a class="navbar-brand" href="home">INJESSVIEW</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -37,13 +68,20 @@ date_default_timezone_set('Africa/Blantyre');
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="home.html">Home</a>
+                        <a class="nav-link" href="home" data-route="home">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="construction-works.html">Construction</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="site-diary.html">Site Diary</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle diary-nav-toggle" href="#" id="diaryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-route-group="ecosystem">
+                            Ecosystem
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end diary-nav-menu" aria-labelledby="diaryDropdown">
+                            <li><a class="dropdown-item" href="construction-works" data-route="construction-works">Construction Works</a></li>
+                            <li><a class="dropdown-item" href="site-sync" data-route="site-sync">SiteSync</a></li>
+                            <li><a class="dropdown-item" href="site-diary" data-route="site-diary">Site Diary</a></li>
+                            <li><a class="dropdown-item" href="it-solutions" data-route="it-solutions">IT Solutions</a></li>
+                            <li><a class="dropdown-item" href="invi-rides" data-route="invi-rides">Invi Rides</a></li>
+                            <li><a class="dropdown-item" href="carbon-abatement" data-route="carbon-abatement">Carbon Abatement</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

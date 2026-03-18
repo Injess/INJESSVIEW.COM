@@ -1,18 +1,25 @@
 <?php
 session_start();
 include './php/core.php';
-include './php/connect.php';
 
 if(!loggedin()) {
-    header('Location: admin-login.php');
+    header('Location: admin-login');
     exit;
 }
 
+include './php/connect.php';
+
 $uid = $_SESSION['uid'];
-$query = "SELECT username FROM users WHERE uid='$uid'";
-$result = mysqli_query($conn, $query);
-$user = mysqli_fetch_assoc($result);
-$username = $user['username'] ?? 'Admin';
+$username = 'Admin';
+$db_error_message = '';
+if($conn) {
+    $query = "SELECT username FROM users WHERE uid='$uid'";
+    $result = mysqli_query($conn, $query);
+    $user = $result ? mysqli_fetch_assoc($result) : null;
+    $username = $user['username'] ?? 'Admin';
+} elseif (!empty($db_connection_error)) {
+    $db_error_message = 'Database connection unavailable. Site settings remain editable from the JSON configuration.';
+}
 
 // Handle settings update
 if(isset($_POST['update_settings'])) {
@@ -53,6 +60,7 @@ if(file_exists($settings_file)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Settings - Injessview Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
@@ -174,13 +182,13 @@ if(file_exists($settings_file)) {
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard.php">📊 Dashboard</a></li>
-            <li><a href="admin-pages.php">📄 Manage Pages</a></li>
-            <li><a href="admin-media.php">🖼️ Media Library</a></li>
-            <li><a href="admin-settings.php" class="active">⚙️ Settings</a></li>
-            <li><a href="admin-users.php">👥 Users</a></li>
-            <li><a href="admin-analytics.php">📈 Analytics</a></li>
-            <li><a href="index.php" target="_blank">🌐 View Website</a></li>
+            <li><a href="admin-dashboard">📊 Dashboard</a></li>
+            <li><a href="admin-pages">📄 Manage Pages</a></li>
+            <li><a href="admin-media">🖼️ Media Library</a></li>
+            <li><a href="admin-settings" class="active">⚙️ Settings</a></li>
+            <li><a href="admin-users">👥 Users</a></li>
+            <li><a href="admin-analytics">📈 Analytics</a></li>
+            <li><a href="home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -188,8 +196,12 @@ if(file_exists($settings_file)) {
     <div class="main-content">
         <div class="top-bar">
             <h1>Site Settings</h1>
-            <a href="admin-dashboard.php" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
+
+        <?php if($db_error_message): ?>
+            <div class="alert alert-warning" role="alert"><?= htmlspecialchars($db_error_message) ?></div>
+        <?php endif; ?>
 
         <?php if(isset($success_message)): ?>
             <script>

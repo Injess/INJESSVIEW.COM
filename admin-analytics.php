@@ -3,7 +3,7 @@ session_start();
 include './php/core.php';
 
 if(!loggedin()) {
-    header('Location: admin-login.php');
+    header('Location: admin-login');
     exit;
 }
 ?>
@@ -12,6 +12,7 @@ if(!loggedin()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Analytics - Injessview Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
@@ -116,13 +117,13 @@ if(!loggedin()) {
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard.php">📊 Dashboard</a></li>
-            <li><a href="admin-pages.php">📄 Manage Pages</a></li>
-            <li><a href="admin-media.php">🖼️ Media Library</a></li>
-            <li><a href="admin-settings.php">⚙️ Settings</a></li>
-            <li><a href="admin-users.php">👥 Users</a></li>
-            <li><a href="admin-analytics.php" class="active">📈 Analytics</a></li>
-            <li><a href="index.php" target="_blank">🌐 View Website</a></li>
+            <li><a href="admin-dashboard">📊 Dashboard</a></li>
+            <li><a href="admin-pages">📄 Manage Pages</a></li>
+            <li><a href="admin-media">🖼️ Media Library</a></li>
+            <li><a href="admin-settings">⚙️ Settings</a></li>
+            <li><a href="admin-users">👥 Users</a></li>
+            <li><a href="admin-analytics" class="active">📈 Analytics</a></li>
+            <li><a href="home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -130,7 +131,7 @@ if(!loggedin()) {
     <div class="main-content">
         <div class="top-bar">
             <h1>Analytics</h1>
-            <a href="admin-dashboard.php" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
 
         <div class="analytics-box">

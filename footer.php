@@ -12,6 +12,7 @@
                     <li><a href="home" class="text-white-50">Home</a></li>
                     <li><a href="about" class="text-white-50">About Us</a></li>
                     <li><a href="construction-works" class="text-white-50">Construction Works</a></li>
+                    <li><a href="site-sync" class="text-white-50">SiteSync</a></li>
                     <li><a href="site-diary" class="text-white-50">Site Diary</a></li>
                     <li><a href="contact" class="text-white-50">Contact</a></li>
                 </ul>

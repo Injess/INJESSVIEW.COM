@@ -7,13 +7,19 @@ date_default_timezone_set('Africa/Blantyre');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT & Technology Products - Injessview</title>
+    <link rel="canonical" href="https://injessview.com/it-solutions">
+    <meta property="og:url" content="https://injessview.com/it-solutions" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://injessview.com/img/engineer.png" />
+    <meta property="og:title" content="IT & Technology Products - Injessview" />
+    <meta property="og:description" content="Discover INVI technology products: SiteSync, Invi Rides, and Ziwilatu — one connected infrastructure ecosystem." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
     <script src="./js/sweetalert.min.js"></script>
-    <meta name="description" content="INVI Technology Products — SiteSync, Invi Rides, and Ziwilatu. AI-driven tools built for the Global South.">
+    <meta name="description" content="INVI Technology Products — SiteSync, Invi Rides, and Ziwilatu. Connected tools built from construction operations in Malawi.">
     <style>
         /* Glassmorphism card style */
         .glass-card {
@@ -116,7 +122,8 @@ date_default_timezone_set('Africa/Blantyre');
                     <p>
                         SiteSync brings your entire project lifecycle into one intelligent dashboard —
                         from resource tracking and labour scheduling to digital site diaries and
-                        client-ready PDF reports. Designed to work in low-connectivity environments
+                        client-ready PDF reports. Born out of our construction works pipeline and
+                        strengthened by Ziwilatu field feedback, it is designed to work in low-connectivity environments
                         across Malawi.
                     </p>
                     <ul class="list-unstyled mt-3 mb-4">
@@ -131,7 +138,7 @@ date_default_timezone_set('Africa/Blantyre');
                        style="background: linear-gradient(135deg,#667eea,#764ba2); color: white; border: none;">
                         🚀 Open SiteSync
                     </a>
-                    <a href="site-sync.php" class="btn btn-outline-secondary btn-lg rounded-pill px-4 ms-2">
+                    <a href="site-sync" class="btn btn-outline-secondary btn-lg rounded-pill px-4 ms-2">
                         Learn More
                     </a>
                 </div>
@@ -180,7 +187,7 @@ date_default_timezone_set('Africa/Blantyre');
                        style="background: linear-gradient(135deg,#10b981,#059669); color: white; border: none;">
                         🚗 Launch Invi Rides
                     </a>
-                    <a href="invi-rides.php" class="btn btn-outline-success btn-lg rounded-pill px-4 ms-2">
+                    <a href="invi-rides" class="btn btn-outline-success btn-lg rounded-pill px-4 ms-2">
                         Learn More
                     </a>
                 </div>

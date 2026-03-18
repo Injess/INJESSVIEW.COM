@@ -1,6 +1,11 @@
 <?php
 //set time zone for your country
 date_default_timezone_set('Africa/Blantyre');
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['submit'])) {
+  header('Location: roads-authority-site-diary');
+  exit;
+}
 ?>
 <?php
 if (isset($_POST['submit'])) {
@@ -19,11 +24,12 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="css/main.css">
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/html2pdf.min.js"></script>
     <script src="./js/all.min.js"></script>
-    <title>Site Diary Preview</title>
+    <title>Roads Authority Site Diary Preview - Injessview</title>
 
     <script type="text/javascript">
       function getFormattedDate() {

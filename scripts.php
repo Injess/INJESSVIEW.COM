@@ -129,5 +129,55 @@
         });
     });
 
-    document.querySelectorAll("ul.navbar-nav .nav-link")[2].classList.add("active")
+    const currentPath = (window.location.pathname.replace(/\/+$/, "").split("/").pop() || "home").toLowerCase();
+    const routeAliases = {
+        home: ["", "home", "index.php"],
+        "construction-works": ["construction-works", "construction-works.php", "construction-jobs-and-tenders"],
+        "site-sync": ["site-sync", "site-sync.php"],
+        "site-diary": [
+            "site-diary",
+            "site-diary.php",
+            "building-site-diary",
+            "building-site-dairy",
+            "building.php",
+            "irrigation-site-diary",
+            "irrigation-site-dairy",
+            "irrigation.php",
+            "roads-authority-site-diary",
+            "roads-authority-site-dairy",
+            "roads-authority.php"
+        ],
+        "it-solutions": ["it-solutions", "it-solutions.php"],
+        "invi-rides": ["invi-rides", "invi-rides.php"],
+        "carbon-abatement": ["carbon-abatement", "carbon-abatement.php"]
+    };
+
+    const routeGroups = {
+        ecosystem: ["construction-works", "site-sync", "site-diary", "it-solutions", "invi-rides", "carbon-abatement"]
+    };
+
+    document.querySelectorAll("ul.navbar-nav [data-route]").forEach(function(link) {
+        link.classList.remove("active");
+
+        const route = link.getAttribute("data-route");
+        const aliases = routeAliases[route] || [route];
+
+        if (aliases.includes(currentPath)) {
+            link.classList.add("active");
+        }
+    });
+
+    document.querySelectorAll("ul.navbar-nav [data-route-group]").forEach(function(link) {
+        link.classList.remove("active");
+
+        const group = link.getAttribute("data-route-group");
+        const isActive = (routeGroups[group] || []).some(function(route) {
+            const aliases = routeAliases[route] || [route];
+            return aliases.includes(currentPath);
+        });
+
+        if (isActive) {
+            link.classList.add("active");
+        }
+    });
 </script>

@@ -8,6 +8,12 @@ date_default_timezone_set('Africa/Blantyre');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Injessview</title>
+    <link rel="canonical" href="https://injessview.com/contact">
+    <meta property="og:url" content="https://injessview.com/contact" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://injessview.com/img/engineer.png" />
+    <meta property="og:title" content="Contact Us - Injessview" />
+    <meta property="og:description" content="Contact INVI for construction intelligence, SiteSync onboarding, and sustainability collaboration in Malawi." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
@@ -15,7 +21,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="icon" type="image/png" href="./img/engineer.png" />
     <script src="./js/sweetalert.min.js"></script>
     
-    <meta name="description" content="Get in touch with INVI (Injessview) for construction, technology, and media solutions.">
+    <meta name="description" content="Get in touch with INVI (Injessview) for construction, SiteSync technology, and sustainable mobility solutions.">
 </head>
 
 <body class="bg-light">
@@ -97,6 +103,7 @@ date_default_timezone_set('Africa/Blantyre');
                     <h5 class="mb-3">Quick Links</h5>
                     <div class="d-grid gap-2">
                         <a href="construction-works" class="btn btn-outline-primary">View Tenders</a>
+                        <a href="site-sync" class="btn btn-outline-primary">Explore SiteSync</a>
                         <a href="site-diary" class="btn btn-outline-primary">Site Diary</a>
                         <a href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" class="btn btn-outline-primary">Ziwilatu Project</a>
                     </div>
