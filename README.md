@@ -49,12 +49,12 @@ INJESSVIEW (INVI) is a cutting-edge, professional website offering construction,
 
 ### Access the Website
 ```
-http://localhost:8000/home
+https://Injessview.com/home
 ```
 
 ### Access Admin Panel
 ```
-http://localhost:8000/admin-login
+http://injess/admin-login
 ```
 
 ### Clean URLs (via .htaccess)
@@ -201,10 +201,10 @@ Light: #f9fafb
 ### Database Settings
 Edit `php/connect.php`:
 ```php
-$port = 'localhost';
-$username = 'root';
+$port = '';
+$username = '';
 $password = '';
-$database = 'umatha_upgrade';
+$database = ';
 ```
 
 ### Site Settings
