@@ -322,8 +322,8 @@ $potential_claims = sanitizeValue($_POST['potential_claims'] ?? []);
 
 <!-- Toolbar -->
 <div class="preview-toolbar">
-    <a href="building-site-diary" class="brand" id="preview-toolbar-brand-building">Building Site Diary Preview</a>
-    <a href="building-site-diary" class="btn-back">← Back to Form</a>
+    <a href="/building-site-diary class="brand" id="preview-toolbar-brand-building">Building Site Diary Preview</a>
+    <a href="/building-site-diary class="btn-back">← Back to Form</a>
     <button id="btn-dl" class="btn-dl"><i class="fas fa-download"></i> Download PDF</button>
 </div>
 

@@ -13,7 +13,7 @@ date_default_timezone_set('Africa/Blantyre');
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/engineer.png" />
     <meta property="og:title" content="About Us - Injessview" />
-    <meta property="og:description" content="Learn how INVI connects construction, SiteSync technology, and sustainable mobility into one ecosystem." />
+    <meta property="og:description" content="Learn how INVI connects construction, Site InviSion technology, and sustainable mobility into one ecosystem." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
@@ -21,7 +21,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="icon" type="image/png" href="./img/engineer.png" />
     <script src="./js/sweetalert.min.js"></script>
     
-    <meta name="description" content="Learn about INVI (Injessview) and how our construction, SiteSync, and sustainability platforms work together.">
+    <meta name="description" content="Learn about INVI (Injessview) and how our construction, Site InviSion, and sustainability platforms work together.">
 </head>
 
 <body class="bg-light">
@@ -138,8 +138,8 @@ date_default_timezone_set('Africa/Blantyre');
         <!-- CTA Section -->
         <div class="text-center my-5" data-aos="zoom-in">
             <h3 class="mb-4">Ready to Transform Your Business?</h3>
-            <a href="construction-works" class="btn btn-primary btn-lg me-2 mb-2">View Projects</a>
-            <a href="site-diary" class="btn btn-outline-primary btn-lg mb-2">Explore Solutions</a>
+            <a href="/construction-works class="btn btn-primary btn-lg me-2 mb-2">View Projects</a>
+            <a href="/site-diary class="btn btn-outline-primary btn-lg mb-2">Explore Solutions</a>
         </div>
     </div>
 

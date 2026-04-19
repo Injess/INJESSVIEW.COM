@@ -3,11 +3,6 @@
 #RewriteCond %{HTTPS} off 
 #RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-l
-
-#turn Rewrite engine on
 RewriteEngine on
 
 #ErrorDocument 404 /404.php
@@ -32,7 +27,8 @@ RewriteRule ^irrigation-site-dairy irrigation.php [NC,L]
 
 RewriteRule ^construction-works construction-works.php [NC,L]
 
-RewriteRule ^site-sync$ site-sync.php [NC,L]
+RewriteRule ^site-sync$ /site-invision [R=301,NC,L]
+RewriteRule ^site-invision$ site-invision.php [NC,L]
 RewriteRule ^it-solutions$ it-solutions.php [NC,L]
 RewriteRule ^invi-rides$ invi-rides.php [NC,L]
 RewriteRule ^carbon-abatement$ carbon-abatement.php [NC,L]

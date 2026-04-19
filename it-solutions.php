@@ -12,14 +12,14 @@ date_default_timezone_set('Africa/Blantyre');
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/engineer.png" />
     <meta property="og:title" content="IT & Technology Products - Injessview" />
-    <meta property="og:description" content="Discover INVI technology products: SiteSync, Invi Rides, and Ziwilatu — one connected infrastructure ecosystem." />
+    <meta property="og:description" content="Discover INVI technology products: Site InviSion, Invi Rides, and Ziwilatu — one connected infrastructure ecosystem." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
     <link rel="icon" type="image/png" href="./img/engineer.png" />
     <script src="./js/sweetalert.min.js"></script>
-    <meta name="description" content="INVI Technology Products — SiteSync, Invi Rides, and Ziwilatu. Connected tools built from construction operations in Malawi.">
+    <meta name="description" content="INVI Technology Products — Site InviSion, Invi Rides, and Ziwilatu. Connected tools built from construction operations in Malawi.">
     <style>
         /* Glassmorphism card style */
         .glass-card {
@@ -67,7 +67,7 @@ date_default_timezone_set('Africa/Blantyre');
             margin-bottom: 0.75rem;
         }
         /* Product card border accent */
-        .product-card-sitesync  { border-top: 4px solid #667eea; }
+        .product-card-siteinvision  { border-top: 4px solid #667eea; }
         .product-card-invirides { border-top: 4px solid #10b981; }
         .product-card-ziwilatu  { border-top: 4px solid #f59e0b; }
         /* Stat pill */
@@ -103,24 +103,24 @@ date_default_timezone_set('Africa/Blantyre');
                     smarter, greener, and more accessible across Malawi and the Global South.
                 </p>
                 <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
-                    <span class="stat-pill" style="color:#a5b4fc;">🚀 SiteSync — Construction AI</span>
+                    <span class="stat-pill" style="color:#a5b4fc;">🚀 Site InviSion — Construction AI</span>
                     <span class="stat-pill" style="color:#6ee7b7;">🚗 Invi Rides — Clean Mobility</span>
                     <span class="stat-pill" style="color:#fcd34d;">🌟 Ziwilatu — Construction Network</span>
                 </div>
             </div>
         </div>
 
-        <!-- ───── PRODUCT 1: SiteSync ───── -->
+        <!-- ───── PRODUCT 1: Site InviSion ───── -->
         <div class="row align-items-center mb-5" data-aos="fade-up">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="p-4 p-md-5 rounded-4 shadow-custom hover-lift product-card-sitesync" style="background: white;">
+                <div class="p-4 p-md-5 rounded-4 shadow-custom hover-lift product-card-siteinvision" style="background: white;">
                     <span class="product-badge" style="background: rgba(102,126,234,0.12); color: #667eea;">
                         Construction Tech
                     </span>
-                    <h2 class="fw-bold mb-2">🚀 SiteSync</h2>
+                    <h2 class="fw-bold mb-2">🚀 Site InviSion</h2>
                     <p class="text-muted mb-3">AI-powered construction & project management platform</p>
                     <p>
-                        SiteSync brings your entire project lifecycle into one intelligent dashboard —
+                        Site InviSion brings your entire project lifecycle into one intelligent dashboard —
                         from resource tracking and labour scheduling to digital site diaries and
                         client-ready PDF reports. Born out of our construction works pipeline and
                         strengthened by Ziwilatu field feedback, it is designed to work in low-connectivity environments
@@ -133,23 +133,23 @@ date_default_timezone_set('Africa/Blantyre');
                         <li class="mb-2">✅ Exportable PDF reports for funders &amp; regulators</li>
                         <li class="mb-2">✅ Works on mobile &amp; low-bandwidth connections</li>
                     </ul>
-                    <a href="https://injess.pythonanywhere.com/" target="_blank"
+                    <a href="https://www.siteinvi.com/" target="_blank"
                        class="btn btn-lg rounded-pill px-4"
                        style="background: linear-gradient(135deg,#667eea,#764ba2); color: white; border: none;">
-                        🚀 Open SiteSync
+                        🚀 Open Site InviSion
                     </a>
-                    <a href="site-sync" class="btn btn-outline-secondary btn-lg rounded-pill px-4 ms-2">
+                    <a href="/site-invision class="btn btn-outline-secondary btn-lg rounded-pill px-4 ms-2">
                         Learn More
                     </a>
                 </div>
             </div>
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
                 <div class="glass-card p-4 p-md-5" style="background: linear-gradient(135deg,#667eea,#764ba2); color: white;">
-                    <h4 class="mb-4">Why SiteSync for Malawi?</h4>
+                    <h4 class="mb-4">Why Site InviSion for Malawi?</h4>
                     <p>
                         Construction projects in Malawi face unique challenges: dispersed teams, paper-heavy
                         reporting, and difficulty accessing funding due to poor documentation.
-                        SiteSync solves all three — keeping your records audit-ready at all times.
+                        Site InviSion solves all three — keeping your records audit-ready at all times.
                     </p>
                     <hr style="border-color:rgba(255,255,255,0.2);">
                     <p class="mb-0 fst-italic" style="color:rgba(255,255,255,0.8);">
@@ -187,7 +187,7 @@ date_default_timezone_set('Africa/Blantyre');
                        style="background: linear-gradient(135deg,#10b981,#059669); color: white; border: none;">
                         🚗 Launch Invi Rides
                     </a>
-                    <a href="invi-rides" class="btn btn-outline-success btn-lg rounded-pill px-4 ms-2">
+                    <a href="/invi-rides class="btn btn-outline-success btn-lg rounded-pill px-4 ms-2">
                         Learn More
                     </a>
                 </div>
@@ -228,7 +228,7 @@ date_default_timezone_set('Africa/Blantyre');
                         <li class="mb-2">✅ Verified industry contacts directory</li>
                         <li class="mb-2">✅ Supplier &amp; contractor networking</li>
                         <li class="mb-2">✅ Subscriber dashboard for personalised feeds</li>
-                        <li class="mb-2">✅ Syncs with SiteSync project data</li>
+                        <li class="mb-2">✅ Syncs with Site InviSion project data</li>
                     </ul>
                     <a href="https://injessview.com/ziwilatu/subscribers.php" target="_blank"
                        class="btn btn-lg rounded-pill px-4"
@@ -241,9 +241,9 @@ date_default_timezone_set('Africa/Blantyre');
                 <div class="glass-card p-4 p-md-5 rounded-4" style="background: linear-gradient(135deg,#f59e0b,#d97706); color: white;">
                     <h4 class="mb-4">The INVI Ecosystem</h4>
                     <p>
-                        SiteSync, Invi Rides, and Ziwilatu are not standalone apps — they are three
+                        Site InviSion, Invi Rides, and Ziwilatu are not standalone apps — they are three
                         layers of a single, interconnected platform. Ziwilatu surfaces the opportunities,
-                        SiteSync delivers them, and Invi Rides keeps the whole system moving cleanly.
+                        Site InviSion delivers them, and Invi Rides keeps the whole system moving cleanly.
                     </p>
                     <hr style="border-color:rgba(255,255,255,0.25);">
                     <p class="mb-0 fst-italic" style="color:rgba(255,255,255,0.85);">
@@ -292,7 +292,7 @@ date_default_timezone_set('Africa/Blantyre');
                             Whether you need a construction management system, a clean mobility solution,
                             or carbon offset certificates — we are ready.
                         </p>
-                        <a href="contact" class="btn btn-light btn-lg rounded-pill px-5 me-2">
+                        <a href="/contact class="btn btn-light btn-lg rounded-pill px-5 me-2">
                             📬 Get In Touch
                         </a>
                         <a href="mailto:injessview@gmail.com" class="btn btn-outline-light btn-lg rounded-pill px-5">

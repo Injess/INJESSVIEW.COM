@@ -13,7 +13,7 @@ date_default_timezone_set('Africa/Blantyre');
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/engineer.png" />
     <meta property="og:title" content="Contact Us - Injessview" />
-    <meta property="og:description" content="Contact INVI for construction intelligence, SiteSync onboarding, and sustainability collaboration in Malawi." />
+    <meta property="og:description" content="Contact INVI for construction intelligence, Site InviSion onboarding, and sustainability collaboration in Malawi." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
@@ -21,7 +21,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="icon" type="image/png" href="./img/engineer.png" />
     <script src="./js/sweetalert.min.js"></script>
     
-    <meta name="description" content="Get in touch with INVI (Injessview) for construction, SiteSync technology, and sustainable mobility solutions.">
+    <meta name="description" content="Get in touch with INVI (Injessview) for construction, Site InviSion technology, and sustainable mobility solutions.">
 </head>
 
 <body class="bg-light">
@@ -102,9 +102,9 @@ date_default_timezone_set('Africa/Blantyre');
                 <div class="p-4 rounded shadow-custom hover-lift" style="background: white;">
                     <h5 class="mb-3">Quick Links</h5>
                     <div class="d-grid gap-2">
-                        <a href="construction-works" class="btn btn-outline-primary">View Tenders</a>
-                        <a href="site-sync" class="btn btn-outline-primary">Explore SiteSync</a>
-                        <a href="site-diary" class="btn btn-outline-primary">Site Diary</a>
+                        <a href="/construction-works class="btn btn-outline-primary">View Tenders</a>
+                        <a href="/site-invision class="btn btn-outline-primary">Explore Site InviSion</a>
+                        <a href="/site-diary class="btn btn-outline-primary">Site Diary</a>
                         <a href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" class="btn btn-outline-primary">Ziwilatu Project</a>
                     </div>
                 </div>

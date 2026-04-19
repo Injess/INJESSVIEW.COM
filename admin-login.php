@@ -94,7 +94,7 @@ if(isset($_SESSION['uid'])) {
         </form>
         
         <div class="text-center mt-3">
-            <a href="home" class="text-muted text-decoration-none">← Back to Website</a>
+            <a href="/home class="text-muted text-decoration-none">← Back to Website</a>
         </div>
     </div>
 

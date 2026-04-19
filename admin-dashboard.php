@@ -241,13 +241,13 @@ if($conn) {
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard" class="active">📊 Dashboard</a></li>
-            <li><a href="admin-pages">📄 Manage Pages</a></li>
-            <li><a href="admin-media">🖼️ Media Library</a></li>
-            <li><a href="admin-settings">⚙️ Settings</a></li>
-            <li><a href="admin-users">👥 Users</a></li>
-            <li><a href="admin-analytics">📈 Analytics</a></li>
-            <li><a href="home" target="_blank">🌐 View Website</a></li>
+            <li><a href="/admin-dashboard class="active">📊 Dashboard</a></li>
+            <li><a href="/admin-pages>📄 Manage Pages</a></li>
+            <li><a href="/admin-media>🖼️ Media Library</a></li>
+            <li><a href="/admin-settings>⚙️ Settings</a></li>
+            <li><a href="/admin-users>👥 Users</a></li>
+            <li><a href="/admin-analytics>📈 Analytics</a></li>
+            <li><a href="/home target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -305,7 +305,7 @@ if($conn) {
                     <div class="icon">📤</div>
                     <span>Upload Media</span>
                 </a>
-                <a href="admin-settings" class="action-btn">
+                <a href="/admin-settings class="action-btn">
                     <div class="icon">⚙️</div>
                     <span>Site Settings</span>
                 </a>
@@ -313,11 +313,11 @@ if($conn) {
                     <div class="icon">🌟</div>
                     <span>Ziwilatu Project</span>
                 </a>
-                <a href="admin-backup" class="action-btn">
+                <a href="/admin-backup class="action-btn">
                     <div class="icon">💾</div>
                     <span>Backup Site</span>
                 </a>
-                <a href="admin-deploy" class="action-btn">
+                <a href="/admin-deploy class="action-btn">
                     <div class="icon">🚀</div>
                     <span>Deploy Changes</span>
                 </a>

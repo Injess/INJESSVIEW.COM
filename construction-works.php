@@ -57,7 +57,7 @@ $rows = $xpath->query('//table[@id="tenderstable"]/tbody/tr');
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/engineer.png" />
     <meta property="og:title" content="Construction Works & Tenders - Injessview" />
-    <meta property="og:description" content="Track current Malawi construction opportunities and follow how they connect to SiteSync, Ziwilatu, and digital site diaries." />
+    <meta property="og:description" content="Track current Malawi construction opportunities and follow how they connect to Site InviSion, Ziwilatu, and digital site diaries." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
@@ -87,10 +87,10 @@ $rows = $xpath->query('//table[@id="tenderstable"]/tbody/tr');
             <br><small class="mt-2 d-block">Data sourced from PPDA Official Tenders</small>
         </div>
 
-        <div class="alert alert-light shadow-custom" data-aos="fade-up">
+            <div class="alert alert-light shadow-custom" data-aos="fade-up">
             <strong>🧭 Narrative Link:</strong> This construction pipeline is the operational origin of
-            <a href="site-sync" class="alert-link">SiteSync</a>. Ziwilatu network activity helps identify opportunity signals,
-            while our <a href="site-diary" class="alert-link">Site Diary</a> forms capture field execution data that strengthens reporting quality.
+            <a href="/site-invision class="alert-link">Site InviSion</a>. Ziwilatu network activity helps identify opportunity signals,
+            while our <a href="/site-diary class="alert-link">Site Diary</a> forms capture field execution data that strengthens reporting quality.
         </div>
 
         <div class="table-responsive">

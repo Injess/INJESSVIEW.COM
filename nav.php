@@ -38,7 +38,7 @@
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;">
     <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="home">
+        <a class="navbar-brand d-flex align-items-center" href="/home">
             <div style="background: white; border-radius: 50%; padding: 5px; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; margin-right: 10px;">
                 <img src="/img/INVI_LOGO.png" alt="INVI Logo" class="logo" style="width: 35px; height: 35px; object-fit: contain;">
             </div>
@@ -50,22 +50,22 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="home" data-route="home">🏠 Home</a>
+                    <a class="nav-link" href="/home" data-route="home">🏠 Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about" data-route="about">ℹ️ About</a>
+                    <a class="nav-link" href="/about" data-route="about">ℹ️ About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="site-sync" data-route="site-sync">🚀 SiteSync</a>
+                    <a class="nav-link" href="/site-invision" data-route="site-invision">🚀 Site InviSion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="invi-rides" data-route="invi-rides">🚗 Invi Rides</a>
+                    <a class="nav-link" href="/invi-rides" data-route="invi-rides">🚗 Invi Rides</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="carbon-abatement" data-route="carbon-abatement">🌱 Carbon Abatement</a>
+                    <a class="nav-link" href="/carbon-abatement" data-route="carbon-abatement">🌱 Carbon Abatement</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact" data-route="contact">📧 Contact Us</a>
+                    <a class="nav-link" href="/contact" data-route="contact">📧 Contact Us</a>
                 </li>
             </ul>
         </div>
@@ -80,7 +80,7 @@
             home: ["", "home", "index.php"],
             about: ["about", "about.php"],
             "construction-works": ["construction-works", "construction-works.php", "construction-jobs-and-tenders"],
-            "site-sync": ["site-sync", "site-sync.php"],
+            "site-invision": ["site-invision", "site-invision.php", "site-sync", "site-sync.php"],
             "site-diary": [
                 "site-diary",
                 "site-diary.php",
@@ -103,7 +103,7 @@
         const routeGroups = {
             ecosystem: [
                 "construction-works",
-                "site-sync",
+                "site-invision",
                 "site-diary",
                 "it-solutions",
                 "invi-rides",

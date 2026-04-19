@@ -13,7 +13,7 @@ date_default_timezone_set('Africa/Blantyre');
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/engineer.png" />
     <meta property="og:title" content="Carbon Abatement & Sustainability - Injessview" />
-    <meta property="og:description" content="Explore INVI's carbon abatement model powered by Invi Rides, SiteSync operations, and climate-focused infrastructure." />
+    <meta property="og:description" content="Explore INVI's carbon abatement model powered by Invi Rides, Site InviSion operations, and climate-focused infrastructure." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
@@ -21,7 +21,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="icon" type="image/png" href="./img/engineer.png" />
     <script src="./js/sweetalert.min.js"></script>
 
-    <meta name="description" content="INVI Carbon Abatement & Sustainability — reducing urban emissions through SiteSync-driven infrastructure and Invi Rides mobility in Malawi.">
+    <meta name="description" content="INVI Carbon Abatement & Sustainability — reducing urban emissions through Site InviSion-driven infrastructure and Invi Rides mobility in Malawi.">
 </head>
 
 <body class="bg-light">
@@ -83,8 +83,8 @@ date_default_timezone_set('Africa/Blantyre');
                     <a href="https://invirides.vercel.app/" target="_blank" class="btn btn-success mt-2 rounded-pill">
                         🚗 Explore Invi Rides
                     </a>
-                    <a href="site-sync" class="btn btn-outline-success mt-2 rounded-pill">
-                        🧠 SiteSync Link
+                    <a href="/site-invision class="btn btn-outline-success mt-2 rounded-pill">
+                        🧠 Site InviSion Link
                     </a>
                 </div>
             </div>
@@ -149,7 +149,7 @@ date_default_timezone_set('Africa/Blantyre');
                     <a href="mailto:injessview@gmail.com" class="btn btn-light btn-lg rounded-pill me-3">
                         📧 injessview@gmail.com
                     </a>
-                    <a href="contact" class="btn btn-outline-light btn-lg rounded-pill">
+                    <a href="/contact class="btn btn-outline-light btn-lg rounded-pill">
                         📬 Contact Us
                     </a>
                 </div>

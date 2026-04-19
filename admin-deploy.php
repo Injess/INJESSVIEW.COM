@@ -124,13 +124,13 @@ if(!loggedin()) {
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard">📊 Dashboard</a></li>
-            <li><a href="admin-pages">📄 Manage Pages</a></li>
-            <li><a href="admin-media">🖼️ Media Library</a></li>
-            <li><a href="admin-settings">⚙️ Settings</a></li>
-            <li><a href="admin-users">👥 Users</a></li>
-            <li><a href="admin-analytics">📈 Analytics</a></li>
-            <li><a href="home" target="_blank">🌐 View Website</a></li>
+            <li><a href="/admin-dashboard>📊 Dashboard</a></li>
+            <li><a href="/admin-pages>📄 Manage Pages</a></li>
+            <li><a href="/admin-media>🖼️ Media Library</a></li>
+            <li><a href="/admin-settings>⚙️ Settings</a></li>
+            <li><a href="/admin-users>👥 Users</a></li>
+            <li><a href="/admin-analytics>📈 Analytics</a></li>
+            <li><a href="/home target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -138,7 +138,7 @@ if(!loggedin()) {
     <div class="main-content">
         <div class="top-bar">
             <h1>🚀 Deploy Changes</h1>
-            <a href="admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="/admin-dashboard class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
 
         <div class="deploy-box">
@@ -185,8 +185,8 @@ if(!loggedin()) {
             <div class="deploy-step">
                 <h5>4. 🛠️ Quick Actions</h5>
                 <div class="mt-3">
-                    <a href="admin-backup" class="btn btn-primary me-2">💾 Create Backup First</a>
-                    <a href="home" target="_blank" class="btn btn-outline-primary">👁️ Preview Site</a>
+                    <a href="/admin-backup class="btn btn-primary me-2">💾 Create Backup First</a>
+                    <a href="/home target="_blank" class="btn btn-outline-primary">👁️ Preview Site</a>
                 </div>
             </div>
         </div>

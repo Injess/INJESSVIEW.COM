@@ -30,7 +30,7 @@ date_default_timezone_set('Africa/Blantyre');
     <!-- Navbar with Skewed Background Links and Navbar-Brand -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home">INJESSVIEW</a>
+            <a class="navbar-brand" href="/home>INJESSVIEW</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -38,22 +38,22 @@ date_default_timezone_set('Africa/Blantyre');
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="home" data-route="home">Home</a>
+                        <a class="nav-link" href="/home data-route="home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about" data-route="about">About</a>
+                        <a class="nav-link" href="/about data-route="about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="site-sync" data-route="site-sync">SiteSync</a>
+                        <a class="nav-link" href="/site-invision data-route="site-invision">Site InviSion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="invi-rides" data-route="invi-rides">Invi Rides</a>
+                        <a class="nav-link" href="/invi-rides data-route="invi-rides">Invi Rides</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="carbon-abatement" data-route="carbon-abatement">Carbon Abatement</a>
+                        <a class="nav-link" href="/carbon-abatement data-route="carbon-abatement">Carbon Abatement</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact" data-route="contact">Contact Us</a>
+                        <a class="nav-link" href="/contact data-route="contact">Contact Us</a>
                     </li>
                 </ul>
             </div>

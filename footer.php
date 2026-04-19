@@ -9,12 +9,12 @@
             <div class="col-md-4 mb-3">
                 <h6>Quick Links</h6>
                 <ul class="list-unstyled">
-                    <li><a href="home" class="text-white-50">Home</a></li>
-                    <li><a href="about" class="text-white-50">About Us</a></li>
-                    <li><a href="construction-works" class="text-white-50">Construction Works</a></li>
-                    <li><a href="site-sync" class="text-white-50">SiteSync</a></li>
-                    <li><a href="site-diary" class="text-white-50">Site Diary</a></li>
-                    <li><a href="contact" class="text-white-50">Contact</a></li>
+                    <li><a href="/home" class="text-white-50">Home</a></li>
+                    <li><a href="/about" class="text-white-50">About Us</a></li>
+                    <li><a href="/construction-works" class="text-white-50">Construction Works</a></li>
+                    <li><a href="/site-invision" class="text-white-50">Site InviSion</a></li>
+                    <li><a href="/site-diary" class="text-white-50">Site Diary</a></li>
+                    <li><a href="/contact" class="text-white-50">Contact</a></li>
                 </ul>
             </div>
             <div class="col-md-4 mb-3">
@@ -27,7 +27,7 @@
         </div>
         <hr style="border-color: rgba(255,255,255,0.1);">
         <div class="text-center py-3">
-            <p class="mb-0">&copy; <?= date('Y'); ?> Injessview. All rights reserved. | <a href="admin-login" class="text-decoration-none" style="color: inherit; opacity: 0.6;">Admin</a></p>
+            <p class="mb-0">&copy; <?= date('Y'); ?> Injessview. All rights reserved. | <a href="/admin-login class="text-decoration-none" style="color: inherit; opacity: 0.6;">Admin</a></p>
         </div>
     </div>
 </footer>

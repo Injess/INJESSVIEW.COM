@@ -134,7 +134,7 @@
         home: ["", "home", "index.php"],
         about: ["about", "about.php"],
         "construction-works": ["construction-works", "construction-works.php", "construction-jobs-and-tenders"],
-        "site-sync": ["site-sync", "site-sync.php"],
+        "site-invision": ["site-invision", "site-invision.php", "site-sync", "site-sync.php"],
         "site-diary": [
             "site-diary",
             "site-diary.php",

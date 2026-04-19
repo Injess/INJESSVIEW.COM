@@ -251,8 +251,8 @@ $vehicleTotal = intField('plant') + intField('hvy_veh') + intField('veh') + intF
 
 <body>
 <div class="preview-toolbar">
-    <a href="roads-authority-site-diary" class="brand" id="preview-toolbar-brand-roads">Roads Authority Site Diary Preview</a>
-    <a href="roads-authority-site-diary" class="btn-action">← Back to Form</a>
+    <a href="/roads-authority-site-diary class="brand" id="preview-toolbar-brand-roads">Roads Authority Site Diary Preview</a>
+    <a href="/roads-authority-site-diary class="btn-action">← Back to Form</a>
     <button id="btn-dl" class="btn-action" type="button"><i class="fas fa-download"></i> Download PDF</button>
 </div>
 

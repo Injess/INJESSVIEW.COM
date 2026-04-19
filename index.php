@@ -27,7 +27,7 @@ date_default_timezone_set('Africa/Blantyre');
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/online-survey.png" />
     <meta property="og:title" content="Injessview - Construction, Technology & Media Solutions" />
-    <meta property="og:description" content="INVI delivers construction intelligence, SiteSync technology, and sustainable mobility solutions across Malawi." />
+    <meta property="og:description" content="INVI delivers construction intelligence, Site InviSion technology, and sustainable mobility solutions across Malawi." />
     
     <style>
         /* Styles for elegant high contrast and sophisticated look for INVI */
@@ -126,16 +126,16 @@ date_default_timezone_set('Africa/Blantyre');
                     </div>
                     
                     <div class="mb-3">
-                        <a href="site-sync" class="btn btn-primary btn-lg menu-btn w-100 py-3">Construction & Project Management</a>
+                        <a href="/site-invision class="btn btn-primary btn-lg menu-btn w-100 py-3">Construction & Project Management</a>
                     </div>
                     <div class="mb-3">
-                        <a href="it-solutions" class="btn btn-info btn-lg menu-btn w-100 py-3">IT & Computer Systems</a>
+                        <a href="/it-solutions class="btn btn-info btn-lg menu-btn w-100 py-3">IT & Computer Systems</a>
                     </div>
                     <div class="mb-3">
-                        <a href="contact" class="btn btn-secondary btn-lg menu-btn w-100 py-3">Media & Digital Solutions</a>
+                        <a href="/contact class="btn btn-secondary btn-lg menu-btn w-100 py-3">Media & Digital Solutions</a>
                     </div>
                     <div class="mb-3">
-                        <a href="carbon-abatement" class="btn btn-outline-success btn-lg menu-btn w-100 py-3">🌱 Carbon Abatement & Sustainability</a>
+                        <a href="/carbon-abatement class="btn btn-outline-success btn-lg menu-btn w-100 py-3">🌱 Carbon Abatement & Sustainability</a>
                     </div>
                 </div>
             </div>
@@ -145,7 +145,7 @@ date_default_timezone_set('Africa/Blantyre');
                     
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-8 col-lg-6 mb-3">
-                            <a href="http://injess.pythonanywhere.com" class="btn btn-success btn-lg menu-btn w-100 py-3 rounded-pill" target="_blank">🚀 Site Sync</a>
+                            <a href="https://www.siteinvi.com/" class="btn btn-success btn-lg menu-btn w-100 py-3 rounded-pill" target="_blank">🚀 Site InviSion</a>
                         </div>
                         
                         <div class="col-12 col-md-8 col-lg-6 mb-3">
@@ -153,7 +153,7 @@ date_default_timezone_set('Africa/Blantyre');
                         </div>
                         
                         <div class="col-12 col-md-8 col-lg-6 mb-3">
-                            <a href="site-diary" class="btn btn-info btn-lg menu-btn w-100 py-3 rounded-pill">📔 Online Site Diary</a>
+                            <a href="/site-diary class="btn btn-info btn-lg menu-btn w-100 py-3 rounded-pill">📔 Online Site Diary</a>
                         </div>
                         
                         <div class="col-12 col-md-8 col-lg-6 mb-3">

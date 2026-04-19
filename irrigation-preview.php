@@ -237,8 +237,8 @@ $otherActivities = [
 
 <body>
 <div class="preview-toolbar">
-    <a href="irrigation-site-diary" class="brand" id="preview-toolbar-brand-irrigation">Irrigation Site Diary Preview</a>
-    <a href="irrigation-site-diary" class="btn-action">← Back to Form</a>
+    <a href="/irrigation-site-diary class="brand" id="preview-toolbar-brand-irrigation">Irrigation Site Diary Preview</a>
+    <a href="/irrigation-site-diary class="btn-action">← Back to Form</a>
     <button id="btn-dl" class="btn-action" type="button"><i class="fas fa-download"></i> Download PDF</button>
 </div>
 

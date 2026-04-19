@@ -198,13 +198,13 @@ if($conn) {
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard">📊 Dashboard</a></li>
-            <li><a href="admin-pages">📄 Manage Pages</a></li>
-            <li><a href="admin-media">🖼️ Media Library</a></li>
-            <li><a href="admin-settings">⚙️ Settings</a></li>
-            <li><a href="admin-users" class="active">👥 Users</a></li>
-            <li><a href="admin-analytics">📈 Analytics</a></li>
-            <li><a href="home" target="_blank">🌐 View Website</a></li>
+            <li><a href="/admin-dashboard>📊 Dashboard</a></li>
+            <li><a href="/admin-pages>📄 Manage Pages</a></li>
+            <li><a href="/admin-media>🖼️ Media Library</a></li>
+            <li><a href="/admin-settings>⚙️ Settings</a></li>
+            <li><a href="/admin-users class="active">👥 Users</a></li>
+            <li><a href="/admin-analytics>📈 Analytics</a></li>
+            <li><a href="/home target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -212,7 +212,7 @@ if($conn) {
     <div class="main-content">
         <div class="top-bar">
             <h1>User Management</h1>
-            <a href="admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="/admin-dashboard class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
 
         <?php if($db_error_message): ?>

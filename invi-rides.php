@@ -12,7 +12,7 @@ date_default_timezone_set('Africa/Blantyre');
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://injessview.com/img/engineer.png" />
     <meta property="og:title" content="Invi Rides - Sustainable Mobility | Injessview" />
-    <meta property="og:description" content="Invi Rides powers measurable carbon reduction and connects with INVI's SiteSync and sustainability ecosystem." />
+    <meta property="og:description" content="Invi Rides powers measurable carbon reduction and connects with INVI's Site InviSion and sustainability ecosystem." />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
@@ -101,7 +101,7 @@ date_default_timezone_set('Africa/Blantyre');
                        class="btn btn-light btn-lg rounded-pill px-5 fw-bold">
                         🚗 Launch Invi Rides
                     </a>
-                    <a href="carbon-abatement"
+                    <a href="/carbon-abatement
                        class="btn btn-outline-light btn-lg rounded-pill px-5">
                         🌱 Carbon Abatement
                     </a>
@@ -291,7 +291,7 @@ date_default_timezone_set('Africa/Blantyre');
                            class="btn btn-light btn-lg rounded-pill px-5 me-2 fw-bold">
                             🚗 Open Invi Rides
                         </a>
-                        <a href="contact"
+                        <a href="/contact
                            class="btn btn-outline-light btn-lg rounded-pill px-5">
                             📬 Partner With Us
                         </a>
