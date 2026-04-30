@@ -18,7 +18,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     
     <meta name="description" content="Get in touch with INVI (Injessview) for construction, Site InviSion technology, and sustainable mobility solutions.">
@@ -102,9 +102,9 @@ date_default_timezone_set('Africa/Blantyre');
                 <div class="p-4 rounded shadow-custom hover-lift" style="background: white;">
                     <h5 class="mb-3">Quick Links</h5>
                     <div class="d-grid gap-2">
-                        <a href="/construction-works class="btn btn-outline-primary">View Tenders</a>
-                        <a href="/site-invision class="btn btn-outline-primary">Explore Site InviSion</a>
-                        <a href="/site-diary class="btn btn-outline-primary">Site Diary</a>
+                        <a href="/construction-works" class="btn btn-outline-primary">View Tenders</a>
+                        <a href="/site-invision" class="btn btn-outline-primary">Explore Site InviSion</a>
+                        <a href="/site-diary" class="btn btn-outline-primary">Site Diary</a>
                         <a href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" class="btn btn-outline-primary">Ziwilatu Project</a>
                     </div>
                 </div>

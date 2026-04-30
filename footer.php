@@ -27,7 +27,7 @@
         </div>
         <hr style="border-color: rgba(255,255,255,0.1);">
         <div class="text-center py-3">
-            <p class="mb-0">&copy; <?= date('Y'); ?> Injessview. All rights reserved. | <a href="/admin-login class="text-decoration-none" style="color: inherit; opacity: 0.6;">Admin</a></p>
+            <p class="mb-0">&copy; <?= date('Y'); ?> Injessview. All rights reserved. | <a href="/admin-login" class="text-decoration-none" style="color: inherit; opacity: 0.6;">Admin</a></p>
         </div>
     </div>
 </footer>

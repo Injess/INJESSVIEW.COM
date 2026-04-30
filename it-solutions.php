@@ -17,7 +17,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     <meta name="description" content="INVI Technology Products — Site InviSion, Invi Rides, and Ziwilatu. Connected tools built from construction operations in Malawi.">
     <style>
@@ -138,7 +138,7 @@ date_default_timezone_set('Africa/Blantyre');
                        style="background: linear-gradient(135deg,#667eea,#764ba2); color: white; border: none;">
                         🚀 Open Site InviSion
                     </a>
-                    <a href="/site-invision class="btn btn-outline-secondary btn-lg rounded-pill px-4 ms-2">
+                    <a href="/site-invision" class="btn btn-outline-secondary btn-lg rounded-pill px-4 ms-2">
                         Learn More
                     </a>
                 </div>
@@ -187,7 +187,7 @@ date_default_timezone_set('Africa/Blantyre');
                        style="background: linear-gradient(135deg,#10b981,#059669); color: white; border: none;">
                         🚗 Launch Invi Rides
                     </a>
-                    <a href="/invi-rides class="btn btn-outline-success btn-lg rounded-pill px-4 ms-2">
+                    <a href="/invi-rides" class="btn btn-outline-success btn-lg rounded-pill px-4 ms-2">
                         Learn More
                     </a>
                 </div>
@@ -292,7 +292,7 @@ date_default_timezone_set('Africa/Blantyre');
                             Whether you need a construction management system, a clean mobility solution,
                             or carbon offset certificates — we are ready.
                         </p>
-                        <a href="/contact class="btn btn-light btn-lg rounded-pill px-5 me-2">
+                        <a href="/contact" class="btn btn-light btn-lg rounded-pill px-5 me-2">
                             📬 Get In Touch
                         </a>
                         <a href="mailto:injessview@gmail.com" class="btn btn-outline-light btn-lg rounded-pill px-5">

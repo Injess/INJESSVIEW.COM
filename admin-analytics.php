@@ -15,7 +15,7 @@ if(!loggedin()) {
     <meta name="robots" content="noindex, nofollow">
     <title>Analytics - Injessview Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <style>
         :root {
             --primary: #667eea;
@@ -122,8 +122,8 @@ if(!loggedin()) {
             <li><a href="/admin-media>🖼️ Media Library</a></li>
             <li><a href="/admin-settings>⚙️ Settings</a></li>
             <li><a href="/admin-users>👥 Users</a></li>
-            <li><a href="/admin-analytics class="active">📈 Analytics</a></li>
-            <li><a href="/home target="_blank">🌐 View Website</a></li>
+            <li><a href="/admin-analytics" class="active">📈 Analytics</a></li>
+            <li><a href="/home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -131,7 +131,7 @@ if(!loggedin()) {
     <div class="main-content">
         <div class="top-bar">
             <h1>Analytics</h1>
-            <a href="/admin-dashboard class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="/admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
 
         <div class="analytics-box">

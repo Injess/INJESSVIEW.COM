@@ -14,7 +14,7 @@ if(isset($_SESSION['uid'])) {
     <meta name="robots" content="noindex, nofollow">
     <title>Admin Login - Injessview</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     <style>
         body {
@@ -94,7 +94,7 @@ if(isset($_SESSION['uid'])) {
         </form>
         
         <div class="text-center mt-3">
-            <a href="/home class="text-muted text-decoration-none">← Back to Website</a>
+            <a href="/home" class="text-muted text-decoration-none">← Back to Website</a>
         </div>
     </div>
 

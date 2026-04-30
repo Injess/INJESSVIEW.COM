@@ -18,7 +18,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
 
     <meta name="description" content="INVI Carbon Abatement & Sustainability — reducing urban emissions through Site InviSion-driven infrastructure and Invi Rides mobility in Malawi.">
@@ -83,7 +83,7 @@ date_default_timezone_set('Africa/Blantyre');
                     <a href="https://invirides.vercel.app/" target="_blank" class="btn btn-success mt-2 rounded-pill">
                         🚗 Explore Invi Rides
                     </a>
-                    <a href="/site-invision class="btn btn-outline-success mt-2 rounded-pill">
+                    <a href="/site-invision" class="btn btn-outline-success mt-2 rounded-pill">
                         🧠 Site InviSion Link
                     </a>
                 </div>
@@ -149,7 +149,7 @@ date_default_timezone_set('Africa/Blantyre');
                     <a href="mailto:injessview@gmail.com" class="btn btn-light btn-lg rounded-pill me-3">
                         📧 injessview@gmail.com
                     </a>
-                    <a href="/contact class="btn btn-outline-light btn-lg rounded-pill">
+                    <a href="/contact" class="btn btn-outline-light btn-lg rounded-pill">
                         📬 Contact Us
                     </a>
                 </div>

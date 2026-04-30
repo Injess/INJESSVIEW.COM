@@ -70,7 +70,7 @@ if($conn) {
     <meta name="robots" content="noindex, nofollow">
     <title>User Management - Injessview Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     <style>
         :root {
@@ -202,9 +202,9 @@ if($conn) {
             <li><a href="/admin-pages>📄 Manage Pages</a></li>
             <li><a href="/admin-media>🖼️ Media Library</a></li>
             <li><a href="/admin-settings>⚙️ Settings</a></li>
-            <li><a href="/admin-users class="active">👥 Users</a></li>
+            <li><a href="/admin-users" class="active">👥 Users</a></li>
             <li><a href="/admin-analytics>📈 Analytics</a></li>
-            <li><a href="/home target="_blank">🌐 View Website</a></li>
+            <li><a href="/home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -212,7 +212,7 @@ if($conn) {
     <div class="main-content">
         <div class="top-bar">
             <h1>User Management</h1>
-            <a href="/admin-dashboard class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="/admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
 
         <?php if($db_error_message): ?>

@@ -13,7 +13,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     
     <!-- SEO Meta Tags -->
@@ -126,16 +126,16 @@ date_default_timezone_set('Africa/Blantyre');
                     </div>
                     
                     <div class="mb-3">
-                        <a href="/site-invision class="btn btn-primary btn-lg menu-btn w-100 py-3">Construction & Project Management</a>
+                        <a href="/site-invision" class="btn btn-primary btn-lg menu-btn w-100 py-3">Construction & Project Management</a>
                     </div>
                     <div class="mb-3">
-                        <a href="/it-solutions class="btn btn-info btn-lg menu-btn w-100 py-3">IT & Computer Systems</a>
+                        <a href="/it-solutions" class="btn btn-info btn-lg menu-btn w-100 py-3">IT & Computer Systems</a>
                     </div>
                     <div class="mb-3">
-                        <a href="/contact class="btn btn-secondary btn-lg menu-btn w-100 py-3">Media & Digital Solutions</a>
+                        <a href="/contact" class="btn btn-secondary btn-lg menu-btn w-100 py-3">Media & Digital Solutions</a>
                     </div>
                     <div class="mb-3">
-                        <a href="/carbon-abatement class="btn btn-outline-success btn-lg menu-btn w-100 py-3">🌱 Carbon Abatement & Sustainability</a>
+                        <a href="/carbon-abatement" class="btn btn-outline-success btn-lg menu-btn w-100 py-3">🌱 Carbon Abatement & Sustainability</a>
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@ date_default_timezone_set('Africa/Blantyre');
                         </div>
                         
                         <div class="col-12 col-md-8 col-lg-6 mb-3">
-                            <a href="/site-diary class="btn btn-info btn-lg menu-btn w-100 py-3 rounded-pill">📔 Online Site Diary</a>
+                            <a href="/site-diary" class="btn btn-info btn-lg menu-btn w-100 py-3 rounded-pill">📔 Online Site Diary</a>
                         </div>
                         
                         <div class="col-12 col-md-8 col-lg-6 mb-3">

@@ -17,7 +17,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     <meta name="description" content="INVI Site InviSion — AI-powered construction and project management platform built from real construction works and Ziwilatu operations in Malawi.">
 </head>
@@ -57,11 +57,11 @@ date_default_timezone_set('Africa/Blantyre');
                     <h4 class="mb-2">How Site InviSion Was Formed</h4>
                     <p class="mb-2">
                         Site InviSion started from our construction operations on
-                        <a href="/construction-works class="alert-link">Construction Works</a>
+                        <a href="/construction-works" class="alert-link">Construction Works</a>
                         and the professional network dynamics from
                         <a href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" class="alert-link">Ziwilatu</a>.
                         Today, the
-                        <a href="/site-diary class="alert-link">Site Diary</a>
+                        <a href="/site-diary" class="alert-link">Site Diary</a>
                         flow contributes day-to-day field intelligence that feeds directly into Site InviSion reporting.
                     </p>
                 </div>
@@ -150,7 +150,7 @@ date_default_timezone_set('Africa/Blantyre');
                     <a href="https://www.siteinvi.com/" target="_blank" class="btn btn-light btn-lg rounded-pill me-3">
                         🚀 Open Site InviSion
                     </a>
-                    <a href="/contact class="btn btn-outline-light btn-lg rounded-pill">
+                    <a href="/contact" class="btn btn-outline-light btn-lg rounded-pill">
                         📬 Request a Demo
                     </a>
                 </div>

@@ -20,7 +20,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
 </head>
 
@@ -35,23 +35,23 @@ date_default_timezone_set('Africa/Blantyre');
         </div>
 
             <div class="alert alert-light shadow-custom text-center" data-aos="fade-up">
-            These diaries are the field intelligence layer for <a href="/site-invision class="alert-link">Site InviSion</a>.
+            These diaries are the field intelligence layer for <a href="/site-invision" class="alert-link">Site InviSion</a>.
             Daily entries from building, roads, and irrigation contribute to stronger project reporting and decision-making.
         </div>
         
         <div class="row home-menu d-flex flex-column align-items-center justify-content-center" style="min-height:65vh;">
             <div class="col-12 col-md-8 col-lg-6 mb-3" data-aos="fade-right" data-aos-delay="100">
-                <a href="/roads-authority-site-diary class="btn btn-primary btn-lg menu-btn w-100 hover-lift">
+                <a href="/roads-authority-site-diary" class="btn btn-primary btn-lg menu-btn w-100 hover-lift">
                     <span style="font-size: 1.3rem;">🛣️</span> Roads Authority Site Diary
                 </a>
             </div>
             <div class="col-12 col-md-8 col-lg-6 mb-3" data-aos="fade-up" data-aos-delay="200">
-                <a href="/building-site-diary class="btn btn-success btn-lg menu-btn w-100 hover-lift">
+                <a href="/building-site-diary" class="btn btn-success btn-lg menu-btn w-100 hover-lift">
                     <span style="font-size: 1.3rem;">🏗️</span> Building Site Diary
                 </a>
             </div>
             <div class="col-12 col-md-8 col-lg-6 mb-3" data-aos="fade-left" data-aos-delay="300">
-                <a href="/irrigation-site-diary class="btn btn-secondary btn-lg menu-btn w-100 hover-lift">
+                <a href="/irrigation-site-diary" class="btn btn-secondary btn-lg menu-btn w-100 hover-lift">
                     <span style="font-size: 1.3rem;">💧</span> Irrigation Site Diary
                 </a>
             </div>

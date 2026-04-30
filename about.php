@@ -18,7 +18,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     
     <meta name="description" content="Learn about INVI (Injessview) and how our construction, Site InviSion, and sustainability platforms work together.">
@@ -138,8 +138,8 @@ date_default_timezone_set('Africa/Blantyre');
         <!-- CTA Section -->
         <div class="text-center my-5" data-aos="zoom-in">
             <h3 class="mb-4">Ready to Transform Your Business?</h3>
-            <a href="/construction-works class="btn btn-primary btn-lg me-2 mb-2">View Projects</a>
-            <a href="/site-diary class="btn btn-outline-primary btn-lg mb-2">Explore Solutions</a>
+            <a href="/construction-works" class="btn btn-primary btn-lg me-2 mb-2">View Projects</a>
+            <a href="/site-diary" class="btn btn-outline-primary btn-lg mb-2">Explore Solutions</a>
         </div>
     </div>
 

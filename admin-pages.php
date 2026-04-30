@@ -70,7 +70,7 @@ if($current_file && in_array($current_file, array_column($pages, 'file'))) {
     <meta name="robots" content="noindex, nofollow">
     <title>Manage Pages - Injessview Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     <style>
         :root {
@@ -214,12 +214,12 @@ if($current_file && in_array($current_file, array_column($pages, 'file'))) {
         </div>
         <ul class="sidebar-menu">
             <li><a href="/admin-dashboard>📊 Dashboard</a></li>
-            <li><a href="/admin-pages class="active">📄 Manage Pages</a></li>
+            <li><a href="/admin-pages" class="active">📄 Manage Pages</a></li>
             <li><a href="/admin-media>🖼️ Media Library</a></li>
             <li><a href="/admin-settings>⚙️ Settings</a></li>
             <li><a href="/admin-users>👥 Users</a></li>
             <li><a href="/admin-analytics>📈 Analytics</a></li>
-            <li><a href="/home target="_blank">🌐 View Website</a></li>
+            <li><a href="/home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
 
@@ -227,7 +227,7 @@ if($current_file && in_array($current_file, array_column($pages, 'file'))) {
     <div class="main-content">
         <div class="top-bar">
             <h1><?= $current_file ? 'Edit Page' : 'Manage Pages' ?></h1>
-            <a href="/admin-dashboard class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
+            <a href="/admin-dashboard" class="btn btn-sm btn-outline-secondary">← Back to Dashboard</a>
         </div>
 
         <?php if($db_error_message): ?>
@@ -261,7 +261,7 @@ if($current_file && in_array($current_file, array_column($pages, 'file'))) {
                     </div>
                     <div class="d-flex gap-2">
                         <button type="submit" name="save_content" class="btn btn-primary">💾 Save Changes</button>
-                        <a href="/admin-pages class="btn btn-secondary">Cancel</a>
+                        <a href="/admin-pages" class="btn btn-secondary">Cancel</a>
                         <a href="<?= htmlspecialchars($current_file) ?>" target="_blank" class="btn btn-outline-primary">👁️ Preview</a>
                     </div>
                 </form>

@@ -17,7 +17,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
-    <link rel="icon" type="image/png" href="./img/engineer.png" />
+    <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <script src="./js/sweetalert.min.js"></script>
     <meta name="description" content="Invi Rides — INVI's carbon-neutral carpooling and smart mobility platform, reducing Blantyre's urban emissions one ride at a time.">
     <style>
