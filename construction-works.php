@@ -132,7 +132,7 @@ if (is_array($feed_data) && !empty($feed_data['success']) && !empty($feed_data['
                                     <td><?php echo htmlspecialchars($feed_item['source']); ?></td>
                                     <td>
                                         <?php if (!empty($feed_item['link'])): ?>
-                                            <a href="<?php echo htmlspecialchars($feed_item['link']); ?>" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Open</a>
+                                            <a href="<?php echo htmlspecialchars($feed_item['link']); ?">" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Open</a>
                                         <?php else: ?>
                                             N/A
                                         <?php endif; ?>

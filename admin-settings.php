@@ -182,12 +182,12 @@ if(file_exists($settings_file)) {
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="/admin-dashboard>📊 Dashboard</a></li>
-            <li><a href="/admin-pages>📄 Manage Pages</a></li>
-            <li><a href="/admin-media>🖼️ Media Library</a></li>
+            <li><a href="/admin-dashboard>📊 Dashboard</a></li">
+            <li><a href="/admin-pages>📄 Manage Pages</a></li">
+            <li><a href="/admin-media>🖼️ Media Library</a></li">
             <li><a href="/admin-settings" class="active">⚙️ Settings</a></li>
-            <li><a href="/admin-users>👥 Users</a></li>
-            <li><a href="/admin-analytics>📈 Analytics</a></li>
+            <li><a href="/admin-users>👥 Users</a></li">
+            <li><a href="/admin-analytics>📈 Analytics</a></li">
             <li><a href="/home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
