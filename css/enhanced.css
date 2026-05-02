@@ -160,6 +160,14 @@ html {
     box-shadow: var(--shadow-md);
 }
 
+.menu-btn.btn-outline-success {
+    box-shadow: 0 0 0 2px rgba(25, 135, 84, 0.22), var(--shadow-md);
+}
+
+.menu-btn.btn-outline-success:hover {
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.28), var(--shadow-lg);
+}
+
 /* Enhanced Cards & Sections */
 .welcome-section,
 .vision-mission-section,

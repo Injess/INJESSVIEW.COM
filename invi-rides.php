@@ -101,7 +101,7 @@ date_default_timezone_set('Africa/Blantyre');
                        class="btn btn-light btn-lg rounded-pill px-5 fw-bold">
                         🚗 Launch Invi Rides
                     </a>
-                    <a href="/carbon-abatement
+                    <a href="/carbon-abatement"
                        class="btn btn-outline-light btn-lg rounded-pill px-5">
                         🌱 Carbon Abatement
                     </a>
@@ -291,7 +291,7 @@ date_default_timezone_set('Africa/Blantyre');
                            class="btn btn-light btn-lg rounded-pill px-5 me-2 fw-bold">
                             🚗 Open Invi Rides
                         </a>
-                        <a href="/contact
+                        <a href="/contact"
                            class="btn btn-outline-light btn-lg rounded-pill px-5">
                             📬 Partner With Us
                         </a>

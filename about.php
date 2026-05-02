@@ -139,7 +139,7 @@ date_default_timezone_set('Africa/Blantyre');
         <div class="text-center my-5" data-aos="zoom-in">
             <h3 class="mb-4">Ready to Transform Your Business?</h3>
             <a href="/construction-works" class="btn btn-primary btn-lg me-2 mb-2">View Projects</a>
-            <a href="/site-diary" class="btn btn-outline-primary btn-lg mb-2">Explore Solutions</a>
+            <a href="/contact" class="btn btn-outline-primary btn-lg mb-2">Explore Solutions</a>
         </div>
     </div>
 

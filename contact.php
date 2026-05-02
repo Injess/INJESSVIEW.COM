@@ -63,6 +63,10 @@ date_default_timezone_set('Africa/Blantyre');
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label for="subject" class="form-label">Subject *</label>
+                            <input type="text" class="form-control" id="subject" placeholder="How can we help you?" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="message" class="form-label">Message *</label>
                             <textarea class="form-control" id="message" rows="5" required></textarea>
                         </div>
@@ -75,6 +79,10 @@ date_default_timezone_set('Africa/Blantyre');
             <div class="col-md-5 mb-4" data-aos="fade-left">
                 <div class="p-4 rounded shadow-custom hover-lift mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
                     <h3 class="mb-4">Contact Information</h3>
+
+                    <div class="text-center mb-4">
+                        <img src="./img/INVI_LOGO.png" alt="INVI Logo" class="img-fluid" style="max-height: 90px; width: auto;">
+                    </div>
                     
                     <div class="mb-4">
                         <h5>📍 Location</h5>
@@ -105,7 +113,8 @@ date_default_timezone_set('Africa/Blantyre');
                         <a href="/construction-works" class="btn btn-outline-primary">View Tenders</a>
                         <a href="/site-invision" class="btn btn-outline-primary">Explore Site InviSion</a>
                         <a href="/site-diary" class="btn btn-outline-primary">Site Diary</a>
-                        <a href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" class="btn btn-outline-primary">Ziwilatu Project</a>
+                        <a href="/carbon-abatement" class="btn btn-outline-primary">Carbon Abatement</a>
+                        <a href="/it-solutions" class="btn btn-outline-primary">IT Solutions</a>
                     </div>
                 </div>
             </div>
@@ -123,15 +132,78 @@ date_default_timezone_set('Africa/Blantyre');
             AOS.init();
         }
 
-        // Contact form submission
+        // Contact form submission: copy details, then open user's email app with prefilled draft.
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Show success message
-            swal("Message Sent!", "Thank you for contacting us. We'll get back to you soon!", "success");
-            
-            // Reset form
-            this.reset();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const serviceSelect = document.getElementById('service');
+            const serviceLabel = serviceSelect.options[serviceSelect.selectedIndex] ? serviceSelect.options[serviceSelect.selectedIndex].text : 'Not specified';
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            const clipboardText = [
+                'INVI Contact Request',
+                '--------------------',
+                'Name: ' + name,
+                'Email: ' + email,
+                'Phone: ' + (phone || 'Not provided'),
+                'Service: ' + (serviceLabel || 'Not specified'),
+                'Subject: ' + subject,
+                '',
+                'Message:',
+                message
+            ].join('\n');
+
+            const emailSubject = '[' + (serviceSelect.value || 'general') + '] ' + subject;
+            const emailBody = [
+                'Name: ' + name,
+                'Email: ' + email,
+                'Phone: ' + (phone || 'Not provided'),
+                'Service: ' + (serviceLabel || 'Not specified'),
+                '',
+                'Message:',
+                message
+            ].join('\n');
+
+            const mailtoUrl = 'mailto:injessview@gmail.com?subject=' + encodeURIComponent(emailSubject) + '&body=' + encodeURIComponent(emailBody);
+
+            const openMailApp = function() {
+                window.location.href = mailtoUrl;
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(clipboardText).then(function() {
+                    swal({
+                        title: 'Details Copied',
+                        text: 'Your details were copied. Your email app will open with a pre-filled draft.',
+                        icon: 'success'
+                    }).then(function() {
+                        openMailApp();
+                        document.getElementById('contactForm').reset();
+                    });
+                }).catch(function() {
+                    swal({
+                        title: 'Preparing Email',
+                        text: 'Clipboard access was blocked. Your email app will still open now.',
+                        icon: 'warning'
+                    }).then(function() {
+                        openMailApp();
+                        document.getElementById('contactForm').reset();
+                    });
+                });
+            } else {
+                swal({
+                    title: 'Preparing Email',
+                    text: 'Your browser does not support clipboard copy here. Your email app will open now.',
+                    icon: 'warning'
+                }).then(function() {
+                    openMailApp();
+                    document.getElementById('contactForm').reset();
+                });
+            }
         });
     </script>
 </body>

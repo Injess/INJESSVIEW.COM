@@ -22,7 +22,26 @@
                 <p class="text-white-50">Blantyre, Malawi<br>
                 Email: <a href="mailto:injessview@gmail.com" class="text-white-50">injessview@gmail.com</a><br>
                 Phone: <a href="tel:+265885715202" class="text-white-50">+265 8857 15202</a></p>
-                <a href="https://injessview.com/ziwilatu/subscribers.php" target="_blank" class="btn btn-sm btn-outline-light">Ziwilatu Project</a>
+                <?php
+                $footer_links = array(
+                    array('href' => '/contact', 'label' => 'Contact Us'),
+                    array('href' => '/site-diary', 'label' => 'Site Diary'),
+                    array('href' => '/site-invision', 'label' => 'Site InviSion'),
+                    array('href' => '/construction-works', 'label' => 'Construction Works'),
+                    array('href' => '/carbon-abatement', 'label' => 'Carbon Abatement'),
+                    array('href' => '/it-solutions', 'label' => 'IT Solutions')
+                );
+
+                // Rotate visible links by day so users see different active pages over time.
+                $offset = (int) date('z') % count($footer_links);
+                $rotated = array_merge(array_slice($footer_links, $offset), array_slice($footer_links, 0, $offset));
+                $visible_links = array_slice($rotated, 0, 3);
+                ?>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                    <?php foreach ($visible_links as $footer_link): ?>
+                        <a href="<?php echo htmlspecialchars($footer_link['href']); ?>" class="btn btn-sm btn-outline-light"><?php echo htmlspecialchars($footer_link['label']); ?></a>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
         <hr style="border-color: rgba(255,255,255,0.1);">

@@ -149,10 +149,6 @@ date_default_timezone_set('Africa/Blantyre');
                         </div>
                         
                         <div class="col-12 col-md-8 col-lg-6 mb-3">
-                            <a href="https://injessview.com/ziwilatu/subscribers.php" class="btn btn-primary btn-lg menu-btn w-100 py-3 rounded-pill" target="_blank">🌟 Ziwilatu: Construction Platform</a>
-                        </div>
-                        
-                        <div class="col-12 col-md-8 col-lg-6 mb-3">
                             <a href="/site-diary" class="btn btn-info btn-lg menu-btn w-100 py-3 rounded-pill">📔 Online Site Diary</a>
                         </div>
                         

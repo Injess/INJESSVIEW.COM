@@ -3,16 +3,16 @@
 date_default_timezone_set('Africa/Blantyre');
 
 // 1. Data Source and Caching Configuration
-$url = 'https://www.siteinvi.com/feed/';
-$cache_file = __DIR__ . '/siteinvi_feed_cache.xml';
+$url = 'https://www.siteinvi.com/api/regional-feed/';
+$cache_file = __DIR__ . '/siteinvi_feed_cache.json';
 $cache_lifetime = 6 * 3600; // 6 hours in seconds
 
-$feed_xml = '';
+$feed_response = '';
 
 // Check if cache file exists and is still fresh
 if (file_exists($cache_file) && (time() - filemtime($cache_file) < $cache_lifetime)) {
     // Cache is fresh, load content from cache
-    $feed_xml = file_get_contents($cache_file);
+    $feed_response = file_get_contents($cache_file);
 } else {
     // Cache is old or doesn't exist, fetch new content
     $ch = curl_init();
@@ -23,30 +23,41 @@ if (file_exists($cache_file) && (time() - filemtime($cache_file) < $cache_lifeti
         'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
     ));
 
-    $feed_xml = curl_exec($ch);
+    $feed_response = curl_exec($ch);
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
     // Only cache if the fetch was successful (HTTP 200) and content is not empty
-    if ($http_code === 200 && !empty($feed_xml)) {
-        file_put_contents($cache_file, $feed_xml);
+    if ($http_code === 200 && !empty($feed_response)) {
+        file_put_contents($cache_file, $feed_response);
     } else if (file_exists($cache_file)) {
         // If fetch failed, use the last good cached version
-        $feed_xml = file_get_contents($cache_file);
+        $feed_response = file_get_contents($cache_file);
     }
 }
 
-// Parse RSS feed items from Site InviSion
+// Parse JSON feed items from Site InviSion
 $feed_items = array();
-$rss = @simplexml_load_string($feed_xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+$feed_data = json_decode($feed_response, true);
 
-if ($rss && isset($rss->channel->item)) {
-    foreach ($rss->channel->item as $item) {
+if (is_array($feed_data) && !empty($feed_data['success']) && !empty($feed_data['items'])) {
+    foreach ($feed_data['items'] as $item) {
+        $raw_pub_date = (string) ($item['created_at'] ?? '');
+        $formatted_pub_date = $raw_pub_date;
+
+        if (!empty($raw_pub_date)) {
+            $timestamp = strtotime($raw_pub_date);
+            if ($timestamp !== false) {
+                $formatted_pub_date = date('M j, Y g:i a', $timestamp);
+            }
+        }
+
         $feed_items[] = array(
-            'title' => (string) $item->title,
-            'pubDate' => (string) $item->pubDate,
-            'link' => (string) $item->link,
-            'source' => 'Site InviSion'
+            'title' => (string) ($item['title'] ?? 'Untitled Item'),
+            'pubDate' => $formatted_pub_date,
+            'link' => (string) ($item['click_url'] ?? $item['source_url'] ?? ''),
+            'detail_url' => (string) ($item['detail_url'] ?? ''),
+            'source' => (string) ($item['institution'] ?? 'Site InviSion')
         );
     }
 }
@@ -91,7 +102,7 @@ if ($rss && isset($rss->channel->item)) {
         
         <div class="alert alert-info text-center shadow-custom" data-aos="fade-up">
             <strong>📅 Last Updated:</strong> <?php echo date('F j, Y, g:i a', file_exists($cache_file) ? filemtime($cache_file) : time()); ?>
-            <br><small class="mt-2 d-block">Data sourced from Site InviSion Feed</small>
+            <br><small class="mt-2 d-block">Data sourced from the Site InviSion API</small>
         </div>
 
             <div class="alert alert-light shadow-custom" data-aos="fade-up">
@@ -130,7 +141,7 @@ if ($rss && isset($rss->channel->item)) {
                         <?php
                         endforeach;
                     else:
-                        echo '<tr><td colspan="4" class="text-center text-danger">Could not fetch or parse Site InviSion feed data.</td></tr>';
+                        echo '<tr><td colspan="4" class="text-center text-danger">Could not fetch or parse Site InviSion API data.</td></tr>';
                     endif;
                     ?>
                 </tbody>
