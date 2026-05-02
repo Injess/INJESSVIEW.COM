@@ -135,7 +135,7 @@ date_default_timezone_set('Africa/Blantyre');
                         <a href="/contact" class="btn btn-secondary btn-lg menu-btn w-100 py-3">Media & Digital Solutions</a>
                     </div>
                     <div class="mb-3">
-                        <a href="/carbon-abatement" class="btn btn-outline-success btn-lg menu-btn w-100 py-3">🌱 Carbon Abatement & Sustainability</a>
+                        <a href="/carbon-abatement" class="btn btn-success btn-lg menu-btn w-100 py-3">🌱 Carbon Abatement & Sustainability</a>
                     </div>
                 </div>
             </div>
