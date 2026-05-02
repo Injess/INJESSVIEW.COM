@@ -14,7 +14,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
     <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
-    <script src="./js/sweetalert.min.js"></script>
+    <script src="./js/sweetalert.min.js" defer></script>
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="INVI (Injessview) provides innovative solutions in construction, technology, and media. Expert project management, IT systems, and digital services.">
@@ -171,28 +171,16 @@ date_default_timezone_set('Africa/Blantyre');
         document.addEventListener("DOMContentLoaded", function() {
             const preloader = document.getElementById('preloader');
             const mainContent = document.getElementById('main-content');
-            const progressBar = document.getElementById('progress-bar');
 
-            let width = 0;
-            const interval = setInterval(function() {
-                if (width >= 100) {
-                    clearInterval(interval);
-                    // Hide the preloader with a smooth fade-out effect
-                    preloader.style.opacity = '0';
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                        preloader.style.visibility = 'hidden';
-                        preloader.style.pointerEvents = 'none'; 
-                        
-                        // Show the main content
-                        mainContent.style.display = 'block';
-                    }, 500); // Wait for the fade-out transition to finish
-                } else {
-                    // Simulate loading progress
-                    width += 5;
-                    progressBar.style.width = width + '%';
-                }
-            }, 100); // Update every 100 milliseconds
+            if (mainContent) {
+                mainContent.style.display = 'block';
+            }
+
+            if (preloader) {
+                preloader.style.display = 'none';
+                preloader.style.visibility = 'hidden';
+                preloader.style.pointerEvents = 'none';
+            }
         });
     </script>
 </body>

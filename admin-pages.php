@@ -213,12 +213,12 @@ if($current_file && in_array($current_file, array_column($pages, 'file'))) {
             <h4>INVI Admin</h4>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="/admin-dashboard>📊 Dashboard</a></li">
+            <li><a href="/admin-dashboard">📊 Dashboard</a></li">
             <li><a href="/admin-pages" class="active">📄 Manage Pages</a></li>
-            <li><a href="/admin-media>🖼️ Media Library</a></li">
-            <li><a href="/admin-settings>⚙️ Settings</a></li">
-            <li><a href="/admin-users>👥 Users</a></li">
-            <li><a href="/admin-analytics>📈 Analytics</a></li">
+            <li><a href="/admin-media">🖼️ Media Library</a></li">
+            <li><a href="/admin-settings">⚙️ Settings</a></li">
+            <li><a href="/admin-users">👥 Users</a></li">
+            <li><a href="/admin-analytics">📈 Analytics</a></li">
             <li><a href="/home" target="_blank">🌐 View Website</a></li>
         </ul>
     </div>
@@ -262,7 +262,7 @@ if($current_file && in_array($current_file, array_column($pages, 'file'))) {
                     <div class="d-flex gap-2">
                         <button type="submit" name="save_content" class="btn btn-primary">💾 Save Changes</button>
                         <a href="/admin-pages" class="btn btn-secondary">Cancel</a>
-                        <a href="<?= htmlspecialchars($current_file) ?">" target="_blank" class="btn btn-outline-primary">👁️ Preview</a>
+                        <a href="<?= htmlspecialchars($current_file) ?>" target="_blank" class="btn btn-outline-primary">👁️ Preview</a>
                     </div>
                 </form>
             </div>
@@ -282,8 +282,8 @@ if($current_file && in_array($current_file, array_column($pages, 'file'))) {
                         </div>
                     </div>
                     <div>
-                        <a href="?edit=<?= urlencode($page['file']) ?">" class="btn btn-primary btn-sm">✏️ Edit</a>
-                        <a href="<?= $page['file'] ?">" target="_blank" class="btn btn-outline-secondary btn-sm">👁️ View</a>
+                        <a href="?edit=<?= urlencode($page['file']) ?>" class="btn btn-primary btn-sm">✏️ Edit</a>
+                        <a href="<?= $page['file'] ?>" target="_blank" class="btn btn-outline-secondary btn-sm">👁️ View</a>
                     </div>
                 </div>
             <?php endforeach; ?>

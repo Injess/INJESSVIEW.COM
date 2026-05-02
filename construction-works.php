@@ -18,6 +18,8 @@ if (file_exists($cache_file) && (time() - filemtime($cache_file) < $cache_lifeti
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     // Add headers to mimic a browser and avoid blocking
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
@@ -81,7 +83,7 @@ if (is_array($feed_data) && !empty($feed_data['success']) && !empty($feed_data['
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
     <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" /> 
-    <script src="./js/sweetalert.min.js"></script>
+    <script src="./js/sweetalert.min.js" defer></script>
     
     <meta name="description" content="Browse the latest updates from Site InviSion feed and connect them to your digital field workflows.">
     <meta name="keywords" content="Site InviSion, construction updates, site feed, site diary, project updates">
@@ -132,7 +134,7 @@ if (is_array($feed_data) && !empty($feed_data['success']) && !empty($feed_data['
                                     <td><?php echo htmlspecialchars($feed_item['source']); ?></td>
                                     <td>
                                         <?php if (!empty($feed_item['link'])): ?>
-                                            <a href="<?php echo htmlspecialchars($feed_item['link']); ?">" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Open</a>
+                                            <a href="<?php echo htmlspecialchars($feed_item['link']); ?>" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Open</a>
                                         <?php else: ?>
                                             N/A
                                         <?php endif; ?>

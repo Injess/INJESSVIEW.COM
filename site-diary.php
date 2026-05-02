@@ -21,7 +21,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/enhanced.css">
     <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
-    <script src="./js/sweetalert.min.js"></script>
+    <script src="./js/sweetalert.min.js" defer></script>
 </head>
 
 <body class="bg-light">

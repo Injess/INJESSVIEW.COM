@@ -5,6 +5,11 @@
 
 RewriteEngine on
 
+# Skip rewrite processing for existing files and directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
 #ErrorDocument 404 /404.php
 
 RewriteRule ^home$ index.php [NC,L]
@@ -27,7 +32,7 @@ RewriteRule ^irrigation-site-dairy irrigation.php [NC,L]
 
 RewriteRule ^construction-works construction-works.php [NC,L]
 
-RewriteRule ^site-sync$ /site-invision [R=301,NC,L]
+RewriteRule ^site-sync$ site-invision.php [NC,L]
 RewriteRule ^site-invision$ site-invision.php [NC,L]
 RewriteRule ^it-solutions$ it-solutions.php [NC,L]
 RewriteRule ^invi-rides$ invi-rides.php [NC,L]
@@ -57,3 +62,33 @@ RewriteRule ^admin-deploy$ admin-deploy.php [NC,L]
 
 AddType image/svg+xml svg svgz
 AddEncoding gzip svgz
+
+# Enable gzip compression for text-based assets
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE text/javascript
+	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE application/json
+	AddOutputFilterByType DEFLATE application/xml
+	AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Enable browser caching for static assets
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresByType text/css "access plus 1 month"
+	ExpiresByType text/javascript "access plus 1 month"
+	ExpiresByType application/javascript "access plus 1 month"
+	ExpiresByType image/jpeg "access plus 6 months"
+	ExpiresByType image/jpg "access plus 6 months"
+	ExpiresByType image/png "access plus 6 months"
+	ExpiresByType image/gif "access plus 6 months"
+	ExpiresByType image/webp "access plus 6 months"
+	ExpiresByType image/svg+xml "access plus 6 months"
+	ExpiresByType font/woff2 "access plus 6 months"
+	ExpiresByType font/woff "access plus 6 months"
+	ExpiresByType application/font-woff "access plus 6 months"
+	ExpiresByType application/font-woff2 "access plus 6 months"
+</IfModule>

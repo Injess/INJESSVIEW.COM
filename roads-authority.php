@@ -15,7 +15,7 @@ date_default_timezone_set('Africa/Blantyre');
     <link rel="stylesheet" href="css/aos.css">
     <link rel="icon" type="image/png" href="./img/INVI_LOGO.png" />
     <link rel="stylesheet" href="css/main.css">
-    <script src="./js/sweetalert.min.js"></script>
+    <script src="./js/sweetalert.min.js" defer></script>
 
     <!--og codes-->
     <meta property="og:url" content="https://injessview.com/roads-authority-site-diary" />

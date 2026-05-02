@@ -39,7 +39,7 @@
                 ?>
                 <div class="d-flex flex-wrap gap-2 mt-2">
                     <?php foreach ($visible_links as $footer_link): ?>
-                        <a href="<?php echo htmlspecialchars($footer_link['href']); ?">" class="btn btn-sm btn-outline-light"><?php echo htmlspecialchars($footer_link['label']); ?></a>
+                        <a href="<?php echo htmlspecialchars($footer_link['href']); ?>" class="btn btn-sm btn-outline-light"><?php echo htmlspecialchars($footer_link['label']); ?></a>
                     <?php endforeach; ?>
                 </div>
             </div>
